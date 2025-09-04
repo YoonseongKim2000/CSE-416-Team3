@@ -3,8 +3,11 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 
-# Only allow requests from GitHub Pages frontend
-CORS(app, resources={r"/*": {"origins": "https://yoonseongkim2000.github.io"}})
+# Only allow requests from GitHub Pages frontend, stops other websites from calling our API
+CORS(app, resources={r"/*": {"origins": [
+    "https://yoonseongkim2000.github.io",
+    "http://localhost:5173" 
+    ]}})
 
 @app.route("/api/hello")
 def hello():

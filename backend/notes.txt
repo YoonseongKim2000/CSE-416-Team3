@@ -1,3 +1,11 @@
 The address we need to do API calls: https://cse-416-team3.onrender.com/
 
 example: https://cse-416-team3.onrender.com/api/hello
+
+in front end, we will do this:
+
+const apiUrl = import.meta.env.VITE_API_URL;
+
+fetch(`${apiUrl}/api/hello`)
+  .then(res => res.json())
+  .then(data => console.log(data));

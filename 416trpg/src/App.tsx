@@ -3,6 +3,14 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
+// testing api to backend
+fetch(`${apiUrl}/api/hello`)
+  .then(res => res.json())
+  .then(data => console.log(data));
+
+
 function App() {
   const [count, setCount] = useState(0)
 
