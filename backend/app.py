@@ -2,7 +2,9 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # allow frontend to access API
+
+# Only allow requests from GitHub Pages frontend
+CORS(app, resources={r"/*": {"origins": "https://yoonseongkim2000.github.io"}})
 
 @app.route("/api/hello")
 def hello():
