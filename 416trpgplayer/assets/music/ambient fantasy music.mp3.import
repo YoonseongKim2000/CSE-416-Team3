@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dr7643mee0cyg"
+path="res://.godot/imported/ambient fantasy music.mp3-6ee7ef08d1f220c5234ede58e9d7a50d.mp3str"
+
+[deps]
+
+source_file="res://assets/music/ambient fantasy music.mp3"
+dest_files=["res://.godot/imported/ambient fantasy music.mp3-6ee7ef08d1f220c5234ede58e9d7a50d.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
