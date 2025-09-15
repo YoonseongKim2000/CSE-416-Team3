@@ -6,6 +6,17 @@ import os
 load_dotenv()
 ATLAS_URI = os.getenv('ATLAS_URI')
 
-client = MongoClient(ATLAS_URI)
-db = client.unnamed_db
+class AtlasClient ():
 
+    # connect to database
+    def __init__ (self):
+        self.mongodb_client = MongoClient(ATLAS_URI)
+        self.database = self.mongodb_client[unnamed_db]
+
+    def ping (self):
+        self.mongodb_client.admin.command('ping')
+
+    def get_users (self):
+        collection = self.mongodb_client[users]
+        users = collection.find({})
+        return users

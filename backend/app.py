@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from routes.test import test
+from routes.testdb import testdb
 
 
 def compile_routes():
@@ -13,6 +14,7 @@ def compile_routes():
     ]}})
 
     app.register_blueprint(test)
+    app.register_blueprint(testdb)
 
     @app.route("/api/ping")
     def ping():
