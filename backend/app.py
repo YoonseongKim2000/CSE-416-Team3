@@ -43,6 +43,8 @@ def compile_routes():
         
     return app
 
+app = compile_routes()
+
 if __name__ == "__main__":
-    app = compile_routes()
+    
     app.run(host="0.0.0.0", port=5000)

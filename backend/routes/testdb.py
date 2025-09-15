@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from ..db import AtlasClient
+from db import AtlasClient
 
 testdb = Blueprint("testdb", __name__, url_prefix="/api")
 
