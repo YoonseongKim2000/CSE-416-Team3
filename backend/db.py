@@ -11,7 +11,6 @@ class AtlasClient ():
     # connect to database
     def __init__ (self):
         self.mongodb_client = MongoClient(ATLAS_URI)
-        print(ATLAS_URI)
         self.database = self.mongodb_client['unnamed_db']
 
     def ping (self):
