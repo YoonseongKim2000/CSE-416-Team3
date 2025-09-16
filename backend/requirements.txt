@@ -1,6 +1,7 @@
-flask
-flask-cors
-gunicorn
-flask_socketio
+torch
+torchvision
+uvicorn
+fastapi
+pillow
 pymongo
 python-dotenv
