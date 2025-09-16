@@ -3,10 +3,25 @@ import torch
 import torch.nn.functional as F
 from torchvision import models, transforms
 from fastapi import FastAPI, File, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
+import os
 from PIL import Image
 from db import AtlasClient
 
 app = FastAPI()
+
+
+# Env var to control origins
+FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "*")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[FRONTEND_ORIGIN],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # =================================================================
 # PUT ALL DB SHIT HERE FOR NOW
 # =================================================================
