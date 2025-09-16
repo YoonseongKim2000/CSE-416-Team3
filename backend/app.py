@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from routes.test import test
 from routes.testdb import testdb
+import platform
 
 
 def compile_routes():
@@ -16,9 +17,9 @@ def compile_routes():
     app.register_blueprint(test)
     app.register_blueprint(testdb)
 
-    @app.route("/api/ping")
-    def ping():
-        return jsonify({"message": "pong from backend"})
+    @app.route("/api/printpython")
+    def printpython():
+        return jsonify({"Python Version": platform.python_version()})
 
     @app.route("/api/login", methods=["POST"])
     def login():
