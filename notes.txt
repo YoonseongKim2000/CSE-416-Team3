@@ -1,3 +1,6 @@
 Commands to update frontend
 npm run build
 npm run deploy
+
+Command to run backend locally
+uvicorn server:app --host 0.0.0.0 --port 10000
