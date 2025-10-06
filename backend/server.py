@@ -12,6 +12,7 @@ from contextlib import asynccontextmanager
 load_dotenv()
 ATLAS_URI = os.getenv('ATLAS_URI')
 
+#Server lifespan(startup/shutdown) behavior
 @asynccontextmanager
 async def db_lifespan(app: FastAPI):
     #Server Startup
@@ -22,6 +23,7 @@ async def db_lifespan(app: FastAPI):
         raise Exception("Problem connecting to mongoDB cluster")
     else:
         print("Connected to mongoDB cluster")
+        print(app.database)
     yield
     #Server Shutdown
     await app.mongodb_client.close()
