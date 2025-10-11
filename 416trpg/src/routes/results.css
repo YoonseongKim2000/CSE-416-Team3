@@ -1,0 +1,58 @@
+.divider {
+  width: 2px;
+  height: 100px;
+  background-color: #dee2e6;
+  margin: auto;
+  border-radius: 1px;
+}
+
+/* Gauge styling */
+.confidence-gauge {
+  position: relative;
+  width: 150px;
+  height: 75px;
+  border-radius: 150px 150px 0 0;
+  overflow: hidden;
+  margin: auto;
+  background: #e9ecef;
+}
+
+.gauge-fill {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 150px 150px 0 0;
+  overflow: hidden;
+}
+
+
+.gauge-cover {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110px;
+  height: 55px;
+  background: #fff;
+  border-radius: 110px 110px 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 5px;
+}
+
+.confidence-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--bs-primary);
+}
+
+.carousel-img {
+  max-width: 600px; /* adjust to preferred size */
+  height: auto;      /* maintain aspect ratio */
+  margin: auto;
+}
+
+.cardCustom {
+    margin-top: 3rem;
+}
