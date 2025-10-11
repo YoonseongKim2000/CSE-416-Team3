@@ -1,9 +1,9 @@
 .navbar {
-    background-color: #cfd3df !important;
+    background-color: #d5dae7 !important;
 }
 
 .navSiteName {
-    color: #526af1;
+    color: #528af1;
     font-size: 150%;
     font-weight: 600;
 }
@@ -29,4 +29,11 @@
 .dropdown-menu{
     background-color: #ced1e0 !important;
     color: #ffffff !important;
+}
+
+.btn {
+    border: 1px solid #528af1;
+    border-radius: 3px;
+    background-color: #c3d6ff;
+    color: #3971d8;
 }

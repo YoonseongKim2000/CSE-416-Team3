@@ -37,7 +37,7 @@ function NavBar() {
 
         {/* Right - Login */}
         <div className="d-flex">
-          <Link to='/login' id="login-link" className='me-1'>
+          <Link to='/login' id="login-link" className='me-2'>
           <button className="btn" id="login-btn">Log In</button>
           </Link>
           <Link to='/signup' id="signup-link">
