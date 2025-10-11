@@ -2,7 +2,6 @@ import { useState } from "react";
 import type { ChangeEvent } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import "./HomePage.css";
 
 const apiUrl = import.meta.env.VITE_API_URL
