@@ -7,3 +7,5 @@ python-multipart
 pymongo
 python-dotenv
 pydantic
+transformers
+hf_xet

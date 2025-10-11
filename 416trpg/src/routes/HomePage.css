@@ -1,34 +1,160 @@
-/* Full-screen background */
 .homepage {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e0f7fa, #f8f9fa);
+}
+
+.preview-image {
+  max-width: 80%;
+  object-fit: cover;
+  border-radius: 0rem !important; 
+  transition: transform 0.2s ease-in-out;
+}
+
+.card{
+  border-radius: 0rem !important; 
+}
+
+.preview-image:hover {
+  transform: scale(1.02);
+}
+
+.btn-primary {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-radius: 0rem !important; 
+}
+
+.AnalyzeImage {
+  margin-top: 1rem;
+}
+
+.modelselect {
+  max-width: 750px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 40px;
+  border-radius: 0rem !important; 
+}
+
+.fileselect {
+  max-width: 750px;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 0rem !important; 
+}
+
+.ScanCustomBtn{
+  max-width: 150px;
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 40px;
+}
+
+.form-select {
+  border-radius: 0rem !important; 
+}
+
+
+/* Over the Top Button*/
+.button-82-pushable {
+  position: relative;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  outline-offset: 4px;
+  transition: filter 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-82-shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
-  width: 100vw;
-  margin: 0;
-  background: url("https://r4.wallpaperflare.com/wallpaper/106/109/184/dungeons-and-dragons-jedd-chevrier-dungeons-and-dragons-curse-of-strahd-tabletop-role-playing-game-in-the-fantasy-genre-hd-wallpaper-f950e84df1eafdcb5697f86f5041e66d.jpg") no-repeat center center fixed;
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 12px;
+  background: hsl(0deg 0% 0% / 0.25);
+  will-change: transform;
+  transform: translateY(2px);
+  transition:
+    transform
+    600ms
+    cubic-bezier(.3, .7, .4, 1);
 }
 
-.sizer {
-    width: 100vw;
-    height: 100vw;
-    margin-top: 5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.button-82-edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: linear-gradient(
+    to left,
+    #052049 0%,
+    #0c4baa  8%,
+    #0c4baa  92%,
+    #052049 100%
+  );
 }
 
-.content {
-    text-align: left;
+.button-82-front {
+  display: block;
+  position: relative;
+  padding: 12px 27px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  color: white;
+  background: #0d6efd ;
+  will-change: transform;
+  transform: translateY(-4px);
+  transition:
+    transform
+    600ms
+    cubic-bezier(.3, .7, .4, 1);
 }
 
-/* The central panel */
-.content-panel {
-  background: #262626; /* semi-transparent white */
-  padding: 2rem;
-  width: 85vw;
-  height: 90%;
-  text-align: center;
-  box-shadow: 0 0 20px rgb(255, 0, 0);
+@media (min-width: 768px) {
+  .button-82-front {
+    font-size: 1.25rem;
+    padding: 12px 42px;
+  }
+}
+
+.button-82-pushable:hover {
+  filter: brightness(110%);
+  -webkit-filter: brightness(110%);
+}
+
+.button-82-pushable:hover .button-82-front {
+  transform: translateY(-6px);
+  transition:
+    transform
+    250ms
+    cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.button-82-pushable:active .button-82-front {
+  transform: translateY(-2px);
+  transition: transform 34ms;
+}
+
+.button-82-pushable:hover .button-82-shadow {
+  transform: translateY(4px);
+  transition:
+    transform
+    250ms
+    cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.button-82-pushable:active .button-82-shadow {
+  transform: translateY(1px);
+  transition: transform 34ms;
+}
+
+.button-82-pushable:focus:not(:focus-visible) {
+  outline: none;
 }

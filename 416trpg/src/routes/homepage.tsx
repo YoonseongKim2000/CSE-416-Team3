@@ -1,14 +1,140 @@
-import "./HomePage.css"; // we'll style background + panel here
+import { useState } from "react";
+import type { ChangeEvent } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import "./HomePage.css";
+
+const apiUrl = import.meta.env.VITE_API_URL
 
 function HomePage() {
+  const navigate = useNavigate();
+  // State for image preview and file
+  const [preview, setPreview] = useState<string>(
+    "https://bootstrap-cheatsheet.themeselection.com/assets/images/bs-images/img-2x1.png"
+  );
+  const [file, setFile] = useState<File | null>(null);
+  const [model, setModel] = useState<string>("general");
+
+  // Handle file selection
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
+    if (!selectedFile) return;
+
+    if (!selectedFile.type.startsWith("image/")) {
+      toast.error("Please select an image file (PNG, JPG, etc.)");
+      event.target.value = "";
+      return;
+    }
+
+    setFile(selectedFile);
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const result = e.target?.result as string;
+      setPreview(result);
+    };
+    reader.readAsDataURL(selectedFile);
+  };
+
+  // Handle model selection
+  const handleModelChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setModel(event.target.value);
+  };
+
+  // Handle scan click
+  const handleScan = async () => {
+    if (!file) {
+      toast.warning("Please upload an image before scanning!");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("model", model);
+    formData.append("image", file);
+
+    try {
+      const response = await fetch(apiUrl + "api/analyze", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Server error");
+      }
+
+      const result = await response.json();
+
+      toast.success("Image analyzed successfully!");
+      console.log("Response:", result);
+
+      // Navigate to /results, passing data
+      navigate("results", { state: { result, model } });
+    } catch (error) {
+      toast.error("Failed to send request to the server.");
+      console.error(error);
+    }
+  };
+
   return (
-    <div className="homepage">
-      <div className="sizer">
-        <div className="content-panel">
-          <h1>Welcome</h1>
-          <p className="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur velit alias asperiores harum nemo saepe blanditiis nisi sequi laboriosam cumque ipsum vitae fugiat, deleniti, illo numquam? Fugiat excepturi consequatur ad id, repellendus esse, ducimus dolor ipsa ratione nihil voluptatum officia. Expedita modi quas sed, rerum est dolor voluptate animi necessitatibus distinctio. Doloribus quisquam dolorem maiores sit neque autem, iure, perferendis dignissimos ratione a labore animi sequi ab veniam repellendus hic nihil iusto officiis, numquam saepe ut placeat fugiat sint. Nam, et! Voluptatibus voluptatem natus similique eos aliquam eius perferendis suscipit minima delectus repellendus maiores dolor, itaque fuga eum expedita vitae cum animi architecto molestiae, dolore, libero totam recusandae facere doloribus! Ipsa quae fugiat totam numquam facilis quam! Veniam, officiis ipsam rerum voluptatem asperiores id delectus ipsa voluptates dolor laborum illo earum magnam est cupiditate reprehenderit assumenda laudantium. Veniam excepturi eos quae optio asperiores minima laboriosam alias nulla quo quisquam expedita iusto perspiciatis similique quam doloremque porro consequatur, illo vel. Sint, quisquam dicta atque, modi assumenda cum tenetur maxime quasi officiis beatae itaque voluptates iure mollitia officia ea reprehenderit accusamus exercitationem cumque distinctio error accusantium explicabo vel quaerat nesciunt. Reiciendis quaerat at et inventore dolorem. Reprehenderit, ipsum delectus perspiciatis, neque odio provident voluptates sit enim temporibus mollitia saepe at aut impedit repellendus. Sunt hic architecto dolore. Ipsam earum ducimus exercitationem, libero nisi itaque optio consectetur eum quidem ipsum incidunt necessitatibus nihil velit quas iure debitis quis adipisci a cupiditate quae! Ratione nesciunt natus velit officia nostrum atque optio, veniam nam nobis voluptatem quis ea rem quos iusto esse molestias sint voluptas placeat fugit? Esse culpa labore non enim quo tenetur amet, magnam voluptatum voluptate consequuntur iure quae explicabo fugit corrupti error magni animi dicta debitis molestias. Ab voluptate exercitationem odit repellendus, animi fugit omnis, quod, suscipit et architecto velit praesentium laborum? </p>
+    <div className="homepage container-fluid py-5 d-flex justify-content-center align-items-center">
+      <div className="text-center w-75">
+        <h1 className="mb-4 fw-bold text-primary AnalyzeImage">Analyze Image</h1>
+
+        <div className="card shadow-lg border-0 p-4">
+          {/* Model selection */}
+          <div className="form-floating mb-4 modelselect">
+            <select
+              className="form-select"
+              id="floatingSelect"
+              aria-label="Model selection"
+              value={model}
+              onChange={handleModelChange}
+            >
+              <option value="general">General Model</option>
+              <option value="art">Art Model</option>
+              <option value="anime">Anime Model</option>
+            </select>
+            <label htmlFor="floatingSelect">Select Model</label>
+          </div>
+
+          {/* Image preview */}
+          <div className="text-center mb-4">
+            <img
+              src={preview}
+              className="img-fluid rounded shadow-sm preview-image"
+              alt="Preview"
+            />
+          </div>
+
+          {/* File upload */}
+          <div className="mb-3">
+            <input
+              className="form-control fileselect"
+              type="file"
+              id="formFile"
+              accept="image/*"
+              onChange={handleFileChange}
+            />
+          </div>
+
+          {/* Scan button */}
+          <div className="d-grid">
+            <button
+              type="button"
+              className="button-82-pushable ScanCustomBtn"
+              onClick={handleScan}
+            >
+              <span className="button-82-shadow"></span>
+              <span className="button-82-edge"></span>
+              <span className="button-82-front text">Scan</span>
+            </button>            
+          </div>
         </div>
       </div>
+
+      {/* Toast container */}
+      <ToastContainer position="top-center" autoClose={2500} theme="colored" />
     </div>
   );
 }
