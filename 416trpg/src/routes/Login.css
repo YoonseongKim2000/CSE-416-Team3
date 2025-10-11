@@ -1,0 +1,22 @@
+.container {
+    height: 100vh;
+}
+
+.login-card {
+    width: 47vw;
+}
+
+.title-style {
+  color: #5b94ff;
+  font-size: 4vh;
+  margin-top: 2vh;
+  margin-bottom: 7vh;
+}
+
+.login-label {
+    float: left;
+}
+
+.login-form {
+    width: 75%;
+}

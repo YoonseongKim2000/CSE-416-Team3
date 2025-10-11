@@ -26,7 +26,7 @@
 
 .AnalyzeImage {
   margin-top: 1rem;
-  color: #547ce9;
+  color: #5b94ff;
 }
 
 .modelselect {
@@ -105,11 +105,11 @@
 .button-82-front {
   display: block;
   position: relative;
-  padding: 12px 27px;
+  padding: 10px 20px !important;
   border-radius: 4px;
   font-size: 1.1rem;
   color: white;
-  background: #547ce9 ;
+  background: #76a3f5 ;
   will-change: transform;
   transform: translateY(-4px);
   transition:
