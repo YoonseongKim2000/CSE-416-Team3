@@ -78,7 +78,7 @@ function HomePage() {
   return (
     <div className="homepage container-fluid py-5 d-flex justify-content-center align-items-center">
       <div className="text-center w-75">
-        <h1 className="mb-4 fw-bold text-primary AnalyzeImage">Analyze Image</h1>
+        <h1 className="mb-4 fw-bold AnalyzeImage">Analyze Image</h1>
 
         <div className="card shadow-lg border-0 p-4">
           {/* Model selection */}
