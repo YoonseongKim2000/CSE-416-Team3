@@ -1,0 +1,171 @@
+.api-docs-container {
+  display: flex;
+  min-height: calc(100vh - 70px);
+  background: #f8f9fa;
+  margin-top: 55px;
+  position: relative;
+}
+
+/* Sidebar */
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 250px;
+  background: #ffffff;
+  border-right: 1px solid #dee2e6;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.3s ease, width 0.3s ease;
+  z-index: 10;
+}
+
+.sidebar.collapsed {
+  transform: translateX(-100%);
+  width: 0px;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+  width: 250px;
+}
+
+/* Sidebar title (fixed in place) */
+.sidebar-title {
+  font-weight: 700;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  color: #6596f0;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  background: #ffffff;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #dee2e6;
+  z-index: 2;
+}
+
+/* Scrollable list */
+.sidebar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  flex: 1;
+  padding-top: 0.5rem;
+
+  /* optional: custom scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: #cfd8dc #ffffff;
+}
+
+.sidebar-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-list::-webkit-scrollbar-thumb {
+  background-color: #cfd8dc;
+  border-radius: 3px;
+}
+
+.sidebar-item {
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  border-radius: 6px;
+  color: #495057;
+  transition: background 0.2s, color 0.2s;
+}
+
+.sidebar-item:hover {
+  background: #e9ecef;
+}
+
+.sidebar-item.active {
+  background: #6596f0;
+  color: white;
+}
+
+/* Wrap the content of sidebar in a container */
+.sidebar-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* hide overflowing text */
+  transition: opacity 0.3s ease;
+}
+
+/* Collapsed state: fade out text */
+.sidebar.collapsed .sidebar-content {
+  opacity: 0;
+}
+
+/* Open state: fade in text */
+.sidebar.open .sidebar-content {
+  opacity: 1;
+}
+
+
+/* Fading bottom shadow when scrollable */
+.sidebar-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  background: linear-gradient(to top, #ffffff, rgba(255, 255, 255, 0));
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Floating toggle button (always visible) */
+.sidebar-toggle-fixed {
+  position: fixed;
+  top: 65px; /* slightly below navbar */
+  left: 250px;
+  width: 22px;
+  height: 45px;
+  background: #6596f0;
+  color: white;
+  border: none;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+  z-index: 20;
+  transition: left 0.3s ease, background 0.2s;
+}
+
+.sidebar-toggle-fixed:hover {
+  background: #6596f0;
+}
+
+.sidebar-toggle-fixed.closed {
+  left: 0;
+}
+
+/* Main content */
+.docs-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  transition: margin-left 0.3s ease;
+}
+
+.api-docs-card {
+  max-width: 80%;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+}
+
+section {
+  margin-bottom: 3rem;
+  scroll-margin-top: 80px;
+}
+
+section h2 {
+  color: #6596f0;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
