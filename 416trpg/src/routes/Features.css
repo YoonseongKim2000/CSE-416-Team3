@@ -1,0 +1,63 @@
+.features-container {
+  width: 100%;
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+/* Main card styling */
+.main-card {
+  width: 80%;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.main-card h2 {
+  color: #6596f0;
+  margin-bottom: 1rem;
+}
+
+.main-card p {
+  color: #495057;
+}
+
+/* Feature row styling */
+.feature-row {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap; /* wrap on smaller screens */
+  width: 100%;
+}
+
+/* Individual feature cards */
+.feature-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  flex: 1 1 250px; /* grow, shrink, minimum width 250px */
+  max-width: 325px; /* optional: limit how big they get */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.feature-card h3 {
+  color: #6596f0;
+  margin-bottom: 0.5rem;
+}
+
+.feature-card p {
+  color: #495057;
+}
