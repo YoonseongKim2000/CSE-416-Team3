@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import "./results.css";
 
 function ResultsPage() {
@@ -7,31 +7,31 @@ function ResultsPage() {
   const { result, model } = location.state || {};
 
   const [gaugeAngle, setGaugeAngle] = useState(0);
-  const [currentImage, setCurrentImage] = useState(0);
-
-  const images = [
-    { src: result?.original_image, title: "Original Image" },
-    { src: result?.attention_heatmap, title: "Attention Heatmap" },
-    { src: result?.masked_overlay, title: "Masked Overlay" },
-  ];
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [overlayType, setOverlayType] = useState<"heatmap" | "mask">("heatmap");
 
   useEffect(() => {
     if (result) {
       let start = 0;
-      const end = result.confidence * 180;
-      const step = end / 50;
+      const end = result.confidence * 360;
+      const duration = 800; // total animation time (ms)
+      const step = 10;
+      const increment = end / (duration / step);
+    
       const interval = setInterval(() => {
-        start += step;
+        start += increment;
         if (start >= end) {
           setGaugeAngle(end);
           clearInterval(interval);
         } else {
           setGaugeAngle(start);
         }
-      }, 10);
+      }, step);
+    
       return () => clearInterval(interval);
     }
   }, [result]);
+
 
   if (!result) {
     return (
@@ -43,18 +43,41 @@ function ResultsPage() {
 
   const confidencePercent = (result.confidence * 100).toFixed(1);
 
+  // Select which image to show
+  const displayedImage = showOverlay
+    ? overlayType === "heatmap"
+      ? result.attention_heatmap
+      : result.masked_overlay
+    : result.original_image;
+
   return (
     <div className="d-flex justify-content-center py-5">
-      <div className="card p-4 shadow cardCustom" style={{ width: "80%" }}>
-        {/* Model info */}
-        <div className="text-center mb-4">
-          <h5 className="text-secondary">Model Used</h5>
-          <h3 className="fw-bold text-primary">{model}</h3>
-        </div>
+          <div className="card p-4 shadow cardCustom" style={{ width: "80%" }}>
+            {/* Model info */}
+            <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+      <div className="text-start">
+        <h5 className="text-secondary mb-1">Model Used</h5>
+        <h3 className="fw-bold mb-0" style={{ color: "#528af1" }}>{model}</h3>
+      </div>
+      <div className="text-end">
+        <Link to="/">
+          <div className="d-grid">
+            <button
+              type="button"
+              className="button-82-pushable ScanCustomBtn"
+            >
+              <span className="button-82-shadow"></span>
+              <span className="button-82-edge"></span>
+              <span className="button-82-front text">Scan Another Image</span>
+            </button>            
+          </div>
+        </Link>
+        
+      </div>
+    </div>
 
-        {/* Top section */}
+        {/* Prediction + Confidence */}
         <div className="row align-items-center mb-5">
-          {/* Left: prediction text */}
           <div className="col-md-6 text-center text-md-start mb-4 mb-md-0">
             <h4 className="text-muted">Our analysis says this image is:</h4>
             <h1 className="fw-bold display-5 text-success">
@@ -62,21 +85,19 @@ function ResultsPage() {
             </h1>
           </div>
 
-          {/* Divider */}
           <div className="col-md-1 d-none d-md-flex justify-content-center">
             <div className="divider"></div>
           </div>
 
-          {/* Right: animated confidence gauge */}
           <div className="col-md-5 text-center">
             <div className="confidence-gauge">
               <div
                 className="gauge-fill"
                 style={{
                   background: `conic-gradient(
-                    from 180deg, 
-                    var(--bs-primary) 0% ${result.confidence * 100}%, 
-                    #e9ecef ${result.confidence * 100}% 100%
+                    from 180deg,
+                    #528af1 0deg ${gaugeAngle}deg,
+                    #e9ecef ${gaugeAngle}deg 180deg
                   )`,
                 }}
               ></div>
@@ -88,46 +109,57 @@ function ResultsPage() {
             <h5 className="text-muted mt-2">Confidence</h5>
           </div>
         </div>
-
-        {/* Bottom carousel gallery */}
-        <div id="resultCarousel" className="carousel slide carousel-img" data-bs-ride="carousel">
-          <div className="carousel-inner">
-            {images.map((img, idx) => (
-              <div
-                key={idx}
-                className={`carousel-item ${idx === 0 ? "active" : ""}`}
-              >
-                <img
-                  src={`data:image/png;base64,${img.src}`}
-                  className="d-block w-100 rounded shadow-sm"
-                  alt={img.title}
-                />
-                <div className="carousel-caption d-none d-md-block">
-                  <h5>{img.title}</h5>
-                </div>
-              </div>
-            ))}
+        
+        <hr />
+        <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+          <h3 className="fw-bold mb-0" style={{ color: "#528af1" }}>Model's Attention</h3>
+        </div>
+        {/* Image + Control Panel */}
+        <div className="row align-items-center">
+          {/* Left: image */}
+          <div className="col-md-8 text-center mb-4 mb-md-0">
+            <img
+              src={`data:image/png;base64,${displayedImage}`}
+              alt="Displayed result"
+              className="img-fluid rounded shadow-sm main-result-img"
+            />
           </div>
 
-          <button
-            className="carousel-control-prev"
-            type="button"
-            data-bs-target="#resultCarousel"
-            data-bs-slide="prev"
-          >
-            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span className="visually-hidden">Previous</span>
-          </button>
+          {/* Right: control panel */}
+          <div className="col-md-4 text-center text-md-start">
+            <h5 className="mb-3">Display Options</h5>
 
-          <button
-            className="carousel-control-next"
-            type="button"
-            data-bs-target="#resultCarousel"
-            data-bs-slide="next"
-          >
-            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-            <span className="visually-hidden">Next</span>
-          </button>
+            <div className="form-check form-switch mb-3">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="toggleOverlay"
+                checked={showOverlay}
+                onChange={(e) => setShowOverlay(e.target.checked)}
+              />
+              <label className="form-check-label" htmlFor="toggleOverlay">
+                Show Overlay
+              </label>
+            </div>
+            
+            <div className="d-grid">
+              <button
+                type="button"
+                className="button-82-pushable ScanCustomBtn"
+                onClick={() =>
+                  setOverlayType((prev) => (prev === "heatmap" ? "mask" : "heatmap"))
+                }
+                disabled={!showOverlay}
+              >
+                <span className="button-82-shadow"></span>
+                <span className="button-82-edge"></span>
+                <span className="button-82-front text">Swap to {overlayType === "heatmap" ? "Mask" : "Heatmap"}</span>
+              </button>            
+            </div>
+            <p className="text-muted mt-3 small">
+              When overlay is off, the original image is displayed.
+            </p>
+          </div>
         </div>
       </div>
     </div>
