@@ -35,8 +35,25 @@ function ResultsPage() {
 
   if (!result) {
     return (
-      <div className="container py-5 text-center">
-        <h1>No result data found. Please analyze an image first.</h1>
+      <div className="features-container">
+        <div className="main-card">
+        <h2>No result data found.</h2>
+        <p>
+          Please analyze an image first.
+        </p>
+        <Link to="/">
+          <div className="d-grid">
+            <button
+              type="button"
+              className="button-82-pushable ScanCustomBtn"
+            >
+              <span className="button-82-shadow"></span>
+              <span className="button-82-edge"></span>
+              <span className="button-82-front text">Go Scan an Image</span>
+            </button>            
+          </div>
+        </Link>
+      </div>
       </div>
     );
   }
