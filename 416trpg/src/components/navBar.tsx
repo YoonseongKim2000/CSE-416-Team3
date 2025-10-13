@@ -13,7 +13,7 @@ function NavBar() {
         <div className="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
           <ul className="navbar-nav mb-2 mb-md-0">
             <li className="nav-item">
-              <NavLink to='/' className={({isActive}) => isActive ? "nav-link active-link" : "nav-link"}>
+              <NavLink to='/home' className={({isActive}) => isActive ? "nav-link active-link" : "nav-link"}>
                 Analyze
               </NavLink>
             </li>
