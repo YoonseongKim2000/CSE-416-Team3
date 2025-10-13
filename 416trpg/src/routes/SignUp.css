@@ -1,9 +1,9 @@
-.login-container {
+.container {
     height: 100vh;
 }
 
-.login-card {
-    width: 47vw;
+.signup-card {
+    width: 57vw;
 }
 
 .title-style {
@@ -13,10 +13,10 @@
   margin-bottom: 7vh;
 }
 
-.login-label {
+.signup-label {
     float: left;
 }
 
-.login-form {
+.signup-form {
     width: 75%;
 }
