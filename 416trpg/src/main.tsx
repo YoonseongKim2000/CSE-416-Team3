@@ -25,6 +25,10 @@ const router = createHashRouter([
         element: <HomePage />
       },
       {
+        path: "home",
+        element: <HomePage />
+      },
+      {
         path: "results",
         element: <ResultsPage/>
       },
