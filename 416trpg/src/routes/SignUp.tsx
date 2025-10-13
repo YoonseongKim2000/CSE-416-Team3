@@ -3,7 +3,7 @@ import './SignUp.css'
 function SignUp() {
   return (
     <div className='container signup-container d-flex justify-content-center align-items-center'>
-        <div className='card shadow-lg signup-card d-flex align-items-center p-4'>
+        <div className='card medium-card shadow-lg signup-card d-flex align-items-center p-4'>
             <h1 className='fw-bold text-center title-style'>Sign Up</h1>
             <form action="#" className='signup-form'>
                 <div className='mb-3'>

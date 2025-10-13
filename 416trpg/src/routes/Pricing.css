@@ -1,0 +1,36 @@
+.pricing-title-style {
+  color: #5b94ff;
+  font-size: 4vh;
+  margin-top: 10vh;
+  margin-bottom: 5vh;
+  text-shadow: 1px 1px 8px #9bcfff;
+}
+
+.paid-header-card {
+    width: 27vw;
+    margin: 30px 3vw;
+}
+
+.subtitle-style {
+    color: #82a7ec;
+}
+
+.glow-btn {
+    box-shadow: 0px 0px 6px 4px #91ceff;
+    background-color: #e9f3ff;
+    border: #91abff;
+    color: #3c7ffc;
+    font-weight: 600;
+    width: 15vw;
+    max-width: 200px;
+}
+
+.glow-btn:hover {
+    background-color: #3c7ffc;
+    color: white;
+    box-shadow: 0 0 6px 2px #5b94ff;
+}
+
+.free-spacing {
+    margin-top: 39px;
+}

@@ -1,7 +1,6 @@
 .api-docs-container {
   display: flex;
   min-height: calc(100vh - 70px);
-  background: #f8f9fa;
   margin-top: 55px;
   position: relative;
 }

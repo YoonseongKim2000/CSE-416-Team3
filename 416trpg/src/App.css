@@ -8,6 +8,8 @@ body {
   background: linear-gradient(135deg, #e6ebf3, #f8f9fa);  
   color: #ffffff;
   margin: 0;
+  height: 100%;
+  min-height: 100%;
 }
 
 .logo {
@@ -44,4 +46,12 @@ body {
 
 .read-the-docs {
   color: #888;
+}
+
+.small-card {
+  max-width: 350px;
+}
+
+.medium-card {
+  max-width: 500px;
 }
