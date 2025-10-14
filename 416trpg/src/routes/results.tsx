@@ -41,7 +41,7 @@ function ResultsPage() {
         <p>
           Please analyze an image first.
         </p>
-        <Link to="/">
+        <Link to="/home">
           <div className="d-grid">
             <button
               type="button"

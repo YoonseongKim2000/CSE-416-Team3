@@ -12,7 +12,7 @@ import Pricing from "./routes/Pricing.tsx";
 import ApiDocs from "./routes/ApiDocs.tsx";
 import Login from "./routes/Login.tsx";
 import SignUp from "./routes/SignUp.tsx";
-// import LandingPage from "./routes/Landing.tsx";
+import LandingPage from "./routes/Landing.tsx";
 
 const router = createHashRouter([
   {

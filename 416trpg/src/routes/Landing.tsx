@@ -9,11 +9,11 @@ function LandingPage() {
           <div className="row align-items-center h-100 containerPicturesCustom">
             {/* Left collage */}
             <div className="col-lg-3 d-none d-lg-block collage left-collage">
-              <img src="/src/assets/AI1.jpg" alt="collage left 1" />
-              <img src="/src/assets/AI2.jpg" alt="collage left 2" />
-              <img src="/src/assets/AI3.jpg" alt="collage left 3" />
-              <img src="/src/assets/AI4.jpg" alt="collage left 4" />
-              <img src="/src/assets/xmark.png" alt="X mark" className="override" />
+              <img src="/CSE-416-Team3/AI1.jpg" alt="collage left 1" />
+              <img src="/CSE-416-Team3/AI2.jpg" alt="collage left 2" />
+              <img src="/CSE-416-Team3/AI3.jpg" alt="collage left 3" />
+              <img src="/CSE-416-Team3/AI4.jpg" alt="collage left 4" />
+              <img src="/CSE-416-Team3/xmark.png" alt="X mark" className="override" />
             </div>
 
             {/* Center content */}
@@ -44,11 +44,11 @@ function LandingPage() {
 
             {/* Right collage */}
             <div className="col-lg-3 d-none d-lg-block collage right-collage">
-              <img src="/src/assets/human1.jpg" alt="collage right 1" />
-              <img src="/src/assets/human2.jpg" alt="collage right 2" />
-              <img src="/src/assets/human3.png" alt="collage right 3" />
-              <img src="/src/assets/human4.png" alt="collage right 3" />
-              <img src="/src/assets/checkmark.png" alt="collage right 3" className="override checkoffset"/>
+              <img src="/CSE-416-Team3/human1.jpg" alt="collage right 1" />
+              <img src="/CSE-416-Team3/human2.jpg" alt="collage right 2" />
+              <img src="/CSE-416-Team3/human3.PNG" alt="collage right 3" />
+              <img src="/CSE-416-Team3/human4.png" alt="collage right 3" />
+              <img src="/CSE-416-Team3/checkmark.png" alt="collage right 3" className="override checkoffset"/>
             </div>
           </div>
         </div>
