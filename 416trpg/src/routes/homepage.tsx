@@ -63,7 +63,7 @@ function HomePage() {
     });
 
     const elapsed = Date.now() - startTime;
-    const remainingTime = Math.max(1000 - elapsed, 0); // ⏱ ensure at least 1s display
+    const remainingTime = Math.max(1000 - elapsed, 0); // ensure at least 1s display
 
     const result = await response.json();
 
@@ -74,7 +74,7 @@ function HomePage() {
     }
 
     toast.success("Image analyzed successfully!");
-    navigate("results", { state: { result, model } });
+    navigate("/results", { state: { result, model } });
   } catch (error) {
     console.error(error);
     toast.error("Failed to send request to the server.");
