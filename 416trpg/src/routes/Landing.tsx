@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import "./Landing.css";
+import PaidFeatures from "../components/paidFeatures";
 
 function LandingPage() {
   return (
@@ -54,6 +55,7 @@ function LandingPage() {
         </div>
 
         {/* PUT OTHER STUFF HERE */}
+        <PaidFeatures/>
 
         <div className="features-container">
         {/* Main card */}
