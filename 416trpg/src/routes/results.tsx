@@ -77,7 +77,7 @@ function ResultsPage() {
         <h3 className="fw-bold mb-0" style={{ color: "#528af1" }}>{model}</h3>
       </div>
       <div className="text-end">
-        <Link to="/">
+        <Link to="/home">
           <div className="d-grid">
             <button
               type="button"
