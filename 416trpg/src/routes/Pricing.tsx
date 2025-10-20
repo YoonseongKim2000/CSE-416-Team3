@@ -15,7 +15,7 @@ function Pricing() {
                     <hr />
                     <p className='fw-bold free-spacing'>$0 / month</p>
                     <p>Image analysis with <br /> <span style={{color: "#960500", fontWeight: "600"}}>1 AI Model</span></p>
-                    <p>No API access ❌</p>
+                    <p>No free API access ❌</p>
                 </div>
                 <div className='card small-card shadow-lg paid-header-card'>
                     <div className='align-items-center'>
