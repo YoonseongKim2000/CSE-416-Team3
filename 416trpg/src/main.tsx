@@ -13,6 +13,7 @@ import ApiDocs from "./routes/ApiDocs.tsx";
 import Login from "./routes/Login.tsx";
 import SignUp from "./routes/SignUp.tsx";
 import LandingPage from "./routes/Landing.tsx";
+import AccountSettingsPage from "./routes/AccountSettings.tsx";
 
 const router = createHashRouter([
   {
@@ -51,6 +52,10 @@ const router = createHashRouter([
       {
         path: "login",
         element: <Login/>
+      },
+      {
+        path: "accountsettings",
+        element: <AccountSettingsPage/>
       }
     ]
   }
