@@ -7,3 +7,239 @@
   margin-top: 1rem;
   color: #5b94ff;
 }
+
+.button-82-pushable {
+  position: relative;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  outline-offset: 4px;
+  transition: filter 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-82-shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: hsl(0deg 0% 0% / 0.25);
+  will-change: transform;
+  transform: translateY(2px);
+  transition:
+    transform
+    600ms
+    cubic-bezier(.3, .7, .4, 1);
+}
+
+.button-82-edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(
+    to left,
+    #052049 0%,
+    #3557b6  8%,
+    #3557b6  92%,
+    #052049 100%
+  );
+}
+
+.button-82-front {
+  display: block;
+  position: relative;
+  padding: 10px 20px !important;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  color: white;
+  background: #76a3f5 ;
+  will-change: transform;
+  transform: translateY(-4px);
+  transition:
+    transform
+    600ms
+    cubic-bezier(.3, .7, .4, 1);
+}
+
+@media (min-width: 768px) {
+  .button-82-front {
+    font-size: 1.25rem;
+    padding: 12px 42px;
+  }
+}
+
+.button-82-pushable:hover {
+  filter: brightness(110%);
+  -webkit-filter: brightness(110%);
+}
+
+.button-82-pushable:hover .button-82-front {
+  transform: translateY(-6px);
+  transition:
+    transform
+    250ms
+    cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.button-82-pushable:active .button-82-front {
+  transform: translateY(-2px);
+  transition: transform 34ms;
+}
+
+.button-82-pushable:hover .button-82-shadow {
+  transform: translateY(4px);
+  transition:
+    transform
+    250ms
+    cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.button-82-pushable:active .button-82-shadow {
+  transform: translateY(1px);
+  transition: transform 34ms;
+}
+
+.button-82-pushable:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.AccountCustomBtn{
+  max-width: 250px;
+  width: 100%;
+  margin-bottom: 0px;
+}
+
+.accountsettingboldtext {
+  color: #5b94ff;
+  font-size: 25px;
+}
+
+.accountnormaltext {
+  font-size: 25px;
+}
+
+.accountkeydisplay {
+  max-width: 400px;
+}
+
+/* Give the modal a proper visible card-style look */
+.modal-content {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  max-width: 500px;
+  width: 100%;
+}
+
+.modal-header,
+.modal-footer {
+  border: none;
+}
+
+.modal-title {
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.modal-body label {
+  font-weight: 500;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 1040;
+}
+
+.modal {
+  z-index: 1050;
+}
+
+/* --- Modal Fade Animations --- */
+.custom-modal,
+.custom-backdrop {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* when shown */
+.fade-in {
+  opacity: 1;
+}
+
+/* when closing */
+.fade-out {
+  opacity: 0;
+}
+
+/* --- Modal Base Styling --- */
+.custom-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+}
+
+.custom-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+}
+
+/* Optional: add subtle slide effect */
+.custom-modal .modal-dialog {
+  transform: translateY(-10px);
+  transition: transform 0.3s ease-in-out;
+}
+.fade-in .modal-dialog {
+  transform: translateY(0);
+}
+.fade-out .modal-dialog {
+  transform: translateY(-10px);
+}
+
+.custom-modal .modal-content {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.fade-in .modal-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-out .modal-content {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.AccountDeleteCustomBtn .button-82-front {
+  background: #ff5c5c !important;
+}
+
+.AccountDeleteCustomBtn .button-82-edge {
+  background: linear-gradient(to left, #7a0000 0%, #b20000 8%, #b20000 92%, #7a0000 100%);
+}
