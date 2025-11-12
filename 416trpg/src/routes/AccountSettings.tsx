@@ -63,7 +63,7 @@ function AccountSettingsPage() {
           <span className='text-start accountnormaltext'>
             <b className='accountsettingboldtext'>Your Email: </b>{email}
           </span>
-
+            <hr />
           <div className="text-start mb-3 accountnormaltext">
             <b className='accountsettingboldtext'>Tier:</b> {subscriptionType}
             <Link to="/pricing">
@@ -77,7 +77,7 @@ function AccountSettingsPage() {
               </button>
             </Link>
           </div>
-
+            <hr />
           <div className="text-start d-flex align-items-center gap-3 mb-3">
             <b className='accountsettingboldtext'>API KEY:</b>
             <input
@@ -109,7 +109,7 @@ function AccountSettingsPage() {
           </div>
 
           <p className='text-start'>*Do not reveal your API key to anyone. Keep it secret, keep it safe.</p>
-
+            <hr />
             {/* Change Password section */}
             <div className="text-start mb-3">
               <b className="accountsettingboldtext">Password: </b>
@@ -123,6 +123,7 @@ function AccountSettingsPage() {
                 <span className="button-82-front text">Change Password</span>
               </button>
             </div>  
+            <hr />
             {/* Delete Account section */}
             <div className="d-flex justify-content-end">
               <button
