@@ -14,6 +14,7 @@ import Login from "./routes/Login.tsx";
 import SignUp from "./routes/SignUp.tsx";
 import LandingPage from "./routes/Landing.tsx";
 import AccountSettingsPage from "./routes/AccountSettings.tsx";
+import PurchasePage from "./routes/Purchase.tsx";
 
 const router = createHashRouter([
   {
@@ -56,6 +57,10 @@ const router = createHashRouter([
       {
         path: "accountsettings",
         element: <AccountSettingsPage/>
+      },
+      {
+        path: "purchasetoken",
+        element: <PurchasePage/>
       }
     ]
   }

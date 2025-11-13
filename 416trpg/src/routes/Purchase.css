@@ -1,0 +1,66 @@
+.purchasetokenpage {
+    min-height: 100vh;
+}
+
+.purchasetokentitle {
+    margin-top: 1rem;
+    color: #5b94ff;
+}
+
+.purchasepagenormaltext {
+    font-size: 25px;
+}
+
+.purchasepageboldtext {
+    color: #5b94ff;
+    font-size: 25px;
+}
+
+.purchasepage-feature-row {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap; /* wrap on smaller screens */
+  width: 100%;
+}
+
+/* Individual feature cards */
+.purchasepage-feature-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  flex: 1 1 250px; /* grow, shrink, minimum width 250px */
+  max-width: 325px; /* optional: limit how big they get */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.purchasepage-feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.purchasepage-feature-card h3 {
+  color: #6596f0;
+  margin-bottom: 0.5rem;
+}
+
+.purchasepage-feature-card p {
+  color: #495057;
+}
+
+.purchasepage-glow-btn {
+    box-shadow: 0px 0px 6px 4px #91ceff;
+    background-color: #e9f3ff;
+    border: #91abff;
+    color: #3c7ffc;
+    font-weight: 600;
+    width: 15vw;
+    max-width: 200px;
+}
+
+.purchasepage-glow-btn:hover {
+    background-color: #3c7ffc;
+    color: white;
+    box-shadow: 0 0 6px 2px #5b94ff;
+}

@@ -1,4 +1,5 @@
 import './paidFeatures.css'
+import { Link } from "react-router-dom";
 
 function PaidFeatures() {
   return (
@@ -27,7 +28,10 @@ function PaidFeatures() {
         </div>
         <div className='card mx-4 shadow-lg'>
             <h3 className='subtitle-style fw-bold'>Paid Tier</h3>
-            <button className='btn glow-btn mt-1'>Buy Now</button>
+            <Link to="/purchasetoken">
+              <button className='btn glow-btn mt-1'>Buy Now</button>
+            </Link>
+            
             <hr />
             <p>$20 / Month</p>
             <p>General, Art, and Anime</p>
