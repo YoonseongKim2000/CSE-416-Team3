@@ -5,7 +5,9 @@ import { useState, useEffect } from "react";
 function AccountSettingsPage() {
   const [email, setEmail] = useState("Retrieving");
   const [subscriptionType, setSubscriptionType] = useState<"Free" | "Paid">("Free");
+  const [tokenAmount, settokenAmount] = useState("Retrieving");
   const [apiKey, setApiKey] = useState("Retrieving");
+  const [apiView, setApiView] = useState<"password" | "text">("password");
 
   // Password modal
   const [showPassModal, setShowPassModal] = useState(false);
@@ -19,6 +21,14 @@ function AccountSettingsPage() {
 
   const openPassModal = () => setShowPassModal(true);
   const openDeleteModal = () => setShowDeleteModal(true);
+  const revealHide = () => {
+    if (apiView == "password") {
+        setApiView("text");
+    } else {
+        setApiView("password");
+    }
+    
+  }
 
   // Fade-in animation triggers (per modal)
   useEffect(() => {
@@ -76,15 +86,19 @@ function AccountSettingsPage() {
                 <span className="button-82-front text">Upgrade</span>
               </button>
             </Link>
+            <div className="text-start mb-3 accountnormaltext">
+            <b className='accountsettingboldtext'>Tokens Remaining: </b> {tokenAmount}
+            </div>
           </div>
             <hr />
           <div className="text-start d-flex align-items-center gap-3 mb-3">
             <b className='accountsettingboldtext'>API KEY:</b>
             <input
-              type="text"
+              type={apiView}
               className="form-control accountkeydisplay"
-              placeholder={apiKey}
+              placeholder="Retrieving"
               readOnly
+              value={apiKey}
             />
           </div>
 
@@ -95,13 +109,13 @@ function AccountSettingsPage() {
               <span className="button-82-front text">Generate</span>
             </button>
 
-            <button type="button" className="button-82-pushable AccountCustomBtn">
+            <button type="button" className="button-82-pushable AccountCustomBtn" onClick={revealHide}>
               <span className="button-82-shadow"></span>
               <span className="button-82-edge"></span>
               <span className="button-82-front text">Reveal/Hide</span>
             </button>
 
-            <button type="button" className="button-82-pushable AccountCustomBtn">
+            <button type="button" className="button-82-pushable AccountCustomBtn" onClick={() =>  navigator.clipboard.writeText(apiKey)}>
               <span className="button-82-shadow"></span>
               <span className="button-82-edge"></span>
               <span className="button-82-front text">Copy to Clipboard</span>
