@@ -1,6 +1,8 @@
 import './Pricing.css'
 import PaidFeatures from '../components/paidFeatures'
 
+import { Link } from "react-router-dom";
+
 function Pricing() {
   return (
     <div className="container d-flex justify-content-center text-center py-4">
@@ -20,7 +22,10 @@ function Pricing() {
                 <div className='card small-card shadow-lg paid-header-card'>
                     <div className='align-items-center'>
                         <h2 className='fw-bold subtitle-style'>Paid Tier</h2>
-                        <button className='btn glow-btn m-2 buy-btn'>Buy Now</button>
+                        <Link to="/purchasetoken">
+                            <button className='btn glow-btn m-2 buy-btn'>Buy Now</button>
+                        </Link>
+                        
                     </div>
                     <hr />
                     <p className='fw-bold'>$20 / month</p>
