@@ -22,9 +22,9 @@ class UserInModel(BaseModel):
     """
     id: Optional[PyObjectID] = Field(alias="_id", default=None)
     email: EmailStr = Field(...)
-    password: str = Field(...)
-    isPaid: bool = Field(...)
-    tokens: int = Field(...)
+    password: Optional[str] = None
+    isPaid: Optional[bool] = False
+    tokens: Optional[int] = 0
     model_config = ConfigDict(
         populate_by_name=True,
         arbitrary_types_allowed=True,
@@ -48,9 +48,9 @@ class UserOutModel(BaseModel):
     # tokens: int = Field(...)
     # APIKey: str = Field(...)
     email: EmailStr = Field(...)
-    isPaid: Optional[bool] = False
-    tokens: Optional[int] = 0
-    APIKey: Optional[str] = None
+    isPaid: bool = Field(...)
+    tokens: int = Field(...)
+    APIKey: str = Field(...)
     model_config = ConfigDict(
         populate_by_name=True,
         arbitrary_types_allowed=True,
