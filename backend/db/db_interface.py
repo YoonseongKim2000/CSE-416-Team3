@@ -4,7 +4,7 @@ from pydantic.functional_validators import BeforeValidator
 from typing import Optional, List
 from typing_extensions import Annotated
 from bson import ObjectId
-from pymongo import ReturnDocument, AsyncDatabase, PyMongoError
+from pymongo import ReturnDocument, PyMongoError
 import asyncio
 # from server import database
 from core.api_key_gen import generateKey
@@ -72,7 +72,7 @@ class UserCollection(BaseModel):
     """
     users: List[UserOutModel]
 
-async def get_user_by_email(user: UserInModel, db: AsyncDatabase):
+async def get_user_by_email(user: UserInModel, db):
     user_collection = db.get_collection("users")
     try:
         result = await user_collection.find_one({"email" : user.email})
@@ -80,7 +80,7 @@ async def get_user_by_email(user: UserInModel, db: AsyncDatabase):
         result = e
     return result
 
-async def create_user(user: UserInModel, db: AsyncDatabase):
+async def create_user(user: UserInModel, db):
     
     user_collection = db.get_collection("users")
 
