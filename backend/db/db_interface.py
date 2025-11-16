@@ -4,7 +4,8 @@ from pydantic.functional_validators import BeforeValidator
 from typing import Optional, List
 from typing_extensions import Annotated
 from bson import ObjectId
-from pymongo import ReturnDocument, PyMongoError
+from pymongo import ReturnDocument 
+from pymongo.errors import PyMongoError
 import asyncio
 # from server import database
 from core.api_key_gen import generateKey

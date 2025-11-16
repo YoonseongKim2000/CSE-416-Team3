@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Body, HTTPException, status, Request
 from core.api_key_gen import generateKey
 from db.db_interface import UserInModel, UserOutModel, get_user_by_email, create_user
-from pymongo import PyMongoError
+from pymongo.errors import PyMongoError
+
 
 router = APIRouter(prefix="/user", tags=["Users"])
 
