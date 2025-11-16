@@ -10,8 +10,6 @@ import asyncio
 # from server import database
 from core.api_key_gen import generateKey
 
-router = APIRouter(prefix="/api", tags=["AI Model"])
-
 #Used to convert BSON _id values to JSON-friendly strings
 PyObjectID = Annotated[str, BeforeValidator(str)]
 
@@ -98,11 +96,11 @@ async def create_user(user: UserInModel, db):
 
     return outval
 
-@router.get("/users", response_model=UserCollection, response_model_by_alias=False,)
-async def list_users(request: Request):
-    """
-    List all user data in the database
-    """
-    db = request.app.database
-    user_collection = db.get_collection("users")
-    return UserCollection(users=await user_collection.find().to_list())
+# @router.get("/users", response_model=UserCollection, response_model_by_alias=False,)
+# async def list_users(request: Request):
+#     """
+#     List all user data in the database
+#     """
+#     db = request.app.database
+#     user_collection = db.get_collection("users")
+#     return UserCollection(users=await user_collection.find().to_list())
