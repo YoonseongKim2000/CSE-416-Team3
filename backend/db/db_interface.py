@@ -78,7 +78,7 @@ async def get_user_by_email(user: UserInModel, db):
     user_collection = db.get_collection("users")
     try:
         result = await user_collection.find_one({"email" : user.email})
-    except PyMongoError as e:
+    except PyMongoError as e: #NOTE: MUST check that db function result is not of type PyMongoError
         result = e
     return result
 
