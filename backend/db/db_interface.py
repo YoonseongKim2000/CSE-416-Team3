@@ -4,14 +4,10 @@ from pydantic.functional_validators import BeforeValidator
 from typing import Optional, List
 from typing_extensions import Annotated
 from bson import ObjectId
-from pymongo import ReturnDocument
+from pymongo import ReturnDocument, AsyncDatabase, PyMongoError
 import asyncio
 # from server import database
 from core.api_key_gen import generateKey
-
-router = APIRouter(prefix="/db", tags=["Database"])
-# user_collection = database.get_collextion("users")
-
 
 #Used to convert BSON _id values to JSON-friendly strings
 PyObjectID = Annotated[str, BeforeValidator(str)]
@@ -43,10 +39,6 @@ class UserOutModel(BaseModel):
     Container for a single user record recieved from backend
     """
     id: Optional[PyObjectID] = Field(alias="_id", default=None)
-    # email: EmailStr = Field(...)
-    # isPaid: bool = Field(...)
-    # tokens: int = Field(...)
-    # APIKey: str = Field(...)
     email: EmailStr = Field(...)
     isPaid: bool = Field(...)
     tokens: int = Field(...)
@@ -80,25 +72,27 @@ class UserCollection(BaseModel):
     """
     users: List[UserOutModel]
 
-@router.post(
-    "/user", 
-    response_model=UserOutModel, 
-    status_code=status.HTTP_201_CREATED, # CHANGED
-    response_model_by_alias=False # CHANGED
-)
-async def create_user(user: UserInModel, request: Request):
+async def get_user_by_email(user: UserInModel, db: AsyncDatabase):
+    user_collection = db.get_collection("users")
+    try:
+        result = await user_collection.find_one({"email" : user.email})
+    except PyMongoError as e:
+        result = e
+    return result
+
+async def create_user(user: UserInModel, db: AsyncDatabase):
     
-    db = request.app.database
     user_collection = db.get_collection("users")
 
     new_user = user.model_dump(by_alias=True, exclude=["id"])
-    new_user["isPaid"] = False
-    new_user["tokens"] = 0
-    new_user["APIKey"] = generateKey(new_user["email"])
-    result = await user_collection.insert_one(new_user)
-    new_user["_id"] = result.inserted_id
+    try:
+        result = await user_collection.insert_one(new_user)
+        new_user["_id"] = result.inserted_id
+        outval = UserOutModel.model_validate(new_user)
+    except PyMongoError as e:
+        outval = e
 
-    return new_user
+    return outval
 
 @router.get("/users", response_model=UserCollection, response_model_by_alias=False,)
 async def list_users(request: Request):
