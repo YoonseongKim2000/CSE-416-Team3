@@ -10,6 +10,8 @@ import asyncio
 # from server import database
 from core.api_key_gen import generateKey
 
+router = APIRouter(prefix="/api", tags=["AI Model"])
+
 #Used to convert BSON _id values to JSON-friendly strings
 PyObjectID = Annotated[str, BeforeValidator(str)]
 
