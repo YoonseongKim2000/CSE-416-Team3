@@ -15,7 +15,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 MODEL_PATHS = {
     "general": Path("vit_general.pth"),
     "art": Path("vit_art.pth"),
-    "anime": Path("vit_anime_temp.pth"),
+    "anime": Path("vit_anime.pth"),
 }
 
 MODEL_NAME = "google/vit-base-patch16-224-in21k"
