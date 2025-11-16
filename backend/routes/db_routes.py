@@ -48,9 +48,9 @@ class UserOutModel(BaseModel):
     # tokens: int = Field(...)
     # APIKey: str = Field(...)
     email: EmailStr = Field(...)
-    isPaid: bool = Field(...)
-    tokens: int = Field(...)
-    APIKey: str = Field(...)
+    isPaid: Optional[bool] = False
+    tokens: Optional[int] = 0
+    APIKey: Optional[str] = None
     model_config = ConfigDict(
         populate_by_name=True,
         arbitrary_types_allowed=True,
