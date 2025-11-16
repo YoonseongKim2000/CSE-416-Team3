@@ -17,7 +17,7 @@ ATLAS_URI = os.getenv('ATLAS_URI')
 async def db_lifespan(app: FastAPI):
     #Server Startup
     app.mongodb_client = AsyncMongoClient(ATLAS_URI)
-    app.database = app.mongodb_client.get_database("unnamed_db")
+    app.database = app.mongodb_client.get_database("truevision_db")
     ping_response = await app.database.command("ping")
     if int(ping_response["ok"]) != 1:
         raise Exception("Problem connecting to mongoDB cluster")
