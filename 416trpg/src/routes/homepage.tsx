@@ -68,7 +68,7 @@ function HomePage() {
     const result = await response.json();
 
     await new Promise((resolve) => setTimeout(resolve, remainingTime));
-
+    console.log(response)
     if (!response.ok) {
       throw new Error(result?.detail || "Server error");
     }
@@ -77,7 +77,7 @@ function HomePage() {
     navigate("/results", { state: { result, model } });
   } catch (error) {
     console.error(error);
-    toast.error("Failed to send request to the server.");
+    toast.error(""+(error));
   } finally {
     setLoading(false);
   }
