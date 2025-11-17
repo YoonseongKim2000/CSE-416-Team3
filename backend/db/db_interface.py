@@ -96,6 +96,16 @@ async def create_user(user: UserInModel, db):
 
     return outval
 
+async def get_user_login(user: UserInModel, db):
+    user_collection = db.get_collection("users")
+    try:
+        result = await user_collection.find_one({"email": user.email})
+        outval = (result["email"], result["password"])
+    except PyMongoError as e:
+        outval = e
+    
+    return outval
+
 # @router.get("/users", response_model=UserCollection, response_model_by_alias=False,)
 # async def list_users(request: Request):
 #     """
