@@ -2,7 +2,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from core.config import FRONTEND_ORIGIN
-from routes import db_routes, predict_routes, account_routes
+from routes import user_routes, predict_routes, account_routes
 from pymongo import AsyncMongoClient
 from dotenv import load_dotenv
 import os
@@ -17,7 +17,7 @@ ATLAS_URI = os.getenv('ATLAS_URI')
 async def db_lifespan(app: FastAPI):
     #Server Startup
     app.mongodb_client = AsyncMongoClient(ATLAS_URI)
-    app.database = app.mongodb_client.get_database("unnamed_db")
+    app.database = app.mongodb_client.get_database("truevision_db")
     ping_response = await app.database.command("ping")
     if int(ping_response["ok"]) != 1:
         raise Exception("Problem connecting to mongoDB cluster")
@@ -39,6 +39,6 @@ app.add_middleware(
 )
 
 # add routers
-app.include_router(db_routes.router)
+app.include_router(user_routes.router)
 app.include_router(predict_routes.router)
 app.include_router(account_routes.router)
