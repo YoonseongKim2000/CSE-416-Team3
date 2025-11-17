@@ -52,6 +52,8 @@ async def log_in(user: UserInModel, request: Request, response: Response):
 
     #get user login details
     result = await get_user_login(user, db)
+    print(result)
+    print("userIn: " + user.email + " " + user.password)
     if (isinstance(result, PyMongoError)):
         raise HTTPException(status_code=500, detail="Database error")
 
