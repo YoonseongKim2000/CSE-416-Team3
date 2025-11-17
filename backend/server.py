@@ -1,9 +1,8 @@
 # server.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.routes import access_routes
 from core.config import FRONTEND_ORIGIN
-from routes import user_routes, predict_routes
+from routes import user_routes, predict_routes, access_routes
 from pymongo import AsyncMongoClient
 from dotenv import load_dotenv
 import os
