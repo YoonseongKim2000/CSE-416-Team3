@@ -168,3 +168,28 @@ section h2 {
   font-weight: 700;
   margin-bottom: 1rem;
 }
+
+.codeVals {
+  background-color: #495057;
+  border-radius: 4px;
+  padding-left: 7px;
+  padding-right: 7px;
+  color: white;
+}
+
+section h3 {
+  color: #6596f0;
+  font-weight: 525;
+  margin-bottom: 1rem;
+}
+
+td {
+  border-color: black;
+  border-width: 1px;
+  padding: 1rem;
+}
+th {
+  border-color: black;
+  border-width: 1px;
+  padding: 1rem;
+}
