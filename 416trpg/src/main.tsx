@@ -55,7 +55,7 @@ const router = createHashRouter([
         element: <Login/>
       },
       {
-        path: "accountsettings",
+        path: "account",
         element: <AccountSettingsPage/>
       },
       {

@@ -1,13 +1,15 @@
 import './Login.css'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useOutletContext } from 'react-router-dom'
 import { generateHash } from '../utilities/hashutils'
 import { ToastContainer, toast } from 'react-toastify'
+import { type AuthOutletContext } from '../App'
 
 const apiUrl = import.meta.env.VITE_API_URL
 const selfUrl = import.meta.env.SELF_URL
 
 function Login() {
     const navigate = useNavigate();
+    const {contextState, contextSetState} = useOutletContext<AuthOutletContext>();
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
@@ -25,7 +27,7 @@ function Login() {
         const loginData = {email: email, password: hashedPw};
 
         try {
-            const response = await fetch(apiUrl + "user/login", {
+            const response = await fetch(apiUrl + "access/login", {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -44,9 +46,11 @@ function Login() {
             } else {
                 const accessToken = result.accessToken;
                 const email = result.email;
-                //TODO: keep login state code here
-                toast.success("Logged In");
-                //navigate('/home');
+                localStorage.setItem('email', email);
+                localStorage.setItem('accessToken', accessToken);
+                contextSetState({auth:{email: email, accessToken: accessToken}});
+                //toast.success("Logged In");
+                navigate('/home');
             }
         } catch (err) {
             console.log(err);
@@ -81,7 +85,7 @@ function Login() {
                             placeholder='Enter your password'
                         />
                     </div>
-                    <button type='submit' className='btn submit-button mt-4 w-75 mb-4'>Log In</button>
+                    <button type='submit' className='btn btnb submit-button mt-4 w-75 mb-4'>Log In</button>
                 </form>
             </div>
             <ToastContainer position='top-center' autoClose={2500} theme='colored'/>

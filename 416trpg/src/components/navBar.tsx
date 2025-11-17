@@ -1,7 +1,22 @@
 import './navBar.css'
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate, useOutletContext } from 'react-router-dom';
+import { useState } from 'react';
+import type { AuthContext } from '../App';
 
-function NavBar() {
+interface Props {
+  auth: AuthContext | null;
+  handleAuthToNull: () => void;
+}
+
+function NavBar({auth, handleAuthToNull}: Props) {
+  //const { auth } = useOutletContext<AuthContext>();
+  const navigate = useNavigate();
+  
+  const handleLogOut = (e: any) => {
+    console.log('logging out...')
+    handleAuthToNull();
+  }
+
   return (
     <nav className="navbar navbar-expand-md bg-body-tertiary fixed-top">
       <div className="container-fluid d-flex justify-content-between align-items-center">
@@ -36,14 +51,20 @@ function NavBar() {
         </div>
 
         {/* Right - Login */}
-        <div className="d-flex">
-          <Link to='/login' id="login-link" className='me-2'>
-          <button className="btn" id="login-btn">Log In</button>
-          </Link>
-          <Link to='/signup' id="signup-link">
-          <button className="btn" id="signup-btn">Sign Up</button>
-          </Link>
-        </div>
+        { auth?.auth.accessToken ?
+          <div>
+            <Link to='/account' id='account-link'> <button className="btn btnb" id='account-btn'>Account Settings</button> </Link>
+            <button onClick={handleLogOut} className="btn btn-outline-danger" id='logout-btn'>Log Out</button> 
+          </div>
+          : <div className="d-flex">
+            <Link to='/login' id="login-link" className='me-2'>
+            <button className="btn btnb" id="login-btn">Log In</button>
+            </Link>
+            <Link to='/signup' id="signup-link">
+            <button className="btn btnb" id="signup-btn">Sign Up</button>
+            </Link>
+          </div>
+        }
       </div>
     </nav>
   );

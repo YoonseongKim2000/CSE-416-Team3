@@ -100,7 +100,7 @@ function SignUp() {
                         />
                     </div>
                     <p className='mt-5'>By signing up you agree to our Terms and Conditions</p>
-                    <button type='submit' className='btn submit-button mt-4 w-75 mb-4'>Sign Up</button>
+                    <button type='submit' className='btn btnb submit-button mt-4 w-75 mb-4'>Sign Up</button>
                 </form>
             </div>
             {/* Toast container */}

@@ -31,14 +31,14 @@
     color: #ffffff !important;
 }
 
-.btn {
+.btnb {
     border: 1px solid #528af1;
     border-radius: 3px;
     background-color: #c3d6ff;
     color: #3971d8;
 }
 
-.btn:hover {
+.btnb:hover {
     border: 1px solid #528af1;
     border-radius: 3px;
     background-color: #528af1;
