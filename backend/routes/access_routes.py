@@ -10,7 +10,7 @@ import os
 
 router = APIRouter(prefix="/access", tags=["User Access"])
 load_dotenv()
-SECRET_KEY = os.getenv('SECRET-KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MIN = 60
 
