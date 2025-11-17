@@ -1,6 +1,7 @@
 # server.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from backend.routes import access_routes
 from core.config import FRONTEND_ORIGIN
 from routes import user_routes, predict_routes
 from pymongo import AsyncMongoClient
@@ -41,3 +42,4 @@ app.add_middleware(
 # add routers
 app.include_router(user_routes.router)
 app.include_router(predict_routes.router)
+app.include_router(access_routes.router)
