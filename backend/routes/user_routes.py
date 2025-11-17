@@ -70,6 +70,10 @@ async def log_in(user: UserInModel, request: Request, response: Response):
         value=tokens[1], 
         httponly=True, 
         secure=True, 
-        samesite='none'
+        samesite='None'
     )
+
+    cookie_header = response.headers.get("set-cookie")
+    response.headers["set-cookie"] = cookie_header + "; Partitioned"
+    
     return {"accessToken": tokens[0], "email": user.email} 
