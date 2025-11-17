@@ -2,7 +2,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from core.config import FRONTEND_ORIGIN
-from routes import user_routes, predict_routes, account_routes
+from routes import user_routes, predict_routes, access_routes
 from pymongo import AsyncMongoClient
 from dotenv import load_dotenv
 import os
@@ -41,4 +41,4 @@ app.add_middleware(
 # add routers
 app.include_router(user_routes.router)
 app.include_router(predict_routes.router)
-app.include_router(account_routes.router)
+app.include_router(access_routes.router)

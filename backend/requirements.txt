@@ -3,6 +3,7 @@ torchvision
 uvicorn
 fastapi
 pillow
+pyjwt
 python-multipart
 pymongo
 python-dotenv
