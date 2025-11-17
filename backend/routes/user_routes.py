@@ -65,5 +65,5 @@ async def log_in(user: UserInModel, request: Request, response: Response):
 
     tokens = generate_tokens(user.email)
 
-    response.set_cookie(key="jwt", value=tokens[1], httponly=True, secure=True)
+    response.set_cookie(key="jwt", value=tokens[1], httponly=True, secure=True, samesite='none')
     return {"accessToken": tokens[0], "email": user.email} 

@@ -4,6 +4,7 @@ import { generateHash } from '../utilities/hashutils'
 import { ToastContainer, toast } from 'react-toastify'
 
 const apiUrl = import.meta.env.VITE_API_URL
+const selfUrl = import.meta.env.SELF_URL
 
 function Login() {
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ function Login() {
 
         const email = e.target.elements.email.value;
 
-        if (!email || !e.target.elements.password.valu) {
+        if (!email || !e.target.elements.password.value) {
             toast.error("Please fill in all fields");
             return;
         }
@@ -27,7 +28,10 @@ function Login() {
             const response = await fetch(apiUrl + "user/login", {
                 method: "POST",
                 credentials: "include",
-                headers: {'Content-Type': 'application/json'},
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": selfUrl,
+                },
                 body: JSON.stringify(loginData)
             });
 
@@ -44,6 +48,9 @@ function Login() {
                 toast.success("Logged In");
                 //navigate('/home');
             }
+        } catch (err) {
+            console.log(err);
+            toast.error("" + (err))
         }
     }
 
@@ -51,7 +58,7 @@ function Login() {
         <div className='container login-container d-flex justify-content-center align-items-center'>
             <div className='card small-card shadow-lg login-card d-flex align-items-center p-4'>
                 <h1 className='fw-bold text-center title-style'>Log In</h1>
-                <form action="#" className='login-form'>
+                <form onSubmit={handleSubmit} className='login-form'>
                     <div className='mb-3'>
                         <label htmlFor="email" className='form-label login-label'>
                             Email:
@@ -77,7 +84,7 @@ function Login() {
                     <button type='submit' className='btn submit-button mt-4 w-75 mb-4'>Log In</button>
                 </form>
             </div>
-            <ToastContainer position='top-center' autoClose={2500} theme='color'/>
+            <ToastContainer position='top-center' autoClose={2500} theme='colored'/>
         </div>
     )
 }
