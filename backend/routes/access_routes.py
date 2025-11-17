@@ -6,6 +6,7 @@ from jwt.exceptions import InvalidTokenError
 from dotenv import load_dotenv
 from pydantic import EmailStr
 from datetime import datetime, timedelta, timezone
+import os
 
 router = APIRouter(prefix="/access", tags=["User Access"])
 load_dotenv()
