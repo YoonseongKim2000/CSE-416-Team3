@@ -182,14 +182,14 @@ function ApiDocsPage() {
             <h4>cURL</h4>
             <pre>
               <code>curl -X POST "https://220.126.157.140:10000/api/APIanalyze" \</code><br />
-                <code>-F "model=default" \</code><br />
+                <code>-F "model=general" \</code><br />
                 <code>-F "image=@./input.jpg" \</code><br />
                 <code>-F "apiKey=YOUR_API_KEY"</code><br />
             </pre>
             <h4>JavaScript (fetch)</h4>
             <pre>
               <code>const formData = new FormData();</code><br />
-              <code>formData.append("model", "default");</code><br />
+              <code>formData.append("model", "general");</code><br />
               <code>formData.append("image", file);</code><br />
               <code>formData.append("apiKey", "YOUR_API_KEY");</code><br />
               <br />
@@ -206,7 +206,7 @@ function ApiDocsPage() {
               <code>import requests</code><br />
               <br />
               <code>files = &#123;"image" &#58; open("input.jpg", "rb")&#125;</code><br />
-              <code>data = &#123;"model"&#58; "default", "apiKey"&#58; "YOUR_API_KEY"&#125;</code><br />
+              <code>data = &#123;"model"&#58; "general", "apiKey"&#58; "YOUR_API_KEY"&#125;</code><br />
               <br />
               <code>response = requests.post("https://api.truevision.com/api/APIanalyze", data=data, files=files)</code><br />
               <code>print(response.json())</code><br />s
