@@ -32,10 +32,10 @@ app = FastAPI(lifespan=db_lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[FRONTEND_ORIGIN],
+    allow_origins=['http://localhost:5173', 'https://yoonseongkim2000.github.io/CSE-416-Team3/'],
     allow_credentials=True,
     allow_methods=["GET", "POST", "HEAD", "OPTIONS"],
-    allow_headers=["Access-Control-Allow-Headers", 'Content-Type', 'Authorization', 'Access-Control-Allow-Origin'],
+    allow_headers=["Access-Control-Allow-Headers", 'Content-Type', 'Authorization', 'Access-Control-Allow-Origin', 'Set-Cookie'],
 )
 
 # add routers
