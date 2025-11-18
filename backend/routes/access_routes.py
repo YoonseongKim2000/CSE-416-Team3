@@ -80,7 +80,7 @@ async def log_in(user: UserInModel, request: Request, response: Response):
         raise HTTPException(status_code=400, detail="Required credentials missing")
 
     #get user login details
-    result = await get_user_login(user, db)
+    result = await get_user_by_email(user, db)
     print(result)
     print("userIn: " + user.email + " " + user.password)
     if (isinstance(result, PyMongoError)):
@@ -89,7 +89,7 @@ async def log_in(user: UserInModel, request: Request, response: Response):
     if (result == None):
         raise HTTPException(status_code=403, detail="Cannot log in: Incorrect email or password")
 
-    if (result[1] != user.password):
+    if (result['password'] != user.password):
         raise HTTPException(status_code=403, detail="Cannot log in: Incorrect email or password")
 
     tokens = generate_tokens(user.email)
