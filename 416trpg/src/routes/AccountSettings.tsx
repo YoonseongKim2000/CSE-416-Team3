@@ -1,8 +1,14 @@
 import './AccountSettings.css'
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import type { AuthOutletContext } from '../App';
+
 
 function AccountSettingsPage() {
+
+  const {contextState, contextSetState} = useOutletContext<AuthOutletContext>();
+
   const [email, setEmail] = useState("Retrieving");
   const [subscriptionType, setSubscriptionType] = useState<"Free" | "Paid">("Free");
   const [tokenAmount, settokenAmount] = useState("Retrieving");
@@ -63,6 +69,26 @@ function AccountSettingsPage() {
       setFadeOutDelete(false);
     }, 300);
   };
+
+  const handleChangePassword = async (e: any) => {
+    e.preventDefault();
+
+    const currpw = e.target.elements.currentpw.value;
+    const newpw = e.target.elements.newpw.value;
+    const confirmNewpw = e.target.elements.confirmNewpw.value;
+
+    if (!currpw || !newpw || !confirmNewpw) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
+    if (newpw != confirmNewpw) {
+      toast.error("New password and confirm new password do not match");
+      return;
+    }
+
+
+  }
 
   return (
     <div className="accountsettingspage container-fluid py-5 d-flex justify-content-center align-items-center">
@@ -166,16 +192,20 @@ function AccountSettingsPage() {
                         onClick={closePassModal}
                       ></button>
                     </div>
-                    <div className="modal-body text-start">
-                      <label className="form-label">New Password</label>
-                      <input type="password" className="form-control mb-3" placeholder="Enter new password" />
-                      <label className="form-label">Confirm Password</label>
-                      <input type="password" className="form-control mb-3" placeholder="Confirm new password" />
-                    </div>
-                    <div className="modal-footer">
-                      <button type="button" className="btn btn-secondary me-3" onClick={closePassModal}>Close</button>
-                      <button type="button" className="btn btn-primary">Update Password</button>
-                    </div>
+                    <form action="">
+                      <div className="modal-body text-start">
+                        <label htmlFor="currentpw">Current Password</label>
+                        <input type="password" className='form-control mb-3' name='currentpw' placeholder='Enter current password'/>
+                        <label className="form-label">New Password</label>
+                        <input type="password" className="form-control mb-3" name='newpw' placeholder="Enter new password" />
+                        <label className="form-label">Confirm New Password</label>
+                        <input type="password" className="form-control mb-3"name='confirmNewpw' placeholder="Confirm new password" />
+                      </div>
+                      <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary me-3" onClick={closePassModal}>Close</button>
+                        <button type="submit" className="btn btn-primary">Confirm Change</button>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -185,6 +215,7 @@ function AccountSettingsPage() {
               ></div>
             </>
           )}
+            <ToastContainer position='top-center' autoClose={2500} theme='colored'/>
 
           {/* --- DELETE ACCOUNT MODAL --- */}
           {showDeleteModal && (
