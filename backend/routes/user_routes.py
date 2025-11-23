@@ -1,15 +1,17 @@
-from fastapi import APIRouter, Body, HTTPException, status, Request, Response
+from typing import Annotated
+from fastapi import APIRouter, Body, Depends, HTTPException, status, Request, Response
+from routes.access_routes import verify_token
 from core.api_key_gen import generateKey
-from db.db_interface import UserInModel, UserOutModel, get_user_by_email, create_user 
+from db.db_interface import UserInModel, UserOutModel, get_user_by_email, create_user, UserAccessAuthOut, update_password
 from pymongo.errors import PyMongoError
 
 router = APIRouter(prefix="/user", tags=["Users"])
 
 @router.post(
-        "/signup",
-        response_model=UserOutModel,
-        status_code=status.HTTP_201_CREATED,
-        response_model_by_alias=False
+    "/signup",
+    response_model=UserOutModel,
+    status_code=status.HTTP_201_CREATED,
+    response_model_by_alias=False
 )
 async def sign_up(user: UserInModel, request: Request):
 
@@ -38,3 +40,30 @@ async def sign_up(user: UserInModel, request: Request):
 
     return new_usr.model_dump(by_alias=False, exclude=["id"])
 
+@router.put(
+    "/password",
+    status_code=status.HTTP_200_OK,
+)
+async def change_pw(authuser: Annotated[UserOutModel, Depends(verify_token)], userin: UserInModel, request: Request):
+    db = request.app.database
+
+    if (userin.password == None):
+        raise HTTPException(status_code=400, detail="Required credentials missing")
+
+    #check that the use found through access token and user given by API call are the same
+    if (authuser["email"] != userin.email):
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Conflicting credentials in request")
+
+    #checking user exists handled by verify_token
+
+    #check if current password matches given current password
+    curruser = await get_user_by_email(userin, db)
+    if (curruser["password"] != userin.password):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Incorrect current password")
+
+    result = await update_password(userin, db)
+
+    if (isinstance(result, PyMongoError) or result == 0):
+        raise HTTPException(status_code=500, detail="Database error")
+
+    return result

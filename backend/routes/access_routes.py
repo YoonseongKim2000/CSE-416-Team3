@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status, Request, Response, Depends
-from db.db_interface import UserInModel, UserOutModel, get_user_by_email
+from db.db_interface import UserInModel, UserOutModel, get_user_by_email, UserAccessAuthOut
 from pymongo.errors import PyMongoError
 import jwt
 from jwt.exceptions import InvalidTokenError
@@ -20,7 +20,11 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 refresh_tokens = []
 
-async def verify_token(token: Annotated[str, Depends(oauth2_scheme)], request: Request, response: Response):
+#function used to create dependencies for other functions that a valid access token is required
+# in the request header and the token is valid before dependent function runs
+#NOTE: does NOT check that the user given from token in req header is the same as the user info
+# given in the request body (if one exists) 
+async def verify_token(token: Annotated[str, Depends(oauth2_scheme)]):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -45,7 +49,8 @@ async def verify_token(token: Annotated[str, Depends(oauth2_scheme)], request: R
     if user is None:
         raise credentials_exception
     
-    return (user, request, response)
+    #outval = UserAccessAuthOut.model_validate({'user': user, 'request': request, 'response': response})
+    return user
 
 def generate_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()

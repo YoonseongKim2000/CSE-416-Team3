@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Body, HTTPException, status, Request
+from fastapi import APIRouter, Body, HTTPException, Response, status, Request
 from pydantic import ConfigDict, BaseModel, Field, EmailStr
 from pydantic.functional_validators import BeforeValidator
 from typing import Optional, List
@@ -74,6 +74,12 @@ class UserCollection(BaseModel):
     """
     users: List[UserOutModel]
 
+class UserAccessAuthOut(BaseModel):
+    userin: Optional[UserInModel] = None
+    authuser: UserOutModel = Field(...)
+    request: Request = Field(...)
+    response: Response = Field(...)
+
 async def get_user_by_email(user: UserInModel, db):
     user_collection = db.get_collection("users")
     try:
@@ -106,6 +112,17 @@ async def get_user_login(user: UserInModel, db):
     except PyMongoError as e:
         outval = e
     
+    return outval
+
+async def update_password(user: UserInModel, db):
+    user_collection = db.get_collection("users")
+
+    try:
+        result = await user_collection.update_one({"$and": [ {'email': user.email}, {'password': user.password} ]}, {'$set': {'password': user.password}})
+        outval = result.modified_count
+    except PyMongoError as e:
+        outval = e
+
     return outval
 
 # @router.get("/users", response_model=UserCollection, response_model_by_alias=False,)
