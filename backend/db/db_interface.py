@@ -79,6 +79,9 @@ class UserAccessAuthOut(BaseModel):
     authuser: UserOutModel = Field(...)
     request: Request = Field(...)
     response: Response = Field(...)
+    model_config = ConfigDict(
+        arbitrary_types_allowed=True,
+    )
 
 async def get_user_by_email(user: UserInModel, db):
     user_collection = db.get_collection("users")
