@@ -26,7 +26,7 @@ function PurchasePage () {
             if (response.ok){
                 toast.success("Purchase Monthly Successful");
             } else {
-                toast.error("Error-"+response.status);
+                toast.error("Already a Monthly User");
             };
         } catch (error) {
             toast.error("" + error)
