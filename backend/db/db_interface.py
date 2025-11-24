@@ -60,6 +60,7 @@ class UserOutModel(BaseModel):
 
 class UpdateUserModel(BaseModel):
     password: Optional[str] = None
+    newPassword: Optional[str] = None
     isPaid: Optional[bool] = None
     token: Optional[int] = None
     APIKey: Optional[str] = None
@@ -117,11 +118,11 @@ async def get_user_login(user: UserInModel, db):
     
     return outval
 
-async def update_password(user: UserInModel, db):
+async def update_password(user: UpdateUserModel, db):
     user_collection = db.get_collection("users")
 
     try:
-        result = await user_collection.update_one({"$and": [ {'email': user.email}, {'password': user.password} ]}, {'$set': {'password': user.password}})
+        result = await user_collection.update_one({"$and": [ {'email': user.email}, {'password': user.password} ]}, {'$set': {'password': user.newPassword}})
         outval = result.modified_count
     except PyMongoError as e:
         outval = e

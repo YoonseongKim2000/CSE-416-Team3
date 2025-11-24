@@ -3,7 +3,10 @@ import { Link, useOutletContext } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import type { AuthOutletContext } from '../App';
+import { generateHash } from '../utilities/hashutils';
 
+const apiUrl = import.meta.env.VITE_API_URL
+const selfUrl = import.meta.env.SELF_URL
 
 function AccountSettingsPage() {
 
@@ -87,7 +90,35 @@ function AccountSettingsPage() {
       return;
     }
 
+    const hashedpw = generateHash(contextState.auth.email ? contextState.auth.email : "", currpw);
+    const hashedNewpw = generateHash(contextState.auth.email ? contextState.auth.email : "", newpw);
 
+    const updateData = {email: contextState.auth.email, password: hashedpw, newPassword: newpw};
+
+    try {
+      const response = await fetch(apiUrl + "user/password", {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          'Authorization': `Bearer ${contextState?.auth.accessToken}`,
+          'Content-Type': 'application/json',
+          "Access-Control-Allow-Origin": selfUrl,
+        },
+        body: JSON.stringify(updateData)
+      });
+
+      if (response.status == 400) {
+        toast.error("Incorrect credentials or wrong current password");
+      } else if (response.status == 500) {
+        toast.error("Internal server error");
+      } else {
+        toast.success("Password succesfully changed!");
+        closePassModal();
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("" + (err));
+    }
   }
 
   return (
@@ -192,13 +223,13 @@ function AccountSettingsPage() {
                         onClick={closePassModal}
                       ></button>
                     </div>
-                    <form action="">
+                    <form onSubmit={handleChangePassword}>
                       <div className="modal-body text-start">
                         <label htmlFor="currentpw">Current Password</label>
                         <input type="password" className='form-control mb-3' name='currentpw' placeholder='Enter current password'/>
-                        <label className="form-label">New Password</label>
+                        <label className="form-label" htmlFor='newpw'>New Password</label>
                         <input type="password" className="form-control mb-3" name='newpw' placeholder="Enter new password" />
-                        <label className="form-label">Confirm New Password</label>
+                        <label className="form-label" htmlFor='confirmNewpw'>Confirm New Password</label>
                         <input type="password" className="form-control mb-3"name='confirmNewpw' placeholder="Confirm new password" />
                       </div>
                       <div className="modal-footer">
