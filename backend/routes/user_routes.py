@@ -96,10 +96,10 @@ async def cancel_plan(authuser: Annotated[UserOutModel, Depends(verify_token)], 
     return
 
 @router.get(
-    "/getInfo", 
+    "/info", 
     status_code=status.HTTP_200_OK
 )
-async def get_info(authuser: Annotated[UserOutModel, Depends(verify_token)], request: Request):
+async def info(authuser: Annotated[UserOutModel, Depends(verify_token)], request: Request):
     db = request.app.database
     user_email = authuser["email"]
 

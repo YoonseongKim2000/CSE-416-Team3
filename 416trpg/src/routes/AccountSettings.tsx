@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
 const apiUrl = import.meta.env.VITE_API_URL
-const selfUrl = import.meta.env.SELF_URL
 
 function AccountSettingsPage() {
   const navigate = useNavigate();
@@ -19,6 +18,7 @@ function AccountSettingsPage() {
   const [showPassModal, setShowPassModal] = useState(false);
   const [fadeInPass, setFadeInPass] = useState(false);
   const [fadeOutPass, setFadeOutPass] = useState(false);
+  const [buttonSwitch, setButtonSwitch] = useState(false);
 
   // Delete modal
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -66,7 +66,7 @@ function AccountSettingsPage() {
     setEmail(storedEmail);
 
     try {
-      const response = await fetch (apiUrl + "user/getInfo", {
+      const response = await fetch (apiUrl + "user/info", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -77,6 +77,7 @@ function AccountSettingsPage() {
               const data = await response.json();
               if (data.tier){
                 setSubscriptionType("Paid");
+                setButtonSwitch(true)
               };
               settokenAmount(data.tokenRemaining);
               setApiKey(data.apiKey);
@@ -122,19 +123,47 @@ function AccountSettingsPage() {
             <hr />
           <div className="text-start mb-3 accountnormaltext">
             <b className='accountsettingboldtext'>Tier:</b> {subscriptionType}
-            <Link to="/pricing">
+            <div className="text-start mb-3 accountnormaltext">
+            <b className='accountsettingboldtext'>Tokens Remaining: </b> {tokenAmount}
+            </div>
+
+            {!buttonSwitch && (
+              <Link to="/pricing">
               <button
                 type="button"
                 className="button-82-pushable AccountCustomBtn ms-3 mt-3"
               >
                 <span className="button-82-shadow"></span>
                 <span className="button-82-edge"></span>
-                <span className="button-82-front text">Upgrade</span>
+                <span className="button-82-front text">Upgrade Tier</span>
+              </button>
+              </Link>
+            )}
+
+            
+            
+            {buttonSwitch && (
+              <button
+              type="button"
+              className="button-82-pushable AccountCustomBtn ms-3 mt-3"
+            >
+              <span className="button-82-shadow"></span>
+              <span className="button-82-edge"></span>
+              <span className="button-82-front text">Cancel Plan</span>
+            </button>
+            )}
+            
+            
+            <Link to="/purchasetoken">
+              <button
+                type="button"
+                className="button-82-pushable AccountCustomBtn ms-3 mt-3"
+              >
+                <span className="button-82-shadow"></span>
+                <span className="button-82-edge"></span>
+                <span className="button-82-front text">Buy More Tokens</span>
               </button>
             </Link>
-            <div className="text-start mb-3 accountnormaltext">
-            <b className='accountsettingboldtext'>Tokens Remaining: </b> {tokenAmount}
-            </div>
           </div>
             <hr />
           <div className="text-start d-flex align-items-center gap-3 mb-3">
@@ -268,6 +297,7 @@ function AccountSettingsPage() {
           )}
         </div>
       </div>
+      <ToastContainer position="top-center" autoClose={2500} theme="colored" />
     </div>
   );
 }
