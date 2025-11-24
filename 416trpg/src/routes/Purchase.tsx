@@ -1,11 +1,34 @@
 import './Purchase.css'
 import { ToastContainer, toast } from "react-toastify";
 
-// const apiUrl = import.meta.env.VITE_API_URL
+const apiUrl = import.meta.env.VITE_API_URL
 
 function PurchasePage () {
 
-    const purchaseMonthly = () => {
+    const purchaseMonthly = async () => {
+        const token = localStorage.getItem("accessToken");
+        if (token === null) {
+            toast.warning("Please Login First");
+            return;
+        }
+
+        try {
+            const response = await fetch(apiUrl + "purchase/monthly", {
+                method: "POST",
+                credentials: "include",  // optional if you don't need cookies
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            if (response.ok){
+                toast.success("Purchase Monthly Successful");
+            } else {
+                toast.error("Error-"+response.status);
+            };
+        } catch (error) {
+            toast.error("" + error)
+        };
         // TODO: Backend glorp, if successful run toast.success else run toast.error
         toast.success("Purchase Monthly Successful")
         // toast.error("Purchase Monthly Failed")

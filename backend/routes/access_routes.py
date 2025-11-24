@@ -24,7 +24,7 @@ refresh_tokens = []
 # in the request header and the token is valid before dependent function runs
 #NOTE: does NOT check that the user given from token in req header is the same as the user info
 # given in the request body (if one exists) 
-async def verify_token(token: Annotated[str, Depends(oauth2_scheme)], request: Request):
+async def verify_token(token: Annotated[str, Depends(oauth2_scheme)]):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",

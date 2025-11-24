@@ -1,7 +1,9 @@
-from fastapi import APIRouter, Body, HTTPException, status, Request, Response
+from fastapi import APIRouter, Body, HTTPException, status, Request, Response, Depends
 from core.api_key_gen import generateKey
 from db.db_interface import UserInModel, UserOutModel, get_user_by_email, create_user 
 from pymongo.errors import PyMongoError
+from typing import Annotated
+from routes.access_routes import verify_token
 
 router = APIRouter(prefix="/purchase", tags=["purchase"])
 
@@ -10,16 +12,17 @@ router = APIRouter(prefix="/purchase", tags=["purchase"])
     "/monthly",
     status_code=status.HTTP_202_ACCEPTED,
 )
-async def buy_monthly(user: UserInModel, request: Request):
+async def buy_monthly(authuser: Annotated[UserOutModel, Depends(verify_token)], request: Request):
 
     db = request.app.database
+    user_email = authuser["email"]
 
     #check that email field isnt null
-    if (user.email == None):
+    if (authuser.email == None):
         raise HTTPException(status_code=400, detail="Required credentials missing")
 
     #checks
-    result = await get_user_by_email(user, db)
+    result = await get_user_by_email(UserInModel(email=user_email), db)
     if (isinstance(result, PyMongoError)):
         raise HTTPException(status_code=500, detail="Database error")
 
