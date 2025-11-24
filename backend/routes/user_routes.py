@@ -2,6 +2,7 @@ from typing import Annotated
 from fastapi import APIRouter, Body, Depends, HTTPException, status, Request, Response
 from routes.access_routes import verify_token
 from core.api_key_gen import generateKey
+from db.db_interface import UpdateUserModel, UserInModel, UserOutModel, get_user_by_email, create_user, UserAccessAuthOut, update_password, update_isPaid
 from db.db_interface import UserInModel, UserOutModel, get_user_by_email, create_user, UserAccessAuthOut, update_password, update_isPaid
 from pymongo.errors import PyMongoError
 
@@ -44,7 +45,7 @@ async def sign_up(user: UserInModel, request: Request):
     "/password",
     status_code=status.HTTP_200_OK,
 )
-async def change_pw(authuser: Annotated[UserOutModel, Depends(verify_token)], userin: UserInModel, request: Request):
+async def change_pw(authuser: Annotated[UserOutModel, Depends(verify_token)], userin: UpdateUserModel, request: Request):
     db = request.app.database
 
     if (userin.password == None):

@@ -1,13 +1,25 @@
 import './AccountSettings.css'
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import { useState, useEffect } from "react";
+<<<<<<< HEAD
+import { ToastContainer, toast } from 'react-toastify';
+import type { AuthOutletContext } from '../App';
+import { generateHash } from '../utilities/hashutils';
+=======
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+>>>>>>> 7e7374d699ba50c3eb13035f24901fb4780e17b8
 
 const apiUrl = import.meta.env.VITE_API_URL
 
 function AccountSettingsPage() {
+<<<<<<< HEAD
+
+  const {contextState, contextSetState} = useOutletContext<AuthOutletContext>();
+
+=======
   const navigate = useNavigate();
+>>>>>>> 7e7374d699ba50c3eb13035f24901fb4780e17b8
   const [email, setEmail] = useState("Retrieving");
   const [subscriptionType, setSubscriptionType] = useState<"Free" | "Paid">("Free");
   const [tokenAmount, settokenAmount] = useState("Retrieving");
@@ -110,6 +122,54 @@ function AccountSettingsPage() {
       setFadeOutDelete(false);
     }, 300);
   };
+
+  const handleChangePassword = async (e: any) => {
+    e.preventDefault();
+
+    const currpw = e.target.elements.currentpw.value;
+    const newpw = e.target.elements.newpw.value;
+    const confirmNewpw = e.target.elements.confirmNewpw.value;
+
+    if (!currpw || !newpw || !confirmNewpw) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
+    if (newpw != confirmNewpw) {
+      toast.error("New password and confirm new password do not match");
+      return;
+    }
+
+    const hashedpw = generateHash(contextState.auth.email ? contextState.auth.email : "", currpw);
+    const hashedNewpw = generateHash(contextState.auth.email ? contextState.auth.email : "", newpw);
+
+    const updateData = {email: contextState.auth.email, password: hashedpw, newPassword: newpw};
+
+    try {
+      const response = await fetch(apiUrl + "user/password", {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          'Authorization': `Bearer ${contextState?.auth.accessToken}`,
+          'Content-Type': 'application/json',
+          "Access-Control-Allow-Origin": selfUrl,
+        },
+        body: JSON.stringify(updateData)
+      });
+
+      if (response.status == 400) {
+        toast.error("Incorrect credentials or wrong current password");
+      } else if (response.status == 500) {
+        toast.error("Internal server error");
+      } else {
+        toast.success("Password succesfully changed!");
+        closePassModal();
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("" + (err));
+    }
+  }
 
   return (
     <div className="accountsettingspage container-fluid py-5 d-flex justify-content-center align-items-center">
@@ -241,16 +301,20 @@ function AccountSettingsPage() {
                         onClick={closePassModal}
                       ></button>
                     </div>
-                    <div className="modal-body text-start">
-                      <label className="form-label">New Password</label>
-                      <input type="password" className="form-control mb-3" placeholder="Enter new password" />
-                      <label className="form-label">Confirm Password</label>
-                      <input type="password" className="form-control mb-3" placeholder="Confirm new password" />
-                    </div>
-                    <div className="modal-footer">
-                      <button type="button" className="btn btn-secondary me-3" onClick={closePassModal}>Close</button>
-                      <button type="button" className="btn btn-primary">Update Password</button>
-                    </div>
+                    <form onSubmit={handleChangePassword}>
+                      <div className="modal-body text-start">
+                        <label htmlFor="currentpw">Current Password</label>
+                        <input type="password" className='form-control mb-3' name='currentpw' placeholder='Enter current password'/>
+                        <label className="form-label" htmlFor='newpw'>New Password</label>
+                        <input type="password" className="form-control mb-3" name='newpw' placeholder="Enter new password" />
+                        <label className="form-label" htmlFor='confirmNewpw'>Confirm New Password</label>
+                        <input type="password" className="form-control mb-3"name='confirmNewpw' placeholder="Confirm new password" />
+                      </div>
+                      <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary me-3" onClick={closePassModal}>Close</button>
+                        <button type="submit" className="btn btn-primary">Confirm Change</button>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -260,6 +324,7 @@ function AccountSettingsPage() {
               ></div>
             </>
           )}
+            <ToastContainer position='top-center' autoClose={2500} theme='colored'/>
 
           {/* --- DELETE ACCOUNT MODAL --- */}
           {showDeleteModal && (
