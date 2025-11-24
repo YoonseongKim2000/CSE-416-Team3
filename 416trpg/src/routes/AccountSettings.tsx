@@ -1,17 +1,26 @@
 import './AccountSettings.css'
 import { Link, useOutletContext } from "react-router-dom";
 import { useState, useEffect } from "react";
+<<<<<<< HEAD
 import { ToastContainer, toast } from 'react-toastify';
 import type { AuthOutletContext } from '../App';
 import { generateHash } from '../utilities/hashutils';
+=======
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+>>>>>>> 7e7374d699ba50c3eb13035f24901fb4780e17b8
 
 const apiUrl = import.meta.env.VITE_API_URL
 const selfUrl = import.meta.env.SELF_URL
 
 function AccountSettingsPage() {
+<<<<<<< HEAD
 
   const {contextState, contextSetState} = useOutletContext<AuthOutletContext>();
 
+=======
+  const navigate = useNavigate();
+>>>>>>> 7e7374d699ba50c3eb13035f24901fb4780e17b8
   const [email, setEmail] = useState("Retrieving");
   const [subscriptionType, setSubscriptionType] = useState<"Free" | "Paid">("Free");
   const [tokenAmount, settokenAmount] = useState("Retrieving");
@@ -39,6 +48,10 @@ function AccountSettingsPage() {
     
   }
 
+  useEffect(() => {
+    getInfo()
+  })
+
   // Fade-in animation triggers (per modal)
   useEffect(() => {
     if (showPassModal) {
@@ -53,6 +66,42 @@ function AccountSettingsPage() {
       return () => clearTimeout(t);
     }
   }, [showDeleteModal]);
+
+  const getInfo = async () => {
+    const storedEmail = localStorage.getItem("email");
+
+    if (storedEmail === null) {
+      navigate("/login");
+      return;
+    }
+    const token = localStorage.getItem("accessToken");
+    setEmail(storedEmail);
+
+    try {
+      const response = await fetch (apiUrl + "user/getInfo", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      });
+      if (response.ok){
+              const data = await response.json();
+              if (data.tier){
+                setSubscriptionType("Paid");
+              };
+              settokenAmount(data.tokenRemaining);
+              setApiKey(data.apiKey);
+            } else {
+                toast.error("Something went wrong");
+                return;
+            };
+    } catch (error) {
+      toast.error("" + error)
+    }
+
+    
+  }
 
   // Close animations
   const closePassModal = () => {

@@ -1,32 +1,117 @@
 import './Purchase.css'
 import { ToastContainer, toast } from "react-toastify";
 
-// const apiUrl = import.meta.env.VITE_API_URL
+const apiUrl = import.meta.env.VITE_API_URL
+const selfUrl = import.meta.env.SELF_URL
 
 function PurchasePage () {
 
-    const purchaseMonthly = () => {
-        // TODO: Backend glorp, if successful run toast.success else run toast.error
-        toast.success("Purchase Monthly Successful")
-        // toast.error("Purchase Monthly Failed")
+    const purchaseMonthly = async () => {
+        const token = localStorage.getItem("accessToken");
+        if (token === null) {
+            toast.warning("Please Login First");
+            return;
+        }
+
+        try {
+            const response = await fetch(apiUrl + "purchase/monthly", {
+                method: "POST",
+                credentials: "include",  // optional if you don't need cookies
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": selfUrl,
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            if (response.ok){
+                toast.success("Purchase Monthly Successful");
+            } else {
+                toast.error("Already a Monthly User");
+            };
+        } catch (error) {
+            toast.error("" + error)
+        };
     }
 
-    const purchase50 = () => {
-        // TODO: Backend glorp, if successful run toast.success else run toast.error
-        toast.success("Purchase Token Successful")
-        // toast.error("Token Purchase Failed")
+    const purchase50 = async () => {
+        const token = localStorage.getItem("accessToken");
+        if (token === null) {
+            toast.warning("Please Login First");
+            return;
+        }
+
+        try {
+            const response = await fetch(apiUrl + "purchase/50", {
+                method: "POST",
+                credentials: "include",  // optional if you don't need cookies
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": selfUrl,
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            if (response.ok){
+                toast.success("Purchase 50 Tokens Successful");
+            } else {
+                toast.error("Error-"+response.status);
+            };
+        } catch (error) {
+            toast.error("" + error)
+        };
     }
 
-    const purchase100 = () => {
-        // TODO: Backend glorp, if successful run toast.success else run toast.error
-        toast.success("Purchase Token Successful")
-        // toast.error("Token Purchase Failed")
+    const purchase100 = async () => {
+        const token = localStorage.getItem("accessToken");
+        if (token === null) {
+            toast.warning("Please Login First");
+            return;
+        }
+
+        try {
+            const response = await fetch(apiUrl + "purchase/100", {
+                method: "POST",
+                credentials: "include",  // optional if you don't need cookies
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": selfUrl,
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            if (response.ok){
+                toast.success("Purchase 100 Tokens Successful");
+            } else {
+                toast.error("Error-"+response.status);
+            };
+        } catch (error) {
+            toast.error("" + error)
+        };
     }
 
-    const purchase200 = () => {
-        // TODO: Backend glorp, if successful run toast.success else run toast.error
-        toast.success("Purchase Token Successful")
-        // toast.error("Token Purchase Failed")
+    const purchase200 = async () => {
+        const token = localStorage.getItem("accessToken");
+        if (token === null) {
+            toast.warning("Please Login First");
+            return;
+        }
+
+        try {
+            const response = await fetch(apiUrl + "purchase/200", {
+                method: "POST",
+                credentials: "include",  // optional if you don't need cookies
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": selfUrl,
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            if (response.ok){
+                toast.success("Purchase 200 Tokens Successful");
+            } else {
+                toast.error("Error-"+response.status);
+            };
+        } catch (error) {
+            toast.error("" + error)
+        };
     }
 
     return (

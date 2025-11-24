@@ -129,6 +129,27 @@ async def update_password(user: UpdateUserModel, db):
 
     return outval
 
+async def update_tokens(userEmail: str, db, newAmount):
+    user_collection = db.get_collection("users")
+
+    try:
+        result = await user_collection.update_one({'email': userEmail}, {'$set': {'tokens': newAmount}})
+        outval = result.modified_count
+    except PyMongoError as e:
+        outval = e
+
+    return outval
+
+async def update_isPaid(userEmail: str, db, status):
+    user_collection = db.get_collection("users")
+
+    try:
+        result = await user_collection.update_one({'email': userEmail}, {'$set': {'isPaid': status}})
+        outval = result.modified_count
+    except PyMongoError as e:
+        outval = e
+
+    return outval
 # @router.get("/users", response_model=UserCollection, response_model_by_alias=False,)
 # async def list_users(request: Request):
 #     """
