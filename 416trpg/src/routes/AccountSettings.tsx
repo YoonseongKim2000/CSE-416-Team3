@@ -1,8 +1,14 @@
 import './AccountSettings.css'
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+
+const apiUrl = import.meta.env.VITE_API_URL
+const selfUrl = import.meta.env.SELF_URL
 
 function AccountSettingsPage() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("Retrieving");
   const [subscriptionType, setSubscriptionType] = useState<"Free" | "Paid">("Free");
   const [tokenAmount, settokenAmount] = useState("Retrieving");
@@ -30,6 +36,10 @@ function AccountSettingsPage() {
     
   }
 
+  useEffect(() => {
+    getInfo()
+  })
+
   // Fade-in animation triggers (per modal)
   useEffect(() => {
     if (showPassModal) {
@@ -44,6 +54,42 @@ function AccountSettingsPage() {
       return () => clearTimeout(t);
     }
   }, [showDeleteModal]);
+
+  const getInfo = async () => {
+    const storedEmail = localStorage.getItem("email");
+
+    if (storedEmail === null) {
+      navigate("/login");
+      return;
+    }
+    const token = localStorage.getItem("accessToken");
+    setEmail(storedEmail);
+
+    try {
+      const response = await fetch (apiUrl + "user/getInfo", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      });
+      if (response.ok){
+              const data = await response.json();
+              if (data.tier){
+                setSubscriptionType("Paid");
+              };
+              settokenAmount(data.tokenRemaining);
+              setApiKey(data.apiKey);
+            } else {
+                toast.error("Something went wrong");
+                return;
+            };
+    } catch (error) {
+      toast.error("" + error)
+    }
+
+    
+  }
 
   // Close animations
   const closePassModal = () => {

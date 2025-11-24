@@ -2,7 +2,7 @@ from typing import Annotated
 from fastapi import APIRouter, Body, Depends, HTTPException, status, Request, Response
 from routes.access_routes import verify_token
 from core.api_key_gen import generateKey
-from db.db_interface import UserInModel, UserOutModel, get_user_by_email, create_user, UserAccessAuthOut, update_password
+from db.db_interface import UserInModel, UserOutModel, get_user_by_email, create_user, UserAccessAuthOut, update_password, update_isPaid
 from pymongo.errors import PyMongoError
 
 router = APIRouter(prefix="/user", tags=["Users"])
@@ -67,3 +67,48 @@ async def change_pw(authuser: Annotated[UserOutModel, Depends(verify_token)], us
         raise HTTPException(status_code=500, detail="Database error")
 
     return result
+
+@router.post(
+    "/cancelPlan",
+    status_code=status.HTTP_202_ACCEPTED         
+)
+async def cancel_plan(authuser: Annotated[UserOutModel, Depends(verify_token)], request: Request):
+
+    db = request.app.database
+    user_email = authuser["email"]
+
+      #checks
+    result = await get_user_by_email(UserInModel(email=user_email), db)
+    if (isinstance(result, PyMongoError)):
+        raise HTTPException(status_code=500, detail="Database error")
+
+    if (result == None):
+        raise HTTPException(status_code=400, detail="Credential error")
+
+    if (result["isPaid"]):
+        raise HTTPException(status_code=418, detail="Already Monthly Member")
+
+    update_result = await update_isPaid(user_email, db, False)
+
+    if (isinstance(update_result, PyMongoError)):
+        raise HTTPException(status_code=500, detail="Database error")
+    
+    return
+
+@router.get(
+    "/getInfo", 
+    status_code=status.HTTP_200_OK
+)
+async def get_info(authuser: Annotated[UserOutModel, Depends(verify_token)], request: Request):
+    db = request.app.database
+    user_email = authuser["email"]
+
+    #checks
+    result = await get_user_by_email(UserInModel(email=user_email), db)
+    if (isinstance(result, PyMongoError)):
+        raise HTTPException(status_code=500, detail="Database error")
+
+    if (result == None):
+        raise HTTPException(status_code=400, detail="Credential error")
+    
+    return {"tier" : result["isPaid"], "tokenRemaining": result["tokens"], "apiKey": result["APIKey"]}
