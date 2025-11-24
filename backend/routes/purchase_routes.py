@@ -17,25 +17,21 @@ async def buy_monthly(authuser: Annotated[UserOutModel, Depends(verify_token)], 
     db = request.app.database
     user_email = authuser["email"]
 
-    #check that email field isnt null
-    if (authuser.email == None):
-        raise HTTPException(status_code=400, detail="Required credentials missing")
-
     #checks
     result = await get_user_by_email(UserInModel(email=user_email), db)
     if (isinstance(result, PyMongoError)):
         raise HTTPException(status_code=500, detail="Database error")
 
-    if (result != None):
+    if (result == None):
         raise HTTPException(status_code=400, detail="Credential error")
 
-    if (result.isPaid == None):
+    if (result["isPaid"] == None):
         raise HTTPException(status_code=500, detail=f"Database error, Contact Admin with your email: {result.email}")
 
-    if (result.isPaid == True):
+    if (result["isPaid"] == True):
         raise HTTPException(status_code=500, detail="Monthly Subscription Already Purchased")
     else:
-        result.isPaid == True
+        result["isPaid"] == True
         # TODO: UPDATE THE BACKEND HERE SOMEHOW
         return
 
@@ -43,26 +39,21 @@ async def buy_monthly(authuser: Annotated[UserOutModel, Depends(verify_token)], 
     "/50",
     status_code=status.HTTP_202_ACCEPTED
 )
-async def buy_50_tokens(user: UserInModel, request: Request):
+async def buy_50_tokens(authuser: Annotated[UserOutModel, Depends(verify_token)], request: Request):
 
     db = request.app.database
-
-     #check that email field isnt null
-    if (user.email == None):
-        raise HTTPException(status_code=400, detail="Required credentials missing")
+    user_email = authuser["email"]
 
     #checks
-    result = await get_user_by_email(user, db)
+    result = await get_user_by_email(UserInModel(email=user_email), db)
     if (isinstance(result, PyMongoError)):
         raise HTTPException(status_code=500, detail="Database error")
 
-    if (result != None):
+    if (result == None):
         raise HTTPException(status_code=400, detail="Credential error")
     
-    if (result.tokens == None):
-        raise HTTPException(status_code=500, detail=f"Database error, Contact Admin with your email: {result.email}")
-    
-    result.tokens = result.tokens + 50
+    result["tokens"] = result["tokens"] + 50
+
     # TODO: UPDATE THE BACKEND HERE SOMEHOW
     return
 
@@ -70,26 +61,21 @@ async def buy_50_tokens(user: UserInModel, request: Request):
     "/100",
     status_code=status.HTTP_202_ACCEPTED
 )
-async def buy_50_tokens(user: UserInModel, request: Request):
+async def buy_100_tokens(authuser: Annotated[UserOutModel, Depends(verify_token)], request: Request):
 
     db = request.app.database
-
-     #check that email field isnt null
-    if (user.email == None):
-        raise HTTPException(status_code=400, detail="Required credentials missing")
+    user_email = authuser["email"]
 
     #checks
-    result = await get_user_by_email(user, db)
+    result = await get_user_by_email(UserInModel(email=user_email), db)
     if (isinstance(result, PyMongoError)):
         raise HTTPException(status_code=500, detail="Database error")
 
-    if (result != None):
+    if (result == None):
         raise HTTPException(status_code=400, detail="Credential error")
     
-    if (result.tokens == None):
-        raise HTTPException(status_code=500, detail=f"Database error, Contact Admin with your email: {result.email}")
+    result["tokens"] = result["tokens"] + 100
     
-    result.tokens = result.tokens + 50
     # TODO: UPDATE THE BACKEND HERE SOMEHOW
     return
 
@@ -97,26 +83,21 @@ async def buy_50_tokens(user: UserInModel, request: Request):
     "/200",
     status_code=status.HTTP_202_ACCEPTED
 )
-async def buy_50_tokens(user: UserInModel, request: Request):
+async def buy_200_tokens(authuser: Annotated[UserOutModel, Depends(verify_token)], request: Request):
 
     db = request.app.database
-
-     #check that email field isnt null
-    if (user.email == None):
-        raise HTTPException(status_code=400, detail="Required credentials missing")
+    user_email = authuser["email"]
 
     #checks
-    result = await get_user_by_email(user, db)
+    result = await get_user_by_email(UserInModel(email=user_email), db)
     if (isinstance(result, PyMongoError)):
         raise HTTPException(status_code=500, detail="Database error")
 
-    if (result != None):
+    if (result == None):
         raise HTTPException(status_code=400, detail="Credential error")
     
-    if (result.tokens == None):
-        raise HTTPException(status_code=500, detail=f"Database error, Contact Admin with your email: {result.email}")
+    result["tokens"] = result["tokens"] + 200
     
-    result.tokens = result.tokens + 50
     # TODO: UPDATE THE BACKEND HERE SOMEHOW
     return
 

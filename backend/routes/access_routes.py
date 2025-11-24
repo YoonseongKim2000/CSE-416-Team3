@@ -69,7 +69,7 @@ def generate_tokens(email: EmailStr):
     access_token = generate_token(data={"sub": email}, expires_delta=access_token_exp)
     refresh_token = generate_token(data={"sub": email})
 
-    refresh_tokens.append(refresh_tokens)
+    refresh_tokens.append(refresh_token)
 
     return (access_token, refresh_token)
 
