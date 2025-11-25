@@ -163,4 +163,20 @@ async def delete_user(authuser: Annotated[UserOutModel, Depends(verify_token)], 
 
     return result
     
+@router.get(
+    "/tierInfo", 
+    status_code=status.HTTP_200_OK
+)
+async def info(authuser: Annotated[UserOutModel, Depends(verify_token)], request: Request):
+    db = request.app.database
+    user_email = authuser["email"]
+
+    #checks
+    result = await get_user_by_email(UserInModel(email=user_email), db)
+    if (isinstance(result, PyMongoError)):
+        raise HTTPException(status_code=500, detail="Database error")
+
+    if (result == None):
+        raise HTTPException(status_code=400, detail="Credential error")
     
+    return {"tier" : result["isPaid"]}    

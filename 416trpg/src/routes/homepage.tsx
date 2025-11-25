@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { ChangeEvent } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +15,41 @@ function HomePage() {
   );
   const [file, setFile] = useState<File | null>(null);
   const [model, setModel] = useState<string>("general");
+  const [accessStatus, setAccessStatus] = useState<boolean>(true);
+
+  useEffect(() => {
+    getAccessInfo()
+  })
+
+    const getAccessInfo = async () => {
+      const storedEmail = localStorage.getItem("email");
+  
+      if (storedEmail === null) {
+        return;
+      }
+      const token = localStorage.getItem("accessToken");
+
+      try {
+        const response = await fetch (apiUrl + "user/tierInfo", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          }
+        });
+        if (response.ok){
+                const data = await response.json();
+                if (data.tier){
+                  setAccessStatus(!data.tier)
+                }
+              } else {
+                  toast.error("Something went wrong");
+                  return;
+              };
+      } catch (error) {
+        toast.error("" + error)
+      }
+    }
 
   // Handle file selection
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -110,8 +145,8 @@ function HomePage() {
                 onChange={handleModelChange}
               >
                 <option className="p-reg" value="general">General Model</option>
-                <option className="p-reg" value="art">Art Model</option>
-                <option className="p-reg" value="anime">Anime Model</option>
+                <option className="p-reg" value="art" disabled={accessStatus}>Art Model</option>
+                <option className="p-reg" value="anime" disabled={accessStatus}>Anime Model</option>
               </select>
               <label htmlFor="floatingSelect" className="p-reg">Select Model</label>
             </div>
