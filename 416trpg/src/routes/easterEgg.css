@@ -1,0 +1,150 @@
+/* Container & General */
+.egg-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Headings */
+.egg-container h1, .egg-container h2 {
+  color: #72a3ff;
+  margin-bottom: 20px;
+  text-shadow: 0px 0px 10px rgba(114, 163, 255, 0.7);
+}
+
+/* Button Base Styles */
+.egg-btn {
+  position: relative;
+  border: none;
+  cursor: pointer;
+  border-radius: 12px;
+  font-size: 1rem;
+  padding: 12px 28px;
+  margin: 8px;
+  color: white;
+  background: linear-gradient(90deg, #3557b6, #72a3ff);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+  font-weight: 600;
+}
+
+.egg-btn:hover {
+  filter: brightness(1.2);
+  transform: translateY(-2px);
+}
+
+.egg-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+/* Specific Buttons */
+.ai-btn { background: linear-gradient(90deg, #8a3939, #ff6b6b); }
+.human-btn { background: linear-gradient(90deg, #39658a, #72c0ff); }
+.again-btn, .menu-btn, .egg-select button { background: linear-gradient(90deg, #3557b6, #72a3ff); }
+
+/* Loading Text */
+.egg-loading {
+  margin-top: 15px;
+  font-style: italic;
+  color: #ffdd59;
+}
+
+/* Images */
+.egg-main-image {
+  width: 400px;
+  max-width: 90%;
+  border-radius: 16px;
+  margin: 20px 0;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease;
+}
+
+.egg-main-image:hover {
+  transform: scale(1.03);
+}
+
+.egg-small-img {
+  width: 180px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease;
+}
+
+.egg-small-img:hover {
+  transform: scale(1.05);
+}
+
+/* Image Row in Result */
+.egg-result .egg-img-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+/* Buttons Container */
+.egg-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Model Selection */
+.egg-select {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.egg-select button {
+  min-width: 200px;
+}
+
+/* Result Text */
+.egg-result p {
+  margin: 8px 0;
+  font-size: 1.1rem;
+}
+
+.egg-result p span {
+  font-weight: 600;
+  color: #ffdd59;
+}
+
+/* Card effect for play/result sections */
+.egg-play, .egg-result {
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+  max-width: 800px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.navbar-margin {
+    margin-top: 5vh;
+}
+
+.egg-score {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffdd59;
+    text-shadow: 0px 0px 8px rgba(255, 221, 89, 0.7);
+}

@@ -15,6 +15,7 @@ import SignUp from "./routes/SignUp.tsx";
 import LandingPage from "./routes/Landing.tsx";
 import AccountSettingsPage from "./routes/AccountSettings.tsx";
 import PurchasePage from "./routes/Purchase.tsx";
+import EasterEggPage from "./routes/easterEgg.tsx";
 
 const router = createHashRouter([
   {
@@ -61,6 +62,10 @@ const router = createHashRouter([
       {
         path: "purchasetoken",
         element: <PurchasePage/>
+      },
+      {
+        path: "easterEgg",
+        element: <EasterEggPage/>
       }
     ]
   }
