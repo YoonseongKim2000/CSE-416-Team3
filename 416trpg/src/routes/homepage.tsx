@@ -144,9 +144,9 @@ function HomePage() {
                 value={model}
                 onChange={handleModelChange}
               >
-                <option className="p-reg" value="general">General Model</option>
-                <option className="p-reg" value="art" disabled={accessStatus}>Art Model</option>
-                <option className="p-reg" value="anime" disabled={accessStatus}>Anime Model</option>
+                <option className="p-reg" value="General">General Model</option>
+                <option className="p-reg" value="Art" disabled={accessStatus}>Art Model</option>
+                <option className="p-reg" value="Anime" disabled={accessStatus}>Anime Model</option>
               </select>
               <label htmlFor="floatingSelect" className="p-reg">Select Model</label>
             </div>
