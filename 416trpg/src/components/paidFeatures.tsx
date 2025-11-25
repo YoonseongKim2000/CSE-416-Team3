@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function PaidFeatures() {
   return (
     <div className='d-flex justify-content-center container-fluid flex-wrap pb-5 p-reg'>
-        <div className='card mx-4 shadow-lg' id='featbr_features_card'>
+        <div className='card mx-4 shadow-lg pop' id='featbr_features_card'>
             <h3 className='subtitle-style fw-bold sp-medium'>Features</h3>
             <hr />
             <p>Price</p>
@@ -15,7 +15,7 @@ function PaidFeatures() {
             <p>Analysis confidence percentage</p>
             <p>API documentation</p>
         </div>
-        <div className='card mx-4 shadow-lg' id='featbr_free_card'>
+        <div className='card mx-4 shadow-lg pop' id='featbr_free_card'>
             <h3 className='subtitle-style fw-bold sp-medium'>Free Tier</h3>
             <hr />
             <p>$0 / Month</p>
@@ -26,7 +26,7 @@ function PaidFeatures() {
             <p>✔</p>
             <p>✔</p>
         </div>
-        <div className='card mx-4 shadow-lg'>
+        <div className='card mx-4 shadow-lg pop'>
             <h3 className='subtitle-style fw-bold sp-medium'>Paid Tier</h3>
             <Link to="/purchasetoken">
               <button className='btn glow-btn mt-1'>Buy Now</button>

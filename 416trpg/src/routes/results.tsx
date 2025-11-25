@@ -68,7 +68,7 @@ function ResultsPage() {
     : result.original_image;
 
   return (
-    <div className="d-flex justify-content-center py-5">
+    <div className="d-flex justify-content-center py-5 p-reg">
           <div className="card p-4 shadow cardCustom" style={{ width: "80%" }}>
             {/* Model info */}
             <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap">
@@ -81,11 +81,9 @@ function ResultsPage() {
           <div className="d-grid">
             <button
               type="button"
-              className="button-82-pushable ScanCustomBtn"
+              className="btn btng ScanCustomBtn"
             >
-              <span className="button-82-shadow"></span>
-              <span className="button-82-edge"></span>
-              <span className="button-82-front text">Scan Another Image</span>
+              <span className="text">Scan Another Image</span>
             </button>            
           </div>
         </Link>
@@ -96,10 +94,13 @@ function ResultsPage() {
         {/* Prediction + Confidence */}
         <div className="row align-items-center mb-5">
           <div className="col-md-6 text-center text-md-start mb-4 mb-md-0">
-            <h4 className="text-muted">Our analysis says this image is:</h4>
-            <h1 className="fw-bold display-5 text-success">
-              {result.predicted_class === 1 ? "Human" : "AI"}
-            </h1>
+            <div className="d-flex justify-content-center align-items-center">
+              <h4 className="text-muted">Our analysis says this image is:</h4>
+              <br />
+              <h1 className="fw-bold display-5 text-success ms-3">
+                {result.predicted_class === 1 ? "Human" : "AI"}
+              </h1>
+            </div>
           </div>
 
           <div className="col-md-1 d-none d-md-flex justify-content-center">
@@ -129,7 +130,7 @@ function ResultsPage() {
         
         <hr />
         <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap">
-          <h3 className="fw-bold mb-0" style={{ color: "#528af1" }}>Model's Attention</h3>
+          <h3 className="fw-bold mb-0 sp-medium" style={{ color: "#72a3ff" }}>Model's Attention</h3>
         </div>
         {/* Image + Control Panel */}
         <div className="row align-items-center">
