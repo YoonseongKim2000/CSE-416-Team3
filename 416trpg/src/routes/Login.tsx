@@ -43,6 +43,7 @@ function Login() {
                 toast.error("Error: Internal server error");
             } else if (response.status == 403) {
                 toast.error(result.detail);
+                e.target.reset();
             } else {
                 const accessToken = result.accessToken;
                 const email = result.email;

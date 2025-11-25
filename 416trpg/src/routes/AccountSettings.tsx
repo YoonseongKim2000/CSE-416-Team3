@@ -294,14 +294,17 @@ function AccountSettingsPage() {
         toast.error("Internal server error");
       } else if (response.status == 403) {
         toast.error("Incorrect password")
+        e.target.reset();
       } else if (response.status == 401) {
         //access token invalid, logout
         toast.error("Error: Not authorized, logging out...")
+        closeDeleteModal();
         localStorage.clear();
         contextSetState(null);
         setTimeout(() => navigate('/'), 2500);
       } else if (response.ok) {
         toast.success("Account successfully deleted");
+        closeDeleteModal();
         localStorage.clear();
         contextSetState(null);
         setTimeout(() => navigate('/'), 2500);
@@ -481,7 +484,7 @@ function AccountSettingsPage() {
                         onClick={closeDeleteModal}
                       ></button>
                     </div>
-                    <form action="">
+                    <form onSubmit={handleDeleteAccount}>
                       <div className="modal-body text-start">
                         <p className="text-danger mb-3">
                           ⚠️ This action cannot be undone. Are you sure you want to delete your account?
