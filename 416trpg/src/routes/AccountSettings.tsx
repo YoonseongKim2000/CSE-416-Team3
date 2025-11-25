@@ -19,20 +19,32 @@ function AccountSettingsPage() {
   const [tokenAmount, settokenAmount] = useState("Retrieving");
   const [apiKey, setApiKey] = useState("Retrieving");
   const [apiView, setApiView] = useState<"password" | "text">("password");
+  const [buttonSwitch, setButtonSwitch] = useState(false);
 
   // Password modal
   const [showPassModal, setShowPassModal] = useState(false);
   const [fadeInPass, setFadeInPass] = useState(false);
   const [fadeOutPass, setFadeOutPass] = useState(false);
-  const [buttonSwitch, setButtonSwitch] = useState(false);
 
   // Delete modal
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [fadeInDelete, setFadeInDelete] = useState(false);
   const [fadeOutDelete, setFadeOutDelete] = useState(false);
 
+  // Cancel modal
+  const [showCancelModal, setShowCancelModal] = useState(false);
+  const [fadeInCancel, setFadeInCancel] = useState(false);
+  const [fadeOutCancel, setFadeOutCancel] = useState(false);  
+
+  // APIKey modal
+  const [showAPIModal, setShowAPIModal] = useState(false);
+  const [fadeInAPI, setFadeInAPI] = useState(false);
+  const [fadeOutAPI, setFadeOutAPI] = useState(false);  
+
   const openPassModal = () => setShowPassModal(true);
   const openDeleteModal = () => setShowDeleteModal(true);
+  const openCancelModal = () => setShowCancelModal(true);
+  const openAPIModal = () => setShowAPIModal(true);
   const revealHide = () => {
     if (apiView == "password") {
         setApiView("text");
@@ -60,6 +72,20 @@ function AccountSettingsPage() {
       return () => clearTimeout(t);
     }
   }, [showDeleteModal]);
+
+  useEffect(() => {
+    if (showCancelModal) {
+      const t = setTimeout(() => setFadeInCancel(true), 10);
+      return () => clearTimeout(t);
+    }
+  }, [showCancelModal]);  
+
+  useEffect(() => {
+    if (showAPIModal) {
+      const t = setTimeout(() => setFadeInAPI(true), 10);
+      return () => clearTimeout(t);
+    }
+  }, [showAPIModal]);  
 
   const getInfo = async () => {
     const storedEmail = localStorage.getItem("email");
@@ -117,6 +143,18 @@ function AccountSettingsPage() {
     }
   }
 
+  const handleCancel = async (e:any) => {
+    e.preventDefault();
+    const check = e.target.elements.cancelInput.value
+    console.log(check)
+    if (check === "CANCEL"){
+      cancelPlan();
+      closeCancelModal();
+    } else {
+      toast.warning("Please type 'CANCEL', case sensitive")
+    }
+  }
+
   // Close animations
   const closePassModal = () => {
     setFadeOutPass(true);
@@ -133,6 +171,24 @@ function AccountSettingsPage() {
     setTimeout(() => {
       setShowDeleteModal(false);
       setFadeOutDelete(false);
+    }, 300);
+  };
+
+  const closeCancelModal = () => {
+    setFadeOutCancel(true);
+    setFadeInCancel(false);
+    setTimeout(() => {
+      setShowCancelModal(false);
+      setFadeOutCancel(false);
+    }, 300);
+  };
+
+  const closeAPIModal = () => {
+    setFadeOutAPI(true);
+    setFadeInAPI(false);
+    setTimeout(() => {
+      setShowAPIModal(false);
+      setFadeOutAPI(false);
     }, 300);
   };
 
@@ -219,7 +275,7 @@ function AccountSettingsPage() {
               <button
               type="button"
               className="button-82-pushable AccountCustomBtn ms-3 mt-3"
-              onClick={cancelPlan}
+              onClick={openCancelModal}
             >
               <span className="button-82-shadow"></span>
               <span className="button-82-edge"></span>
@@ -255,7 +311,7 @@ function AccountSettingsPage() {
             <button type="button" className="button-82-pushable AccountCustomBtn">
               <span className="button-82-shadow"></span>
               <span className="button-82-edge"></span>
-              <span className="button-82-front text">Generate</span>
+              <span className="button-82-front text">Regenerate Key</span>
             </button>
 
             <button type="button" className="button-82-pushable AccountCustomBtn" onClick={revealHide}>
@@ -371,6 +427,74 @@ function AccountSettingsPage() {
               <div
                 className={`custom-backdrop ${fadeInDelete ? "fade-in" : ""} ${fadeOutDelete ? "fade-out" : ""}`}
                 onClick={closeDeleteModal}
+              ></div>
+            </>
+          )}
+
+          {/* Cancel Modal */}
+          {showCancelModal && (
+            <>
+              <div className={`custom-modal ${fadeInCancel ? "fade-in" : ""} ${fadeOutCancel ? "fade-out" : ""}`}>
+                <div className="modal-dialog">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h5 className="modal-title">Cancel Tier</h5>
+                      <button
+                        type="button"
+                        className="btn-close ms-auto"
+                        onClick={closeCancelModal}
+                      ></button>
+                    </div>
+                    <form onSubmit={handleCancel}>
+                      <div className="modal-body text-start">
+                        <label className="form-label">Type "CANCEL" to confirm your monthly cancellation:</label>
+                        <input type="text" className="form-control mb-3" placeholder="CANCEL" name="cancelInput"/>
+                      </div>
+                      <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary me-3" onClick={closeCancelModal}>Abort</button>
+                        <button type="submit" className="btn btn-danger">Confirm</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div
+                className={`custom-backdrop ${fadeInCancel ? "fade-in" : ""} ${fadeOutCancel ? "fade-out" : ""}`}
+                onClick={closeCancelModal}
+              ></div>
+            </>
+          )}
+
+          {/* API Modal */}
+          {showCancelModal && (
+            <>
+              <div className={`custom-modal ${fadeInAPI ? "fade-in" : ""} ${fadeOutAPI ? "fade-out" : ""}`}>
+                <div className="modal-dialog">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h5 className="modal-title">Regenerate API Key</h5>
+                      <button
+                        type="button"
+                        className="btn-close ms-auto"
+                        onClick={closeCancelModal}
+                      ></button>
+                    </div>
+                    <form onSubmit={handleCancel}>
+                      <div className="modal-body text-start">
+                        <label className="form-label">Type "CANCEL" to confirm your monthly cancellation:</label>
+                        <input type="text" className="form-control mb-3" placeholder="CANCEL" name="cancelInput"/>
+                      </div>
+                      <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary me-3" onClick={closeCancelModal}>Abort</button>
+                        <button type="submit" className="btn btn-danger">Confirm</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div
+                className={`custom-backdrop ${fadeInCancel ? "fade-in" : ""} ${fadeOutCancel ? "fade-out" : ""}`}
+                onClick={closeCancelModal}
               ></div>
             </>
           )}
