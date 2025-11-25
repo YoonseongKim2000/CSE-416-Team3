@@ -51,6 +51,7 @@ function SignUp() {
             } else {
                 if (response.status >= 400 || response.status < 500) { //user issue
                     toast.error("Entered information is invalid.")
+                    e.target.reset();
                 } else {
                     toast.error(response.statusText || "An error occurred during registration.");
                 }
