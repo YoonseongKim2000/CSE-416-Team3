@@ -137,7 +137,7 @@ function AccountSettingsPage() {
     const hashedpw = generateHash(contextState.auth.email ? contextState.auth.email : "", currpw);
     const hashedNewpw = generateHash(contextState.auth.email ? contextState.auth.email : "", newpw);
 
-    const updateData = {email: contextState.auth.email, password: hashedpw, newPassword: newpw};
+    const updateData = {email: contextState.auth.email, password: hashedpw, newPassword: hashedNewpw};
 
     try {
       const response = await fetch(apiUrl + "user/password", {
