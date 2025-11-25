@@ -15,13 +15,19 @@ function Login() {
         e.preventDefault();
 
         const email = e.target.elements.email.value;
+        const pw = e.target.elements.password.value;
 
-        if (!email || !e.target.elements.password.value) {
+        if (!email || !pw) {
             toast.error("Please fill in all fields");
             return;
         }
 
-        const hashedPw = generateHash(email, e.target.elements.password.value);
+        if (email.length > 72 || pw.length > 72) {
+            toast.error("Inputs too long, keep under 72 characters");
+            return;
+        }
+
+        const hashedPw = generateHash(email, pw);
 
 
         const loginData = {email: email, password: hashedPw};

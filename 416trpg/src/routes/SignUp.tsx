@@ -22,6 +22,11 @@ function SignUp() {
             return;
         }
 
+        if (email.length > 72 || password.length > 72 || confirmPassword.length > 72) {
+            toast.error("Inputs too long, keep under 72 characters");
+            return;
+        }
+
         if (password != confirmPassword) { //check passwords match
             toast.error("Error, passwords do not match.");
             return;

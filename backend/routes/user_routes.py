@@ -21,6 +21,9 @@ async def sign_up(user: UserInModel, request: Request):
     if (user.password == None):
         raise HTTPException(status_code=400, detail="Required credentials missing")
 
+    if (len(user.email) > 72 or len(user.password) > 72):
+        raise HTTPException(status_code=413, detail="Content too large")
+
     #check if email already exists
     result = await get_user_by_email(user, db)
     if (isinstance(result, PyMongoError)):
