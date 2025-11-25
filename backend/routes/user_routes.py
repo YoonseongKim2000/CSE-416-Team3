@@ -2,8 +2,7 @@ from typing import Annotated
 from fastapi import APIRouter, Body, Depends, HTTPException, status, Request, Response
 from routes.access_routes import verify_token
 from core.api_key_gen import generateKey
-from db.db_interface import UpdateUserModel, UserInModel, UserOutModel, get_user_by_email, create_user, UserAccessAuthOut, update_password, update_isPaid
-from db.db_interface import UserInModel, UserOutModel, get_user_by_email, create_user, UserAccessAuthOut, update_password, update_isPaid
+from db.db_interface import UpdateUserModel, UserInModel, UserOutModel, delete_user_db, get_user_by_email, create_user, UserAccessAuthOut, update_password, update_isPaid
 from pymongo.errors import PyMongoError
 
 router = APIRouter(prefix="/user", tags=["Users"])
@@ -113,3 +112,27 @@ async def info(authuser: Annotated[UserOutModel, Depends(verify_token)], request
         raise HTTPException(status_code=400, detail="Credential error")
     
     return {"tier" : result["isPaid"], "tokenRemaining": result["tokens"], "apiKey": result["APIKey"]}
+
+@router.delete(
+    "/delete",
+    status_code=status.HTTP_200_OK
+)
+async def delete_user(authuser: Annotated[UserOutModel, Depends(verify_token)], userin: UserInModel, request: Request):
+    db = request.app.database
+    
+    if (authuser["password"] == None):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Required credentials missing")
+
+    result = await delete_user_db(userin, db)
+    if (isinstance(result, PyMongoError)):
+        raise HTTPException(status_code=500, detail="Database error")
+
+    if (result == None):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Credential error")
+
+    if (result != 1):
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Database error")
+
+    return result
+    
+    
