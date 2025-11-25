@@ -146,12 +146,31 @@ function AccountSettingsPage() {
   const handleCancel = async (e:any) => {
     e.preventDefault();
     const check = e.target.elements.cancelInput.value
-    console.log(check)
     if (check === "CANCEL"){
       cancelPlan();
       closeCancelModal();
     } else {
       toast.warning("Please type 'CANCEL', case sensitive")
+    }
+  }
+
+  const handleRegen = async () => {
+    const token = localStorage.getItem("accessToken");
+    try {
+      const response = await fetch (apiUrl + "user/regenKey", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      });
+
+      if (response.ok){
+        await getInfo();
+        closeAPIModal();
+      }
+    } catch (error) {
+      toast.error(""+error)
     }
   }
 
@@ -361,7 +380,7 @@ function AccountSettingsPage() {
           </div>
 
           <div className='text-start d-flex flex-wrap gap-3 mb-3'>
-            <button type="button" className="button-82-pushable AccountCustomBtn">
+            <button type="button" className="button-82-pushable AccountCustomBtn" onClick={openAPIModal}>
               <span className="button-82-shadow"></span>
               <span className="button-82-edge"></span>
               <span className="button-82-front text">Regenerate Key</span>
@@ -520,7 +539,7 @@ function AccountSettingsPage() {
           )}
 
           {/* API Modal */}
-          {showCancelModal && (
+          {showAPIModal && (
             <>
               <div className={`custom-modal ${fadeInAPI ? "fade-in" : ""} ${fadeOutAPI ? "fade-out" : ""}`}>
                 <div className="modal-dialog">
@@ -530,25 +549,25 @@ function AccountSettingsPage() {
                       <button
                         type="button"
                         className="btn-close ms-auto"
-                        onClick={closeCancelModal}
+                        onClick={closeAPIModal}
                       ></button>
                     </div>
-                    <form onSubmit={handleCancel}>
-                      <div className="modal-body text-start">
-                        <label className="form-label">Type "CANCEL" to confirm your monthly cancellation:</label>
-                        <input type="text" className="form-control mb-3" placeholder="CANCEL" name="cancelInput"/>
-                      </div>
-                      <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary me-3" onClick={closeCancelModal}>Abort</button>
-                        <button type="submit" className="btn btn-danger">Confirm</button>
-                      </div>
-                    </form>
+
+                    <div className="modal-body text-start">
+                      <label className="form-label">Are you sure you want to regenerate your API key?</label>
+                      <hr />
+                    </div>
+                    <div className="modal-footer">
+                      <button type="button" className="btn btn-secondary me-3" onClick={closeAPIModal}>Abort</button>
+                      <button type="button" className="btn btn-danger" onClick={handleRegen}>Confirm</button>
+                    </div>
+
                   </div>
                 </div>
               </div>
               <div
-                className={`custom-backdrop ${fadeInCancel ? "fade-in" : ""} ${fadeOutCancel ? "fade-out" : ""}`}
-                onClick={closeCancelModal}
+                className={`custom-backdrop ${fadeInAPI ? "fade-in" : ""} ${fadeOutAPI ? "fade-out" : ""}`}
+                onClick={closeAPIModal}
               ></div>
             </>
           )}
