@@ -9,21 +9,21 @@
 }
 
 /* Main card styling */
-.main-card {
+.f-main-card {
   width: 80%;
   background: #ffffff;
-  border-radius: 12px;
+  border-radius: 2px;
   padding: 2rem;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   text-align: center;
 }
 
-.main-card h2 {
+.f-main-card h2 {
   color: #6596f0;
   margin-bottom: 1rem;
 }
 
-.main-card p {
+.f-main-card p {
   color: #495057;
 }
 
@@ -39,7 +39,7 @@
 /* Individual feature cards */
 .feature-card {
   background: #ffffff;
-  border-radius: 12px;
+  border-radius: 2px;
   padding: 1.5rem;
   flex: 1 1 250px; /* grow, shrink, minimum width 250px */
   max-width: 325px; /* optional: limit how big they get */
