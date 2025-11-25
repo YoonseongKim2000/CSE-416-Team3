@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function PaidFeatures() {
   return (
-    <div className='d-flex justify-content-center container-fluid flex-wrap pb-5'>
+    <div className='d-flex justify-content-center container-fluid flex-wrap pb-5 p-reg'>
         <div className='card mx-4 shadow-lg' id='featbr_features_card'>
             <h3 className='subtitle-style fw-bold sp-medium'>Features</h3>
             <hr />

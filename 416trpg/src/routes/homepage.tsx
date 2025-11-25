@@ -163,7 +163,7 @@ function HomePage() {
             {/* File upload */}
             <div className="mb-3">
               <input
-                className="form-control fileselect"
+                className="form-control fileselect p-reg"
                 type="file"
                 id="formFile"
                 accept="image/*"

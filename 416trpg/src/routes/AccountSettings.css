@@ -117,13 +117,19 @@
   margin-bottom: 0px;
 }
 
+.accbtnsmall {
+  max-width: 250px;
+  margin-bottom: 0px; 
+}
+
 .accountsettingboldtext {
   color: #5b94ff;
-  font-size: 25px;
+  font-size: 20px;
+  margin-right: 8px;
 }
 
 .accountnormaltext {
-  font-size: 25px;
+  font-size: 17px;
 }
 
 .accountkeydisplay {
@@ -242,4 +248,16 @@
 
 .AccountDeleteCustomBtn .button-82-edge {
   background: linear-gradient(to left, #7a0000 0%, #b20000 8%, #b20000 92%, #7a0000 100%);
+}
+
+.btng {
+    border: 1px solid #686d77;
+    border-radius: 3px;
+    background-color: #ffffff;
+    color: #56585c;
+}
+
+.btng:hover, .btng:active {
+  background-color: #8c9099;
+  color: white;
 }

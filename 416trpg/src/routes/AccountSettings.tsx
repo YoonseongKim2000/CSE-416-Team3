@@ -316,7 +316,7 @@ function AccountSettingsPage() {
   }
 
   return (
-    <div className="accountsettingspage container-fluid py-5 d-flex justify-content-center align-items-center">
+    <div className="accountsettingspage container-fluid py-5 d-flex justify-content-center align-items-center p-reg">
       <div className="w-75">
         <h1 className="mb-4 fw-bold accountsettingtitle aw-regular">Account Settings</h1>
 
@@ -327,7 +327,7 @@ function AccountSettingsPage() {
             <hr />
           <div className="text-start mb-3 accountnormaltext">
             <b className='accountsettingboldtext'>Tier:</b> {subscriptionType}
-            <div className="text-start mb-3 accountnormaltext">
+            <div className="text-start mb-1 accountnormaltext">
             <b className='accountsettingboldtext'>Tokens Remaining: </b> {tokenAmount}
             </div>
 
@@ -335,11 +335,10 @@ function AccountSettingsPage() {
               <Link to="/pricing">
               <button
                 type="button"
-                className="button-82-pushable AccountCustomBtn ms-3 mt-3"
+                className="btn glow-btn AccountCustomBtn mt-3"
               >
-                <span className="button-82-shadow"></span>
-                <span className="button-82-edge"></span>
-                <span className="button-82-front text">Upgrade Tier</span>
+                
+                <span className="text">Upgrade Tier</span>
               </button>
               </Link>
             )}
@@ -349,12 +348,11 @@ function AccountSettingsPage() {
             {buttonSwitch && (
               <button
               type="button"
-              className="button-82-pushable AccountCustomBtn ms-3 mt-3"
+              className="btn btn-outline-danger AccountCustomBtn mt-3"
               onClick={openCancelModal}
             >
-              <span className="button-82-shadow"></span>
-              <span className="button-82-edge"></span>
-              <span className="button-82-front text">Cancel Plan</span>
+              
+              <span className="text">Cancel Plan</span>
             </button>
             )}
             
@@ -362,16 +360,15 @@ function AccountSettingsPage() {
             <Link to="/purchasetoken">
               <button
                 type="button"
-                className="button-82-pushable AccountCustomBtn ms-3 mt-3"
+                className="btn glow-btn AccountCustomBtn ms-3 mt-3"
               >
-                <span className="button-82-shadow"></span>
-                <span className="button-82-edge"></span>
-                <span className="button-82-front text">Buy More Tokens</span>
+              
+                <span className="text">Buy More Tokens</span>
               </button>
             </Link>
           </div>
             <hr />
-          <div className="text-start d-flex align-items-center gap-3 mb-3">
+          <div className="text-start d-flex align-items-center gap-3 mb-3 mt-3">
             <b className='accountsettingboldtext'>API KEY:</b>
             <input
               type={apiView}
@@ -380,41 +377,36 @@ function AccountSettingsPage() {
               readOnly
               value={apiKey}
             />
+            <button type="button" className="btn btng acbtnsmall" onClick={revealHide}>
+
+              <span className="text">Reveal/Hide</span>
+            </button>
           </div>
 
           <div className='text-start d-flex flex-wrap gap-3 mb-3'>
-            <button type="button" className="button-82-pushable AccountCustomBtn" onClick={openAPIModal}>
-              <span className="button-82-shadow"></span>
-              <span className="button-82-edge"></span>
-              <span className="button-82-front text">Regenerate Key</span>
+            <button type="button" className="btn btn-outline-danger AccountCustomBtn" onClick={openAPIModal}>
+              
+              <span className="text">Regenerate Key</span>
             </button>
 
-            <button type="button" className="button-82-pushable AccountCustomBtn" onClick={revealHide}>
-              <span className="button-82-shadow"></span>
-              <span className="button-82-edge"></span>
-              <span className="button-82-front text">Reveal/Hide</span>
-            </button>
 
-            <button type="button" className="button-82-pushable AccountCustomBtn" onClick={() =>  navigator.clipboard.writeText(apiKey)}>
-              <span className="button-82-shadow"></span>
-              <span className="button-82-edge"></span>
-              <span className="button-82-front text">Copy to Clipboard</span>
+            <button type="button" className="btn btng AccountCustomBtn" onClick={() =>  navigator.clipboard.writeText(apiKey)}>
+
+              <span className="text">Copy to Clipboard</span>
             </button>
           </div>
 
           <p className='text-start'>*Do not reveal your API key to anyone. Keep it secret, keep it safe.</p>
             <hr />
             {/* Change Password section */}
-            <div className="text-start mb-3">
+            <div className="text-start mb-3 mt-3">
               <b className="accountsettingboldtext">Password: </b>
               <button
                 type="button"
-                className="button-82-pushable AccountCustomBtn"
+                className="btn btnb AccountCustomBtn"
                 onClick={openPassModal}
               >
-                <span className="button-82-shadow"></span>
-                <span className="button-82-edge"></span>
-                <span className="button-82-front text">Change Password</span>
+                <span className="text">Change Password</span>
               </button>
             </div>  
             <hr />
@@ -422,12 +414,10 @@ function AccountSettingsPage() {
             <div className="d-flex justify-content-end">
               <button
                 type="button"
-                className="button-82-pushable AccountDeleteCustomBtn"
+                className="btn btn-outline-danger AccountDeleteCustomBtn"
                 onClick={openDeleteModal}
               >
-                <span className="button-82-shadow"></span>
-                <span className="button-82-edge"></span>
-                <span className="button-82-front text">Delete Account</span>
+                <span className="text">Delete Account</span>
               </button>
             </div>
 
