@@ -322,7 +322,7 @@ function AccountSettingsPage() {
 
         <div className="card shadow-lg border-0 p-4">
           <span className='text-start accountnormaltext'>
-            <b className='accountsettingboldtext'>Your Email: </b>{email}
+            <b className='accountsettingboldtext2'>Your Email: </b>{email}
           </span>
             <hr />
           <div className="text-start mb-3 accountnormaltext">
@@ -400,7 +400,7 @@ function AccountSettingsPage() {
             <hr />
             {/* Change Password section */}
             <div className="text-start mb-3 mt-3">
-              <b className="accountsettingboldtext">Password: </b>
+              <b className="accountsettingboldtext2">Password: </b>
               <button
                 type="button"
                 className="btn btnb AccountCustomBtn"
