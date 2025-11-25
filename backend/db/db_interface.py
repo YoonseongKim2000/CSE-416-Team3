@@ -151,6 +151,17 @@ async def update_isPaid(userEmail: str, db, status):
         outval = e
 
     return outval
+
+async def update_APIKey(userEmail: str, db, newKey):
+    user_collection = db.get_collection("users")
+
+    try:
+        result = await user_collection.update_one({'email': userEmail}, {'$set': {'APIKey': newKey}})
+        outval = result.modified_count
+    except PyMongoError as e:
+        outval = e
+
+    return outval
 # @router.get("/users", response_model=UserCollection, response_model_by_alias=False,)
 # async def list_users(request: Request):
 #     """
