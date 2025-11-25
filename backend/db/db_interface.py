@@ -59,6 +59,7 @@ class UserOutModel(BaseModel):
     )
 
 class UpdateUserModel(BaseModel):
+    email: EmailStr = Field(...)
     password: Optional[str] = None
     newPassword: Optional[str] = None
     isPaid: Optional[bool] = None
