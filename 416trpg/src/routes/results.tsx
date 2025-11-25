@@ -178,6 +178,32 @@ function ResultsPage() {
             </p>
           </div>
         </div>
+
+        <hr />
+        <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+          <h3 className="fw-bold mb-0" style={{ color: "#528af1" }}>Analysis History</h3>
+        </div>
+
+        <div className="">
+          <div className="d-flex justify-content-center align-items-center row row-cols-2 row-cols-md-1">
+            <div className="history-card row flex flex-start p-0">
+              <img 
+                src={`data:image/png;base64,${displayedImage}`}
+                alt="History Image" 
+                className="history-image p-0 col"
+              />
+              <div className="col testTemp text-start">
+                <p>Model Used: Blah</p>
+                <p>Classification: Blah%</p>
+              </div>
+            </div>
+            <div className="history-card col">blah</div>
+            <div className="history-card col">blah</div>
+            <div className="history-card col">blah</div>
+            <div className="history-card col">blah</div>
+          </div>
+        </div>
+
       </div>
     </div>
   );
