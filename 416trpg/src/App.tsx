@@ -16,7 +16,7 @@ export type AuthContext = {
 
 export type AuthOutletContext = {
   contextState: AuthContext;
-  contextSetState: (a: AuthContext) => void;
+  contextSetState: (a: AuthContext | null) => void;
 }
 
 function App() {

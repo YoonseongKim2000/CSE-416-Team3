@@ -34,7 +34,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=['http://localhost:5173', 'https://yoonseongkim2000.github.io'],
     allow_credentials=True,
-    allow_methods=["GET", "POST", "HEAD", "OPTIONS", "PUT"],
+    allow_methods=["GET", "POST", "HEAD", "OPTIONS", "PUT", "DELETE"],
     allow_headers=["Access-Control-Allow-Headers", 'Content-Type', 'Authorization', 'Access-Control-Allow-Origin', 'Set-Cookie'],
 )
 
