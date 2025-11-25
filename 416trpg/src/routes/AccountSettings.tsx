@@ -230,9 +230,62 @@ function AccountSettingsPage() {
         toast.error("Incorrect credentials or wrong current password");
       } else if (response.status == 500) {
         toast.error("Internal server error");
-      } else {
+      } else if (response.status == 401) {
+        //access token invalid, logout
+        toast.error("Error: Not authorized, logging out...")
+        localStorage.clear();
+        contextSetState(null);
+        setTimeout(() => navigate('/'), 2500);
+      } else if (response.ok) {
         toast.success("Password succesfully changed!");
         closePassModal();
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("" + (err));
+    }
+  }
+
+  const handleDeleteAccount = async (e: any) => {
+    e.preventDefault();
+
+    const password = e.target.elements.passwordchk.value;
+
+    if (!password) {
+      toast.error("Please enter your password");
+    }
+
+    const hashedpw = generateHash(contextState.auth.email ? contextState.auth.email : "", password);
+    const data = {email: contextState.auth.email, password: hashedpw};
+
+    try {
+      const response = await fetch (apiUrl + "user/delete", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${contextState?.auth.accessToken}`,
+          "Access-Control-Allow-Origin": selfUrl,
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.status == 400) {
+        toast.error("Required credentials missing");
+      } else if (response.status == 500) {
+        toast.error("Internal server error");
+      } else if (response.status == 403) {
+        toast.error("Incorrect password")
+      } else if (response.status == 401) {
+        //access token invalid, logout
+        toast.error("Error: Not authorized, logging out...")
+        localStorage.clear();
+        contextSetState(null);
+        setTimeout(() => navigate('/'), 2500);
+      } else if (response.ok) {
+        toast.success("Account successfully deleted");
+        localStorage.clear();
+        contextSetState(null);
+        setTimeout(() => navigate('/'), 2500);
       }
     } catch (err) {
       console.log(err);
@@ -394,7 +447,6 @@ function AccountSettingsPage() {
               ></div>
             </>
           )}
-            <ToastContainer position='top-center' autoClose={2500} theme='colored'/>
 
           {/* --- DELETE ACCOUNT MODAL --- */}
           {showDeleteModal && (
@@ -410,17 +462,19 @@ function AccountSettingsPage() {
                         onClick={closeDeleteModal}
                       ></button>
                     </div>
-                    <div className="modal-body text-start">
-                      <p className="text-danger mb-3">
-                        ⚠️ This action cannot be undone. Are you sure you want to delete your account?
-                      </p>
-                      <label className="form-label">Confirm your password to proceed:</label>
-                      <input type="password" className="form-control mb-3" placeholder="Enter your password" />
-                    </div>
-                    <div className="modal-footer">
-                      <button type="button" className="btn btn-secondary me-3" onClick={closeDeleteModal}>Cancel</button>
-                      <button type="button" className="btn btn-danger">Delete Account</button>
-                    </div>
+                    <form action="">
+                      <div className="modal-body text-start">
+                        <p className="text-danger mb-3">
+                          ⚠️ This action cannot be undone. Are you sure you want to delete your account?
+                        </p>
+                        <label className="form-label" htmlFor='passwordchk'>Confirm your password to proceed:</label>
+                        <input type="password" className="form-control mb-3" placeholder="Enter your password" name='passwordchk'/>
+                      </div>
+                      <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary me-3" onClick={closeDeleteModal}>Cancel</button>
+                        <button type="submit" className="btn btn-danger">Delete Account</button>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
