@@ -70,7 +70,6 @@ function AccountSettingsPage() {
     }
     const token = localStorage.getItem("accessToken");
     setEmail(storedEmail);
-
     try {
       const response = await fetch (apiUrl + "user/info", {
         method: "GET",
@@ -84,6 +83,9 @@ function AccountSettingsPage() {
               if (data.tier){
                 setSubscriptionType("Paid");
                 setButtonSwitch(true)
+              } else {
+                setSubscriptionType("Free");
+                setButtonSwitch(false)
               };
               settokenAmount(data.tokenRemaining);
               setApiKey(data.apiKey);
@@ -94,8 +96,25 @@ function AccountSettingsPage() {
     } catch (error) {
       toast.error("" + error)
     }
+  }
 
-    
+  const cancelPlan = async () => {
+    const token = localStorage.getItem("accessToken");
+    try {
+      const response = await fetch (apiUrl + "user/cancelPlan", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      });
+
+      if (response.ok){
+        await getInfo();
+      }
+    } catch (error) {
+      toast.error(""+error)
+    }
   }
 
   // Close animations
@@ -200,6 +219,7 @@ function AccountSettingsPage() {
               <button
               type="button"
               className="button-82-pushable AccountCustomBtn ms-3 mt-3"
+              onClick={cancelPlan}
             >
               <span className="button-82-shadow"></span>
               <span className="button-82-edge"></span>
