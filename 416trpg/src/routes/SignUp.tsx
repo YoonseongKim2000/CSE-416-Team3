@@ -68,9 +68,9 @@ function SignUp() {
     }
 
     return (
-        <div className='container signup-container d-flex justify-content-center align-items-center'>
+        <div className='container signup-container d-flex justify-content-center align-items-center p-reg'>
             <div className='card medium-card shadow-lg signup-card d-flex align-items-center p-4'>
-                <h1 className='fw-bold text-center title-style'>Sign Up</h1>
+                <h1 className='fw-bold text-center title-style aw-regular'>Sign Up</h1>
                 <form onSubmit={handleSubmit} className='signup-form'>
                     <div className='mb-3'>
                         <label htmlFor="email" className='form-label signup-label'>

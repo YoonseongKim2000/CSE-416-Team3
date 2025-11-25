@@ -131,12 +131,12 @@ function PurchasePage () {
     }
 
     return (
-        <div className="purchasetokenpage container-fluid py-5 d-flex justify-content-center align-items-center">
+        <div className="purchasetokenpage container-fluid py-5 d-flex justify-content-center align-items-center p-reg">
             <div className="w-75">
-                <h1 className="mb-4 fw-bold purchasetokentitle">Purchase Product</h1>
+                <h1 className="mb-4 fw-bold purchasetokentitle aw-regular">Purchase Product</h1>
                 <div className="card border-0 p-4">
                     <span className='text-start purchasepagenormaltext'>
-                        <b className='purchasepageboldtext'>Purchase Monthly Access</b>
+                        <b className='purchasepageboldtext sp-medium'>Purchase Monthly Access</b>
                     </span>
                     <hr />
                     <div className="purchasepage-feature-row">
@@ -163,7 +163,7 @@ function PurchasePage () {
 
                 <div className="card border-0 p-4">
                     <span className='text-start purchasepagenormaltext'>
-                        <b className='purchasepageboldtext'>Purchase Tokens</b>
+                        <b className='purchasepageboldtext sp-medium'>Purchase Tokens</b>
                     </span>
                     <hr />
                     <div className="purchasepage-feature-row">

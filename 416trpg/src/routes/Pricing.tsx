@@ -12,14 +12,14 @@ function Pricing() {
                 <span style={{color: "#727884", textShadow: "0 0 0"}}> for</span> Improved Image Analysis
             </h1>
             <div className='d-flex justify-content-center container-fluid flex-wrap'>
-                <div className='card small-card shadow-lg paid-header-card'>
+                <div className='card small-card shadow-lg paid-header-card p-reg pop'>
                     <h2 className='fw-bold subtitle-style m-2 mb-3 sp-medium'>Free Tier</h2>
                     <hr />
                     <p className='fw-bold free-spacing'>$0 / month</p>
                     <p>Image analysis with <br /> <span style={{color: "#960500", fontWeight: "600"}}>1 AI Model</span></p>
                     <p>No free API access ❌</p>
                 </div>
-                <div className='card small-card shadow-lg paid-header-card'>
+                <div className='card small-card shadow-lg paid-header-card p-reg pop'>
                     <div className='align-items-center'>
                         <h2 className='fw-bold subtitle-style sp-medium'>Paid Tier</h2>
                         <Link to="/purchasetoken">

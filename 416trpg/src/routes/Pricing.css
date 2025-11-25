@@ -34,3 +34,11 @@
 .free-spacing {
     margin-top: 39px;
 }
+
+.pop:hover {
+  transform: translateY(-5px);
+}
+
+.pop {
+    transition: transform 0.3s ease;
+}

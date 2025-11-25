@@ -31,7 +31,7 @@ function NavBar({auth, handleAuthToNull}: Props) {
 
         {/* Middle - Links */}
         <div className="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-          <ul className="navbar-nav mb-2 mb-md-0">
+          <ul className="navbar-nav mb-2 mb-md-0 p-reg">
             <li className="nav-item">
               <NavLink to='/home' className={({isActive}) => isActive ? "nav-link active-link" : "nav-link"}>
                 Analyze
@@ -57,7 +57,7 @@ function NavBar({auth, handleAuthToNull}: Props) {
 
         {/* Right - Login */}
         { auth?.auth.accessToken ?
-          <div className='nav-item'>
+          <div className='nav-item p-reg'>
             <button className='nav-link dropdown-toggle dropdown d-flex flex-row align-items-center' id='nav_dropdown' type='button' data-bs-toggle="dropdown">
               <b id='nav_email'>{auth?.auth.email}</b>
             </button>
@@ -73,7 +73,7 @@ function NavBar({auth, handleAuthToNull}: Props) {
               </li>
             </ul>
           </div>
-          : <div className="d-flex">
+          : <div className="d-flex p-reg">
             <Link to='/login' id="login-link" className='me-2'>
             <button className="btn btnb" id="login-btn">Log In</button>
             </Link>

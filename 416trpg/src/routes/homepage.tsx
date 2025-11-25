@@ -131,7 +131,7 @@ function HomePage() {
 
       {/* Main content (hidden while loading) */}
       {!loading && (
-        <div className="text-center w-75">
+        <div className="text-center w-75 p-reg">
           <h1 className="mb-4 fw-bold AnalyzeImage aw-regular">Analyze Image</h1>
 
           <div className="card shadow-lg border-0 p-4">
@@ -163,7 +163,7 @@ function HomePage() {
             {/* File upload */}
             <div className="mb-3">
               <input
-                className="form-control fileselect"
+                className="form-control fileselect p-reg"
                 type="file"
                 id="formFile"
                 accept="image/*"

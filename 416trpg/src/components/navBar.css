@@ -29,7 +29,7 @@
     color: #3971d8;
 }
 
-.btnb:hover {
+.btnb:hover, .btnb:active {
     border: 1px solid #528af1;
     border-radius: 3px;
     background-color: #528af1;
@@ -54,6 +54,12 @@
 #nav_dropdown:hover , #nav_dropdown:hover b {
   color:#526af1;
   text-shadow: 0;
+}
+
+.dropdown-item:focus, #navbar_user_dropdown li:focus,
+.dropdown-item:active, #navbar_user_dropdown li:active {
+    background-color: white;
+    color:#15203f;
 }
 
 #navbar_user_dropdown {

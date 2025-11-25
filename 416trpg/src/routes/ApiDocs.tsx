@@ -36,7 +36,7 @@ function ApiDocsPage() {
   };
 
   return (
-    <div className="api-docs-container">
+    <div className="api-docs-container p-reg">
       {/* Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? "open" : "collapsed"}`}>
         <div className="sidebar-content">
@@ -68,7 +68,7 @@ function ApiDocsPage() {
       <main className={`docs-content ${sidebarOpen ? "shifted" : "centered"}`}>
         <div className="card p-4 shadow api-docs-card">
           <section id="Overview" className="text-start">
-            <h2>Overview</h2>
+            <h2 className="aw-regular">Overview</h2>
             <p>
               The TrueVision API allows developers to analyze images using our advanced machine-learning models. 
               The implementation of our API will allow clients to upload an image and specify the model to receive 
@@ -82,7 +82,7 @@ function ApiDocsPage() {
             </section>
 
           <section id="Base URL" className="text-start">
-            <h2>Base URL</h2>
+            <h2 className="aw-regular">Base URL</h2>
             <p>
               <pre>
                 <code className="codeVals">
@@ -93,7 +93,7 @@ function ApiDocsPage() {
             </section>
 
           <section id="Authentication" className="text-start">
-            <h2>API Endpoints</h2>
+            <h2 className="aw-regular">API Endpoints</h2>
             <h3>API Key</h3>
             <p>
               Every user is assigned a unique API Key. The use of the TrueVision API requires 
@@ -141,7 +141,7 @@ function ApiDocsPage() {
           </section>
 
           <section id="Endpoint: Analyze Image" className="text-start">
-            <h2>Endpoint: Analyze Image</h2>
+            <h2 className="aw-regular">Endpoint: Analyze Image</h2>
             <h3>POST (/APIanalyze)</h3>
             <p>Analyze an image using one of the available TrueVision AI models.</p>
 
@@ -214,7 +214,7 @@ function ApiDocsPage() {
           </section>
 
           <section id="Successful Response (Example)" className="text-start">
-            <h2>Successful Response (Example)</h2>
+            <h2 className="aw-regular">Successful Response (Example)</h2>
             <pre>
               <code>&#123;</code><br />
               <code>&#9;"predicted_class": int,</code><br />

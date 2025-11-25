@@ -3,8 +3,8 @@
 }
 
 .purchasetokentitle {
-    margin-top: 1rem;
-    color: #5b94ff;
+    margin-top: 5vh;
+    color: #72a3ff;
 }
 
 .purchasepagenormaltext {
@@ -12,7 +12,7 @@
 }
 
 .purchasepageboldtext {
-    color: #5b94ff;
+    color: #75aeff;
     font-size: 25px;
 }
 

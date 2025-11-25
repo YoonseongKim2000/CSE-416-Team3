@@ -66,9 +66,9 @@ function Login() {
     }
 
     return (
-        <div className='container login-container d-flex justify-content-center align-items-center'>
+        <div className='container login-container d-flex justify-content-center align-items-center p-reg'>
             <div className='card small-card shadow-lg login-card d-flex align-items-center p-4'>
-                <h1 className='fw-bold text-center title-style'>Log In</h1>
+                <h1 className='fw-bold text-center title-style aw-regular'>Log In</h1>
                 <form onSubmit={handleSubmit} className='login-form'>
                     <div className='mb-3'>
                         <label htmlFor="email" className='form-label login-label'>
