@@ -35,7 +35,7 @@
   font-weight: 700;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  color: #6596f0;
+  color: #8fb6ff;
   flex-shrink: 0;
   position: sticky;
   top: 0;
@@ -81,7 +81,7 @@
 }
 
 .sidebar-item.active {
-  background: #6596f0;
+  background: #8fb6ff;
   color: white;
 }
 
@@ -124,7 +124,7 @@
   left: 250px;
   width: 22px;
   height: 45px;
-  background: #6596f0;
+  background: #8fb6ff;
   color: white;
   border: none;
   border-radius: 0 6px 6px 0;
@@ -136,7 +136,7 @@
 }
 
 .sidebar-toggle-fixed:hover {
-  background: #6596f0;
+  background: #8fb6ff;
 }
 
 .sidebar-toggle-fixed.closed {

@@ -5,7 +5,7 @@ function PaidFeatures() {
   return (
     <div className='d-flex justify-content-center container-fluid flex-wrap pb-5'>
         <div className='card mx-4 shadow-lg' id='featbr_features_card'>
-            <h3 className='subtitle-style fw-bold'>Features</h3>
+            <h3 className='subtitle-style fw-bold sp-medium'>Features</h3>
             <hr />
             <p>Price</p>
             <p>Models</p>
@@ -16,7 +16,7 @@ function PaidFeatures() {
             <p>API documentation</p>
         </div>
         <div className='card mx-4 shadow-lg' id='featbr_free_card'>
-            <h3 className='subtitle-style fw-bold'>Free Tier</h3>
+            <h3 className='subtitle-style fw-bold sp-medium'>Free Tier</h3>
             <hr />
             <p>$0 / Month</p>
             <p>General Model Only</p>
@@ -27,7 +27,7 @@ function PaidFeatures() {
             <p>✔</p>
         </div>
         <div className='card mx-4 shadow-lg'>
-            <h3 className='subtitle-style fw-bold'>Paid Tier</h3>
+            <h3 className='subtitle-style fw-bold sp-medium'>Paid Tier</h3>
             <Link to="/purchasetoken">
               <button className='btn glow-btn mt-1'>Buy Now</button>
             </Link>

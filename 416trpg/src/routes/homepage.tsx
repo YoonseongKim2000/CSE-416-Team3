@@ -97,23 +97,23 @@ function HomePage() {
       {/* Main content (hidden while loading) */}
       {!loading && (
         <div className="text-center w-75">
-          <h1 className="mb-4 fw-bold AnalyzeImage">Analyze Image</h1>
+          <h1 className="mb-4 fw-bold AnalyzeImage aw-regular">Analyze Image</h1>
 
           <div className="card shadow-lg border-0 p-4">
             {/* Model selection */}
-            <div className="form-floating mb-4 modelselect">
+            <div className="form-floating mb-4 modelselect p-reg">
               <select
                 className="form-select"
                 id="floatingSelect"
-                aria-label="Model selection"
+                aria-label="Model selection p-reg"
                 value={model}
                 onChange={handleModelChange}
               >
-                <option value="general">General Model</option>
-                <option value="art">Art Model</option>
-                <option value="anime">Anime Model</option>
+                <option className="p-reg" value="general">General Model</option>
+                <option className="p-reg" value="art">Art Model</option>
+                <option className="p-reg" value="anime">Anime Model</option>
               </select>
-              <label htmlFor="floatingSelect">Select Model</label>
+              <label htmlFor="floatingSelect" className="p-reg">Select Model</label>
             </div>
 
             {/* Image preview */}

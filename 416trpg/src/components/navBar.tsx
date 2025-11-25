@@ -2,6 +2,7 @@ import './navBar.css'
 import { Link, NavLink, useNavigate, useOutletContext } from 'react-router-dom';
 import { useState } from 'react';
 import type { AuthContext } from '../App';
+import logo from "../assets/truvision_logo.png"
 
 interface Props {
   auth: AuthContext | null;
@@ -22,7 +23,11 @@ function NavBar({auth, handleAuthToNull}: Props) {
       <div className="container-fluid d-flex justify-content-between align-items-center">
         
         {/* Left - Logo */}
-        <a className="navSiteName m-1" href="#">TrueVision</a>
+        <Link to={auth ? '/home' : '/'}>
+          <div className='d-flex flex-wrap align-content-center'>
+            <img src={logo} alt="TrueVision" className='logo'/>
+          </div>
+        </Link>
 
         {/* Middle - Links */}
         <div className="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
@@ -52,9 +57,21 @@ function NavBar({auth, handleAuthToNull}: Props) {
 
         {/* Right - Login */}
         { auth?.auth.accessToken ?
-          <div>
-            <Link to='/account' id='account-link'> <button className="btn btnb" id='account-btn'>Account Settings</button> </Link>
-            <button onClick={handleLogOut} className="btn btn-outline-danger" id='logout-btn'>Log Out</button> 
+          <div className='nav-item'>
+            <button className='nav-link dropdown-toggle dropdown d-flex flex-row align-items-center' id='nav_dropdown' type='button' data-bs-toggle="dropdown">
+              <b id='nav_email'>{auth?.auth.email}</b>
+            </button>
+            <ul className='dropdown-menu end-0' aria-labelledby='dropdownMenuOffset' id='navbar_user_dropdown'>
+              <li>
+                <Link to='/account' id='account_link' className='dropdown-item text-center'> Account Settings </Link>
+              </li>
+              <hr id='dropdown_line'/>
+              <li>
+                  <div className='dropdown-item d-flex justify-content-center'>
+                    <button onClick={handleLogOut} className="btn btn-outline-danger" id='logout_btn'>Log Out</button> 
+                  </div>
+              </li>
+            </ul>
           </div>
           : <div className="d-flex">
             <Link to='/login' id="login-link" className='me-2'>

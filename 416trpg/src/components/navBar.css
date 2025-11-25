@@ -22,15 +22,6 @@
   color:#526af1
 }
 
-.dropdown-item:hover {
-    background-color: #3557b6;
-}
-
-.dropdown-menu{
-    background-color: #ced1e0 !important;
-    color: #ffffff !important;
-}
-
 .btnb {
     border: 1px solid #528af1;
     border-radius: 3px;
@@ -43,4 +34,51 @@
     border-radius: 3px;
     background-color: #528af1;
     color: #ffffff;
+}
+
+.logo {
+    height: 50px;
+    padding: 0.5rem;
+}
+
+#nav_dropdown {
+    margin: 0 0.8rem;
+    color: #3d3b3b;
+}
+
+#nav_email {
+    color: #3d3b3b;
+    margin-right: 0.5rem;
+}
+
+#nav_dropdown:hover , #nav_dropdown:hover b {
+  color:#526af1;
+  text-shadow: 0;
+}
+
+#navbar_user_dropdown {
+    left: auto;
+    background-color: white;
+    min-width: 13vw;
+    justify-content: center;
+    border-radius: 1;
+}
+
+#dropdown_line{
+    margin: 10px 0;
+}
+
+#account_link:hover {
+    font-weight: 600;
+}
+
+#logout_btn {
+    border-color: white;
+    padding: 0 0;
+}
+
+#logout_btn:hover {
+    background-color: white;
+    font-weight: 600;
+    color: red;
 }
