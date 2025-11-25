@@ -23,7 +23,23 @@ function PurchasePage () {
                     "Authorization": `Bearer ${token}`
                 }
             });
-            if (response.ok){
+                if (response.ok){
+                    try {
+                        const response = await fetch(apiUrl + "purchase/100", {
+                        method: "POST",
+                        credentials: "include",  // optional if you don't need cookies
+                        headers: {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": selfUrl,
+                        "Authorization": `Bearer ${token}`
+                        }
+                    });
+                        if (response.ok){
+
+                        }
+                    } catch (error) {
+                        toast.error("" + error)
+                    };
                 toast.success("Purchase Monthly Successful");
             } else {
                 toast.error("Already a Monthly User");
