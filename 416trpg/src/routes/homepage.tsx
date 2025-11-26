@@ -14,7 +14,7 @@ function HomePage() {
     "https://bootstrap-cheatsheet.themeselection.com/assets/images/bs-images/img-2x1.png"
   );
   const [file, setFile] = useState<File | null>(null);
-  const [model, setModel] = useState<string>("general");
+  const [model, setModel] = useState<string>("General");
   const [accessStatus, setAccessStatus] = useState<boolean>(true);
 
   useEffect(() => {
