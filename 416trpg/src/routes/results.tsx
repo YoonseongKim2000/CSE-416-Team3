@@ -187,17 +187,23 @@ function ResultsPage() {
 
         <div className="">
           <div className="d-flex justify-content-center align-items-center row row-cols-2 row-cols-md-1">
+
             <div className="history-card row flex flex-start p-0">
               <img 
                 src={`data:image/png;base64,${displayedImage}`}
                 alt="History Image" 
                 className="history-image p-0 col"
               />
-              <div className="col testTemp text-start">
-                <p>Model Used: Blah</p>
-                <p>Classification: Blah%</p>
+              <div className="d-flex justify-content-center align-items-center col testTemp text-start">
+                <div>
+                  <p><b>Model Used:</b> Blah</p>
+                  <p><b>Classification:</b> {result.predicted_class === 1 ? "Human" : "AI"}</p>
+                  <p><b>Confidence:</b> {(result.confidence*100).toFixed(3)}%</p>
+                </div>
+                
               </div>
             </div>
+
             <div className="history-card col">blah</div>
             <div className="history-card col">blah</div>
             <div className="history-card col">blah</div>
