@@ -330,42 +330,44 @@ function AccountSettingsPage() {
             <div className="text-start mb-1 accountnormaltext">
             <b className='accountsettingboldtext'>Tokens Remaining: </b> {tokenAmount}
             </div>
-
-            {!buttonSwitch && (
-              <Link to="/pricing">
-              <button
+            <div className='text-start d-flex flex-wrap gap-3'>
+  
+              {!buttonSwitch && (
+                <Link to="/pricing">
+                <button
+                  type="button"
+                  className="btn glow-btn AccountCustomBtn mt-3"
+                >
+  
+                  <span className="text">Upgrade Tier</span>
+                </button>
+                </Link>
+              )}
+  
+  
+  
+              {buttonSwitch && (
+                <button
                 type="button"
-                className="btn glow-btn AccountCustomBtn mt-3"
+                className="btn btn-outline-danger AccountCustomBtn mt-3"
+                onClick={openCancelModal}
               >
-                
-                <span className="text">Upgrade Tier</span>
+  
+                <span className="text">Cancel Plan</span>
               </button>
+              )}
+  
+  
+              <Link to="/purchasetoken" id='buy_token_btn'>
+                <button
+                  type="button"
+                  className="btn glow-btn AccountCustomBtn mt-3"
+                >
+  
+                  <span className="text">Buy More Tokens</span>
+                </button>
               </Link>
-            )}
-
-            
-            
-            {buttonSwitch && (
-              <button
-              type="button"
-              className="btn btn-outline-danger AccountCustomBtn mt-3"
-              onClick={openCancelModal}
-            >
-              
-              <span className="text">Cancel Plan</span>
-            </button>
-            )}
-            
-            
-            <Link to="/purchasetoken">
-              <button
-                type="button"
-                className="btn glow-btn AccountCustomBtn ms-3 mt-3"
-              >
-              
-                <span className="text">Buy More Tokens</span>
-              </button>
-            </Link>
+            </div>
           </div>
             <hr />
           <div className="text-start d-flex align-items-center gap-3 mb-3 mt-3">

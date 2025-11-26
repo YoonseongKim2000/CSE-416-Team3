@@ -2,7 +2,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from core.config import FRONTEND_ORIGIN
-from routes import user_routes, predict_routes, access_routes, purchase_routes
+from routes import user_routes, predict_routes, access_routes, purchase_routes, minigame_routes
 from pymongo import AsyncMongoClient
 from dotenv import load_dotenv
 import os
@@ -43,3 +43,4 @@ app.include_router(user_routes.router)
 app.include_router(predict_routes.router)
 app.include_router(access_routes.router)
 app.include_router(purchase_routes.router)
+app.include_router(minigame_routes.router)

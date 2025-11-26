@@ -4,7 +4,7 @@ function Features() {
   return (
     <div className="features-container">
       {/* Main card */}
-      <div className="main-card">
+      <div className="f-main-card">
         <h2 className="aw-regular">Welcome to Our Models</h2>
         <p className="p-reg">
           Our models have been trained and fine-tuned to meet your needs. 
