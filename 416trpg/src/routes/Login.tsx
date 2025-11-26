@@ -3,6 +3,7 @@ import { Link, useNavigate, useOutletContext } from 'react-router-dom'
 import { generateHash } from '../utilities/hashutils'
 import { ToastContainer, toast } from 'react-toastify'
 import { type AuthOutletContext } from '../App'
+import { useRef } from 'react'
 
 const apiUrl = import.meta.env.VITE_API_URL
 const selfUrl = import.meta.env.SELF_URL
@@ -10,6 +11,7 @@ const selfUrl = import.meta.env.SELF_URL
 function Login() {
     const navigate = useNavigate();
     const {contextState, contextSetState} = useOutletContext<AuthOutletContext>();
+    const ref = useRef<HTMLInputElement>(null);
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
@@ -49,7 +51,9 @@ function Login() {
                 toast.error("Error: Internal server error");
             } else if (response.status == 403) {
                 toast.error(result.detail);
-                e.target.reset();
+                if (ref.current) {
+                    ref.current.value = '';
+                }
             } else {
                 const accessToken = result.accessToken;
                 const email = result.email;
@@ -86,6 +90,7 @@ function Login() {
                             Password:
                         </label>
                         <input 
+                            ref={ref}
                             type="password" 
                             name='password' 
                             className='form-control'
