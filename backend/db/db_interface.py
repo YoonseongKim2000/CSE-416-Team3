@@ -96,6 +96,10 @@ class UserHistoryModel(BaseModel):
     id: Optional[PyObjectID] = Field(alias="_id", default=None)
     email: EmailStr = Field(...)
     history: List[HistoryModel]
+    model_config = ConfigDict(
+        arbitrary_types_allowed=True,
+        populate_by_name=True,
+    )
 
 async def get_user_by_email(user: UserInModel, db):
     user_collection = db.get_collection("users")
@@ -195,6 +199,7 @@ async def test_history_db(user: UserInModel, db):
     try:
         result = await history_collection.find_one({"email": "aa@a.a"})
     except PyMongoError as e:
+        print(PyMongoError)
         result = e
     
     return result
