@@ -2,8 +2,9 @@ from typing import Annotated
 from fastapi import APIRouter, Body, Depends, HTTPException, status, Request, Response
 from routes.access_routes import verify_token
 from core.api_key_gen import generateKey
-from db.db_interface import UpdateUserModel, UserInModel, UserOutModel, get_user_by_email, create_user, UserAccessAuthOut, test_history_db, test_history_db2, update_password, update_isPaid, update_APIKey, delete_user_db,  HistoryModel, UserHistoryModel
+from db.db_interface import UpdateUserModel, UserInModel, UserOutModel, get_user_by_email, create_user, UserAccessAuthOut, get_history_db, update_history_db, update_password, update_isPaid, update_APIKey, delete_user_db,  HistoryModel, UserHistoryModel
 from pymongo.errors import PyMongoError
+import json
 
 router = APIRouter(prefix="/user", tags=["Users"])
 
@@ -181,42 +182,53 @@ async def info(authuser: Annotated[UserOutModel, Depends(verify_token)], request
     
     return {"tier" : result["isPaid"]}    
 
-#TODO: remove after test
-# when sending test body only need some {"email": "whatever"}
-@router.post(
-    "test/history",
+@router.get(
+    "/get_history",
     status_code=status.HTTP_200_OK
 )
-async def test_history(user: UserInModel, request: Request):
+async def get_history_api(authuser: Annotated[UserOutModel, Depends(verify_token)], request: Request):
     db = request.app.database
+    user_email = authuser["email"]
 
-    result = await test_history_db(user, db)
+    #checks
+    result = await get_history_db(user_email, db)
+
     if (isinstance(result, PyMongoError)):
         raise HTTPException(status_code=500, detail="Database error")
 
-    return result
+    if (result == None):
+        raise HTTPException(status_code=400, detail="Credential error")
 
-@router.post(
-    "test/history2",
-    status_code=status.HTTP_200_OK
-)
-async def test_history2(email: str, request: Request):
+    return {'history': result['history']}
+
+@router.post("/update_history", status_code=status.HTTP_200_OK)
+async def update_history_api(authuser: Annotated[UserOutModel, Depends(verify_token)], request: Request, newEntry):
     db = request.app.database
-    result = await test_history_db2(email, db)
-    print("DEBUG DEBUG DEBUG DEBUG I GET HERE")
-    print("DEBUG DEBUG DEBUG DEBUG I GET HERE")
-    print("DEBUG DEBUG DEBUG DEBUG I GET HERE")
-    print("DEBUG DEBUG DEBUG DEBUG I GET HERE")
-    print("DEBUG DEBUG DEBUG DEBUG I GET HERE")
-    print("DEBUG DEBUG DEBUG DEBUG I GET HERE")
-    print(type(result))
-    print(result)
-    print("DEBUG DEBUG DEBUG DEBUG I GET HERE")
-    print("DEBUG DEBUG DEBUG DEBUG I GET HERE")
-    print("DEBUG DEBUG DEBUG DEBUG I GET HERE")
-    print("DEBUG DEBUG DEBUG DEBUG I GET HERE")
-    print("DEBUG DEBUG DEBUG DEBUG I GET HERE")
-    if (isinstance(result, PyMongoError)):
+    user_email = authuser["email"]
+
+    #checks
+    result = await get_history_db(user_email, db)
+
+    if isinstance(result, PyMongoError):
         raise HTTPException(status_code=500, detail="Database error")
 
-    return {'email': result['email'], 'history': result['history']}
+    if result is None:
+        raise HTTPException(status_code=400, detail="User not found")
+
+    if newEntry is None:
+        raise HTTPException(status_code=400, detail="Invalid Record")
+
+    history_list = result["history"]
+    history_list.append(json.loads(newEntry))
+
+    if len(history_list) > 10:
+        history_list.pop(0)
+
+    update_result = await update_history_db(user_email, db, history_list)
+
+    if isinstance(update_result, PyMongoError):
+        raise HTTPException(status_code=500, detail="Database error")
+
+    return {"message": "History updated"}
+
+

@@ -16,10 +16,11 @@ function HomePage() {
   const [file, setFile] = useState<File | null>(null);
   const [model, setModel] = useState<string>("General");
   const [accessStatus, setAccessStatus] = useState<boolean>(true);
+  const [fileName, setFileName] = useState<string>("")
 
   useEffect(() => {
     getAccessInfo()
-  })
+  }, [])
 
     const getAccessInfo = async () => {
       const storedEmail = localStorage.getItem("email");
@@ -63,6 +64,7 @@ function HomePage() {
     }
 
     setFile(selectedFile);
+    setFileName(selectedFile.name);
 
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -109,7 +111,7 @@ function HomePage() {
     }
 
     toast.success("Image analyzed successfully!");
-    navigate("/results", { state: { result, model } });
+    navigate("/results", { state: { result, model, fileName } });
   } catch (error) {
     console.error(error);
     toast.error(""+(error));

@@ -194,25 +194,57 @@ async def update_APIKey(userEmail: str, db, newKey):
 
     return outval
 
-async def test_history_db(user: UserInModel, db):
-    history_collection = db.get_collection("user_history")
-
-    try:
-        result = await history_collection.find_one({"email": "aa@a.a"})
-        outval = result["history"]
-    except PyMongoError as e:
-        print(PyMongoError)
-        outval = e
-    
-    return outval
-
-async def test_history_db2(email: str, db):
+async def get_history_db(email: str, db):
     history_collection = db.get_collection("user_history")
 
     try:
         result = await history_collection.find_one({"email": email})
+        if result == None:
+            result = {'history': []}
     except PyMongoError as e:
         print(e)
         result = e
     
     return result
+
+async def update_history_db(userEmail: str, db, new_history):
+    history_collection = db.get_collection("user_history")
+
+    try:
+        result = await history_collection.find_one({"email": userEmail})
+        if result == None:
+            # TODO: Create new entry
+            # new_history is an array of records [{json}, {json}, {json}, {json}]
+            # new_history is not this -> {history: [{json}, {json}, {json}, {json}]}
+            # honestly I have no idea what outval is so just make it whatever you want
+            print(1)
+        else:
+            result2 = await history_collection.update_one({'email': userEmail}, {'$set': {'history': new_history}})
+            outval = result2.modified_count
+    except PyMongoError as e:
+        outval = e
+
+    return outval 
+
+# async def test_history_db(user: UserInModel, db):
+#     history_collection = db.get_collection("user_history")
+
+#     try:
+#         result = await history_collection.find_one({"email": "aa@a.a"})
+#         outval = result["history"]
+#     except PyMongoError as e:
+#         print(PyMongoError)
+#         outval = e
+    
+#     return outval
+
+# async def test_history_db2(email: str, db):
+#     history_collection = db.get_collection("user_history")
+
+#     try:
+#         result = await history_collection.find_one({"email": email})
+#     except PyMongoError as e:
+#         print(e)
+#         result = e
+    
+#     return result

@@ -1,14 +1,28 @@
 import { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import "./results.css";
+
+type HistoryRecord = {
+  filename: string;
+  image: string;
+  model: string;
+  classification: number;
+  confidence: number;
+}
+
+const apiUrl = import.meta.env.VITE_API_URL
+const selfUrl = import.meta.env.SELF_URL
 
 function ResultsPage() {
   const location = useLocation();
-  const { result, model } = location.state || {};
+  const { result, model, fileName } = location.state || {};
 
   const [gaugeAngle, setGaugeAngle] = useState(0);
   const [showOverlay, setShowOverlay] = useState(false);
   const [overlayType, setOverlayType] = useState<"heatmap" | "mask">("heatmap");
+  const [historyArray, setHistoryArray] = useState<HistoryRecord[] | null>(null);
+  const [historyVisibility, setHistoryVisibility] = useState<boolean>(false);
 
   useEffect(() => {
     if (result) {
@@ -31,6 +45,11 @@ function ResultsPage() {
       return () => clearInterval(interval);
     }
   }, [result]);
+
+  useEffect(() => {
+    historyGlorp();
+    }, []
+  )
 
 
   if (!result) {
@@ -56,9 +75,67 @@ function ResultsPage() {
       </div>
       </div>
     );
-  }
+  };
 
   const confidencePercent = (result.confidence * 100).toFixed(1);
+
+
+  // TODO: FINISH THIS
+  // TODO: FINISH THIS
+  // TODO: FINISH THIS
+  // TODO: FINISH THIS
+  // TODO: FINISH THIS
+  // TODO: FINISH THIS
+  const historyGlorp = async () => {
+    const token = localStorage.getItem("accessToken");
+    const userEmail = localStorage.getItem("email");
+    if (userEmail === null) {
+      setHistoryVisibility(false);
+    } else {
+      try {
+            const response = await fetch(apiUrl + "user/get_history", {
+              method: "GET",
+              credentials: "include",  // optional if you don't need cookies
+              headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": selfUrl,
+                "Authorization": `Bearer ${token}`
+              }
+            });
+            
+            const result2 = await response.json();
+
+            setHistoryArray(result2["history"]);
+            const newRecord = {
+                filename: fileName,
+                image: result.original_image,
+                model: model,
+                classification: result.predicted_class,
+                confidence: result.confidence,
+              }
+            try {
+              
+              const formData = new FormData();
+              formData.append("newEntry", JSON.stringify(newRecord))
+              await fetch(apiUrl + "user/update_history", {
+              method: "POST",
+              credentials: "include",  // optional if you don't need cookies
+              headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": selfUrl,
+                "Authorization": `Bearer ${token}`
+              },
+              body: formData,
+            });
+
+            } catch (error) {
+              toast.error(""+error);
+            }
+        } catch (error) {
+        toast.error(""+error);
+      }
+    }
+  };
 
   // Select which image to show
   const displayedImage = showOverlay
@@ -212,6 +289,8 @@ function ResultsPage() {
         </div>
 
       </div>
+      {/* Toast container */}
+        <ToastContainer position="top-center" autoClose={2500} theme="colored" />
     </div>
   );
 }
