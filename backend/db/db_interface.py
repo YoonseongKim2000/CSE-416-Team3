@@ -199,7 +199,7 @@ async def test_history_db(user: UserInModel, db):
 
     try:
         result = await history_collection.find_one({"email": "aa@a.a"})
-        outval = result.history
+        outval = result["history"]
     except PyMongoError as e:
         print(PyMongoError)
         outval = e
