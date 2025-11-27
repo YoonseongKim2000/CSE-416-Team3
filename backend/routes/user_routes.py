@@ -2,7 +2,7 @@ from typing import Annotated
 from fastapi import APIRouter, Body, Depends, HTTPException, status, Request, Response
 from routes.access_routes import verify_token
 from core.api_key_gen import generateKey
-from db.db_interface import UpdateUserModel, UserInModel, UserOutModel, get_user_by_email, create_user, UserAccessAuthOut, test_history_db, update_password, update_isPaid, update_APIKey, delete_user_db,  HistoryModel, UserHistoryModel
+from db.db_interface import UpdateUserModel, UserInModel, UserOutModel, get_user_by_email, create_user, UserAccessAuthOut, test_history_db, test_history_db2, update_password, update_isPaid, update_APIKey, delete_user_db,  HistoryModel, UserHistoryModel
 from pymongo.errors import PyMongoError
 
 router = APIRouter(prefix="/user", tags=["Users"])
@@ -195,3 +195,28 @@ async def test_history(user: UserInModel, request: Request):
         raise HTTPException(status_code=500, detail="Database error")
 
     return result
+
+@router.post(
+    "test/history2",
+    status_code=status.HTTP_200_OK
+)
+async def test_history2(email: str, request: Request):
+    db = request.app.database
+    result = await test_history_db2(email, db)
+    print("DEBUG DEBUG DEBUG DEBUG I GET HERE")
+    print("DEBUG DEBUG DEBUG DEBUG I GET HERE")
+    print("DEBUG DEBUG DEBUG DEBUG I GET HERE")
+    print("DEBUG DEBUG DEBUG DEBUG I GET HERE")
+    print("DEBUG DEBUG DEBUG DEBUG I GET HERE")
+    print("DEBUG DEBUG DEBUG DEBUG I GET HERE")
+    print(type(result))
+    print(result)
+    print("DEBUG DEBUG DEBUG DEBUG I GET HERE")
+    print("DEBUG DEBUG DEBUG DEBUG I GET HERE")
+    print("DEBUG DEBUG DEBUG DEBUG I GET HERE")
+    print("DEBUG DEBUG DEBUG DEBUG I GET HERE")
+    print("DEBUG DEBUG DEBUG DEBUG I GET HERE")
+    if (isinstance(result, PyMongoError)):
+        raise HTTPException(status_code=500, detail="Database error")
+
+    return {'email': result['email'], 'history': result['history']}

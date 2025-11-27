@@ -205,3 +205,14 @@ async def test_history_db(user: UserInModel, db):
         outval = e
     
     return outval
+
+async def test_history_db2(email: str, db):
+    history_collection = db.get_collection("user_history")
+
+    try:
+        result = await history_collection.find_one({"email": email})
+    except PyMongoError as e:
+        print(e)
+        result = e
+    
+    return result
