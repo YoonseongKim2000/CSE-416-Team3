@@ -85,6 +85,18 @@ class UserAccessAuthOut(BaseModel):
         arbitrary_types_allowed=True,
     )
 
+class HistoryModel(BaseModel):
+    filename: str = Field(...)
+    image: str = Field(...)
+    model: str = Field(...)
+    classification: int = Field(...)
+    confidence: float = Field(...)
+
+class UserHistoryModel(BaseModel):
+    id: Optional[PyObjectID] = Field(alias="_id", default=None)
+    email: EmailStr = Field(...)
+    history: List[HistoryModel]
+
 async def get_user_by_email(user: UserInModel, db):
     user_collection = db.get_collection("users")
     try:
@@ -177,11 +189,12 @@ async def update_APIKey(userEmail: str, db, newKey):
 
     return outval
 
-# @router.get("/users", response_model=UserCollection, response_model_by_alias=False,)
-# async def list_users(request: Request):
-#     """
-#     List all user data in the database
-#     """
-#     db = request.app.database
-#     user_collection = db.get_collection("users")
-#     return UserCollection(users=await user_collection.find().to_list())
+async def test_history_db(user: UserInModel, db):
+    history_collection = db.get_collection("user_history")
+
+    try:
+        result = await history_collection.find_one({"email": "aa@a.a"})
+    except PyMongoError as e:
+        result = e
+    
+    return result

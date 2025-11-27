@@ -2,7 +2,7 @@ from typing import Annotated
 from fastapi import APIRouter, Body, Depends, HTTPException, status, Request, Response
 from routes.access_routes import verify_token
 from core.api_key_gen import generateKey
-from db.db_interface import UpdateUserModel, UserInModel, UserOutModel, get_user_by_email, create_user, UserAccessAuthOut, update_password, update_isPaid, update_APIKey, delete_user_db
+from db.db_interface import UpdateUserModel, UserInModel, UserOutModel, get_user_by_email, create_user, UserAccessAuthOut, test_history_db, update_password, update_isPaid, update_APIKey, delete_user_db,  HistoryModel, UserHistoryModel
 from pymongo.errors import PyMongoError
 
 router = APIRouter(prefix="/user", tags=["Users"])
@@ -180,3 +180,18 @@ async def info(authuser: Annotated[UserOutModel, Depends(verify_token)], request
         raise HTTPException(status_code=400, detail="Credential error")
     
     return {"tier" : result["isPaid"]}    
+
+#TODO: remove after test
+# when sending test body only need some {"email": "whatever"}
+@router.post(
+    "test/history",
+    status_code=status.HTTP_200_OK
+)
+async def test_history(user: UserInModel, request: Request):
+    db = request.app.database
+
+    result = await test_history_db(user, db)
+    if (isinstance(result, PyMongoError)):
+        raise HTTPException(status_code=500, detail="Database error")
+
+    return result
