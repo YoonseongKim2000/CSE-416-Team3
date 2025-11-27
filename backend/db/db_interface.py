@@ -99,6 +99,7 @@ class UserHistoryModel(BaseModel):
     model_config = ConfigDict(
         arbitrary_types_allowed=True,
         populate_by_name=True,
+        json_encoders={ObjectId: str},
     )
 
 async def get_user_by_email(user: UserInModel, db):
