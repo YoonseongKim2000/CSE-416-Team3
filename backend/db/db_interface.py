@@ -214,14 +214,18 @@ async def update_history_db(userEmail: str, db, new_history):
         result = await history_collection.find_one({"email": userEmail})
         if result == None:
             # make new instance of class
-            new_user_history = UserHistoryModel()
-            new_user_history.email = userEmail
-            new_user_history.history = new_history
+            new_user_history = UserHistoryModel(
+                email=userEmail,
+                history=new_history
+            )
+
+            # new_user_history.email = userEmail
+            # new_user_history.history = new_history
             #dump json values
             user_history_json = new_user_history.model_dump(by_alias=True, exclude=["id"])
             result2 = await history_collection.insert_one(user_history_json)
             #outval = new inserted document id
-            outval = result.inserted_id
+            outval = result2.inserted_id
         else:
             result2 = await history_collection.update_one({'email': userEmail}, {'$set': {'history': new_history}})
             outval = result2.modified_count

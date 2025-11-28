@@ -14,6 +14,7 @@ type HistoryRecord = {
 const apiUrl = import.meta.env.VITE_API_URL
 const selfUrl = import.meta.env.SELF_URL
 
+
 function ResultsPage() {
   const location = useLocation();
   const { result, model, fileName } = location.state || {};
@@ -23,6 +24,10 @@ function ResultsPage() {
   const [overlayType, setOverlayType] = useState<"heatmap" | "mask">("heatmap");
   const [historyArray, setHistoryArray] = useState<HistoryRecord[] | null>(null);
   const [historyVisibility, setHistoryVisibility] = useState<boolean>(false);
+
+  const limitName = (str: string, max: number) =>
+  str.length > max ? str.slice(0, max) + "..." : str;
+
 
   useEffect(() => {
     if (result) {
@@ -79,13 +84,6 @@ function ResultsPage() {
 
   const confidencePercent = (result.confidence * 100).toFixed(1);
 
-
-  // TODO: FINISH THIS
-  // TODO: FINISH THIS
-  // TODO: FINISH THIS
-  // TODO: FINISH THIS
-  // TODO: FINISH THIS
-  // TODO: FINISH THIS
   const historyGlorp = async () => {
     const token = localStorage.getItem("accessToken");
     const userEmail = localStorage.getItem("email");
@@ -114,9 +112,7 @@ function ResultsPage() {
                 confidence: result.confidence,
               }
             try {
-              
-              const formData = new FormData();
-              formData.append("newEntry", JSON.stringify(newRecord))
+            
               await fetch(apiUrl + "user/update_history", {
               method: "POST",
               credentials: "include",  // optional if you don't need cookies
@@ -125,9 +121,11 @@ function ResultsPage() {
                 "Access-Control-Allow-Origin": selfUrl,
                 "Authorization": `Bearer ${token}`
               },
-              body: formData,
+              body: JSON.stringify(
+                      newRecord
+                    )
             });
-
+            setHistoryVisibility(true)
             } catch (error) {
               toast.error(""+error);
             }
@@ -257,36 +255,55 @@ function ResultsPage() {
           </div>
         </div>
 
-        <hr />
-        <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap">
-          <h3 className="fw-bold mb-0" style={{ color: "#528af1" }}>Analysis History</h3>
-        </div>
+        
 
-        <div className="">
-          <div className="d-flex justify-content-center align-items-center row row-cols-2 row-cols-md-1">
-
-            <div className="history-card row flex flex-start p-0">
-              <img 
-                src={`data:image/png;base64,${displayedImage}`}
-                alt="History Image" 
-                className="history-image p-0 col"
-              />
-              <div className="d-flex justify-content-center align-items-center col testTemp text-start">
-                <div>
-                  <p><b>Model Used:</b> Blah</p>
-                  <p><b>Classification:</b> {result.predicted_class === 1 ? "Human" : "AI"}</p>
-                  <p><b>Confidence:</b> {(result.confidence*100).toFixed(3)}%</p>
-                </div>
-                
-              </div>
+        {historyVisibility && (
+          <div>
+            <hr />
+            <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+            <h3 className="fw-bold mb-0" style={{ color: "#528af1" }}>Analysis History</h3>
             </div>
 
-            <div className="history-card col">blah</div>
-            <div className="history-card col">blah</div>
-            <div className="history-card col">blah</div>
-            <div className="history-card col">blah</div>
+            <div className="">
+              <div className="d-flex justify-content-center align-items-center row row-cols-2 row-cols-md-1">
+
+                    {/* If user has no history */}
+                    {(!historyArray || historyArray.length === 0) && (
+                      <div className="text-center text-muted py-3">
+                        <p>No history available yet.</p>
+                      </div>
+                    )}
+
+                    {/* Map through history records */}
+                    {historyArray &&
+                      [...historyArray].reverse().map((record, idx) => (
+                        <div className="history-card row flex flex-start p-0" key={idx}>
+
+                          {/* Thumbnail */}
+                          <img
+                            src={`data:image/png;base64,${record.image}`}
+                            alt={`History item ${idx}`}
+                            className="history-image p-0 col"
+                          />
+
+                          {/* Info */}
+                          <div className="d-flex justify-content-center align-items-center col testTemp text-start">
+                            <div>
+                              <p><b>Filename:</b> {limitName(record.filename, 20)}</p>
+                              <p><b>Model Used:</b> {record.model}</p>
+                              <p><b>Classification:</b> {record.classification === 1 ? "Human" : "AI"}</p>
+                              <p><b>Confidence:</b> {(record.confidence * 100).toFixed(2)}%</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+
+              </div>
+            </div>
           </div>
-        </div>
+        )}
+
+        
 
       </div>
       {/* Toast container */}

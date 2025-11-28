@@ -202,7 +202,7 @@ async def get_history_api(authuser: Annotated[UserOutModel, Depends(verify_token
     return {'history': result['history']}
 
 @router.post("/update_history", status_code=status.HTTP_200_OK)
-async def update_history_api(authuser: Annotated[UserOutModel, Depends(verify_token)], request: Request, newEntry):
+async def update_history_api(authuser: Annotated[UserOutModel, Depends(verify_token)], request: Request, newEntry: dict = Body(...)):
     db = request.app.database
     user_email = authuser["email"]
 
@@ -219,8 +219,8 @@ async def update_history_api(authuser: Annotated[UserOutModel, Depends(verify_to
         raise HTTPException(status_code=400, detail="Invalid Record")
 
     history_list = result["history"]
-    history_list.append(json.loads(newEntry))
-
+    history_list.append(newEntry)
+    
     if len(history_list) > 10:
         history_list.pop(0)
 
