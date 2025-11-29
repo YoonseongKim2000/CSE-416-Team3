@@ -4,7 +4,9 @@ from routes.access_routes import verify_token
 from core.api_key_gen import generateKey
 from db.db_interface import UpdateUserModel, UserInModel, UserOutModel, get_user_by_email, create_user, UserAccessAuthOut, get_history_db, update_history_db, update_password, update_isPaid, update_APIKey, delete_user_db,  HistoryModel, UserHistoryModel
 from pymongo.errors import PyMongoError
-import json
+import base64
+import os
+from datetime import datetime
 
 router = APIRouter(prefix="/user", tags=["Users"])
 
@@ -186,27 +188,60 @@ async def info(authuser: Annotated[UserOutModel, Depends(verify_token)], request
     "/get_history",
     status_code=status.HTTP_200_OK
 )
-async def get_history_api(authuser: Annotated[UserOutModel, Depends(verify_token)], request: Request):
+async def get_history_api(
+    authuser: Annotated[UserOutModel, Depends(verify_token)],
+    request: Request
+):
     db = request.app.database
     user_email = authuser["email"]
 
-    #checks
+    # checks
     result = await get_history_db(user_email, db)
 
-    if (isinstance(result, PyMongoError)):
+    if isinstance(result, PyMongoError):
         raise HTTPException(status_code=500, detail="Database error")
 
-    if (result == None):
+    if result is None:
         raise HTTPException(status_code=400, detail="Credential error")
 
-    return {'history': result['history']}
+    history_list = result["history"]
+    base_dir = "historyImages"
+    user_dir = os.path.join(base_dir, user_email)
+
+    # Convert filenames -> base64
+    updated_history = []
+
+    for entry in history_list:
+        entry_copy = entry.copy()
+
+        filename = entry.get("image")
+        if filename:
+            image_path = os.path.join(user_dir, filename)
+
+            try:
+                with open(image_path, "rb") as f:
+                    image_bytes = f.read()
+                    b64_encoded = base64.b64encode(image_bytes).decode("utf-8")
+
+                entry_copy["image"] = b64_encoded
+
+            except FileNotFoundError:
+                entry_copy["image"] = None 
+
+        updated_history.append(entry_copy)
+
+    return {"history": updated_history}
 
 @router.post("/update_history", status_code=status.HTTP_200_OK)
-async def update_history_api(authuser: Annotated[UserOutModel, Depends(verify_token)], request: Request, newEntry: dict = Body(...)):
+async def update_history_api(
+    authuser: Annotated[UserOutModel, Depends(verify_token)],
+    request: Request,
+    newEntry: dict = Body(...)
+):
     db = request.app.database
     user_email = authuser["email"]
 
-    #checks
+    # DB checks
     result = await get_history_db(user_email, db)
 
     if isinstance(result, PyMongoError):
@@ -218,9 +253,46 @@ async def update_history_api(authuser: Annotated[UserOutModel, Depends(verify_to
     if newEntry is None:
         raise HTTPException(status_code=400, detail="Invalid Record")
 
+    # -------------------------
+    #  IMAGE SAVING LOGIC HERE
+    # -------------------------
+    try:
+        raw_b64 = newEntry.get("image")
+        original_filename = newEntry.get("filename")
+
+        if raw_b64 and original_filename:
+
+            # Create folder structure
+            base_dir = "historyImages"
+            user_dir = os.path.join(base_dir, user_email)
+
+            os.makedirs(user_dir, exist_ok=True)
+
+            # Create filename
+            timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+            saved_filename = f"{timestamp}_{original_filename}"
+            save_path = os.path.join(user_dir, saved_filename)
+
+            # Decode and write file
+            image_bytes = base64.b64decode(raw_b64)
+            with open(save_path, "wb") as f:
+                f.write(image_bytes)
+
+            # Replace the b64 blob with the new filename
+            newEntry["image"] = saved_filename
+
+        else:
+            raise HTTPException(status_code=400, detail="Missing image or filename")
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Image save failed: {str(e)}")
+
+    # -------------------------
+    # Update history list
+    # -------------------------
     history_list = result["history"]
     history_list.append(newEntry)
-    
+
     if len(history_list) > 10:
         history_list.pop(0)
 

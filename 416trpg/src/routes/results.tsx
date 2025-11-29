@@ -24,9 +24,44 @@ function ResultsPage() {
   const [overlayType, setOverlayType] = useState<"heatmap" | "mask">("heatmap");
   const [historyArray, setHistoryArray] = useState<HistoryRecord[] | null>(null);
   const [historyVisibility, setHistoryVisibility] = useState<boolean>(false);
+  const [modelViewAccess, setModelViewAccess] = useState<boolean>(false);
 
   const limitName = (str: string, max: number) =>
   str.length > max ? str.slice(0, max) + "..." : str;
+
+  useEffect(() => {
+      getAccessInfo()
+    }, [])
+  
+      const getAccessInfo = async () => {
+        const storedEmail = localStorage.getItem("email");
+    
+        if (storedEmail === null) {
+          return;
+        }
+        const token = localStorage.getItem("accessToken");
+  
+        try {
+          const response = await fetch (apiUrl + "user/tierInfo", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+            }
+          });
+          if (response.ok){
+                  const data = await response.json();
+                  if (data.tier){
+                    setModelViewAccess(data.tier)
+                  }
+                } else {
+                    toast.error("Something went wrong");
+                    return;
+                };
+        } catch (error) {
+          toast.error("" + error)
+        }
+      }
 
 
   useEffect(() => {
@@ -220,38 +255,52 @@ function ResultsPage() {
 
           {/* Right: control panel */}
           <div className="col-md-4 text-center text-md-start">
-            <h5 className="mb-3">Display Options</h5>
+            {modelViewAccess && (
+              <>
+                <h5 className="mb-3">Display Options</h5>
 
-            <div className="form-check form-switch mb-3">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="toggleOverlay"
-                checked={showOverlay}
-                onChange={(e) => setShowOverlay(e.target.checked)}
-              />
-              <label className="form-check-label" htmlFor="toggleOverlay">
-                Show Overlay
-              </label>
-            </div>
+                <div className="form-check form-switch mb-3">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    id="toggleOverlay"
+                    checked={showOverlay}
+                    onChange={(e) => setShowOverlay(e.target.checked)}
+                  />
+                  <label className="form-check-label" htmlFor="toggleOverlay">
+                    Show Overlay
+                  </label>
+                </div>
+
+                <div className="d-grid">
+                  <button
+                    type="button"
+                    className="button-82-pushable ScanCustomBtn"
+                    onClick={() =>
+                      setOverlayType((prev) => (prev === "heatmap" ? "mask" : "heatmap"))
+                    }
+                    disabled={!showOverlay}
+                  >
+                    <span className="button-82-shadow"></span>
+                    <span className="button-82-edge"></span>
+                    <span className="button-82-front text">Swap to {overlayType === "heatmap" ? "Mask" : "Heatmap"}</span>
+                  </button>            
+                </div>
+                <p className="text-muted mt-3 small">
+                  When overlay is off, the original image is displayed.
+                </p>
+              </>
+            )}
+
+            {!modelViewAccess && (
+              <div>
+                <h5 className="mb-3">Display Options</h5>
+                <p className="text-muted mt-3 small">
+                  Purchase the upgraded tier to access model view features.
+                </p>
+              </div>
+            )}
             
-            <div className="d-grid">
-              <button
-                type="button"
-                className="button-82-pushable ScanCustomBtn"
-                onClick={() =>
-                  setOverlayType((prev) => (prev === "heatmap" ? "mask" : "heatmap"))
-                }
-                disabled={!showOverlay}
-              >
-                <span className="button-82-shadow"></span>
-                <span className="button-82-edge"></span>
-                <span className="button-82-front text">Swap to {overlayType === "heatmap" ? "Mask" : "Heatmap"}</span>
-              </button>            
-            </div>
-            <p className="text-muted mt-3 small">
-              When overlay is off, the original image is displayed.
-            </p>
           </div>
         </div>
 
