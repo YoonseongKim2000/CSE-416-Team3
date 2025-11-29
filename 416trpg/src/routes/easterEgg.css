@@ -1,24 +1,59 @@
-/* Container & General */
+/* --------------------------------------------------
+   GENERAL PAGE + CONTAINER
+-------------------------------------------------- */
 .egg-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
   padding: 40px 20px;
   background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
   color: white;
   font-family: 'Inter', sans-serif;
 }
 
-/* Headings */
-.egg-container h1, .egg-container h2 {
-  color: #72a3ff;
-  margin-bottom: 20px;
-  text-shadow: 0px 0px 10px rgba(114, 163, 255, 0.7);
+.navbar-margin {
+  margin-top: 5vh;
 }
 
-/* Button Base Styles */
+.egg-card {
+  width: 95%;
+  max-width: 1100px;
+  background: rgb(223, 223, 223);
+  padding: 40px;
+  border-radius: 18px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px);
+  margin-top: 20px;
+}
+
+.egg-card h1, 
+.egg-card h2 {
+  color: #1b2a4a;
+  text-shadow: none;
+}
+
+/* --------------------------------------------------
+   SCORE
+-------------------------------------------------- */
+.egg-score {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1b1b1b;
+  text-shadow: none;
+}
+
+.blackHR {
+  color: black;
+}
+
+/* --------------------------------------------------
+   BUTTONS
+-------------------------------------------------- */
 .egg-btn {
   position: relative;
   border: none;
@@ -29,6 +64,7 @@
   margin: 8px;
   color: white;
   background: linear-gradient(90deg, #3557b6, #72a3ff);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(0,0,0,0.25);
   font-weight: 600;
@@ -44,25 +80,98 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.25);
 }
 
-/* Specific Buttons */
 .ai-btn { background: linear-gradient(90deg, #8a3939, #ff6b6b); }
 .human-btn { background: linear-gradient(90deg, #39658a, #72c0ff); }
-.again-btn, .menu-btn, .egg-select button { background: linear-gradient(90deg, #3557b6, #72a3ff); }
 
-/* Loading Text */
-.egg-loading {
-  margin-top: 15px;
-  font-style: italic;
-  color: #ffdd59;
+/* --------------------------------------------------
+   SELECT SCREEN LAYOUT
+-------------------------------------------------- */
+
+/* Entire layout */
+.egg-select-layout {
+  display: grid;
+  grid-template-areas:
+      "title title"
+      "left preview";
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  gap: 30px;
 }
 
-/* Images */
+/* Top row title */
+.egg-select-title {
+  grid-area: title;
+  text-align: center;
+}
+
+/* Left column: button stack */
+.egg-select-left {
+  grid-area: left;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Right column: preview box */
+.egg-select-preview {
+  grid-area: preview;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Preview image */
+.egg-select-img {
+  width: 350px;
+  max-width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+  animation: fadeIn 0.25s ease;
+}
+
+/* Simple fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* --------------------------------------------------
+   PLAY SCREEN
+-------------------------------------------------- */
+.egg-play-layout {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 30px;
+}
+
+.egg-play-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #1b1b1b;
+}
+
+.egg-play-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.egg-divider {
+  width: 2px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+}
+
 .egg-main-image {
   width: 400px;
   max-width: 90%;
   border-radius: 16px;
-  margin: 20px 0;
   box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+  margin: 20px 0;
   transition: transform 0.3s ease;
 }
 
@@ -70,81 +179,93 @@
   transform: scale(1.03);
 }
 
-.egg-small-img {
-  width: 180px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-  transition: transform 0.2s ease;
-}
-
-.egg-small-img:hover {
-  transform: scale(1.05);
-}
-
-/* Image Row in Result */
-.egg-result .egg-img-row {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
-  flex-wrap: wrap;
-}
-
-/* Buttons Container */
-.egg-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-/* Model Selection */
-.egg-select {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.egg-select button {
-  min-width: 200px;
-}
-
-/* Result Text */
-.egg-result p {
-  margin: 8px 0;
-  font-size: 1.1rem;
-}
-
-.egg-result p span {
+.egg-guessing {
+  margin-top: 15px;
+  font-size: 1.3rem;
   font-weight: 600;
-  color: #ffdd59;
+  color: #272bff;
+  text-shadow: 0px 0px 10px rgba(31, 29, 100, 0.7);
 }
 
-/* Card effect for play/result sections */
-.egg-play, .egg-result {
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(10px);
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-  max-width: 800px;
-  width: 90%;
+/* --------------------------------------------------
+   RESULT SCREEN
+-------------------------------------------------- */
+.egg-result-layout {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 30px;
+}
+
+.egg-result-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  color: #1b1b1b;
+}
+
+.egg-result-right {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.navbar-margin {
-    margin-top: 5vh;
+/* Carousel */
+.egg-carousel-wrapper {
+  position: relative;
 }
 
-.egg-score {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    margin-bottom: 20px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #ffdd59;
-    text-shadow: 0px 0px 8px rgba(255, 221, 89, 0.7);
+.egg-carousel-img {
+  width: 350px;
+  max-width: 90%;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  transition: opacity 0.3s ease;
+}
+
+/* Floating arrows */
+.egg-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  color: white;
+  font-size: 2.4rem;
+  font-weight: 300;
+  cursor: pointer;
+  user-select: none;
+  transition: 0.15s ease;
+  text-shadow: 0px 0px 10px rgba(0,0,0,0.8);
+}
+
+.egg-carousel-arrow:hover {
+  transform: translateY(-50%) scale(1.15);
+  text-shadow: 0px 0px 14px rgba(0,0,0,1);
+}
+
+.egg-carousel-arrow.left { left: -35px; }
+.egg-carousel-arrow.right { right: -35px; }
+
+/* Dots */
+.egg-carousel-dots {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.egg-carousel-dots span {
+  width: 12px;
+  height: 12px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 50%;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.egg-carousel-dots span.active {
+  background: #3557b6;
+  transform: scale(1.2);
 }

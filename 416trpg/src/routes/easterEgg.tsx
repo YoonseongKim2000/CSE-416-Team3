@@ -18,10 +18,36 @@ function EasterEggPage() {
     const [model, setModel] = useState<string>("");
     const [roundId, setRoundId] = useState<string>("");
     const [imageUrl, setImageUrl] = useState<string>("");
+    const [previewImage, setPreviewImage] = useState<string | null>(null);
 
     const [result, setResult] = useState<ResultResponse | null>(null);
     const [loading, setLoading] = useState(false);
     const [mode, setMode] = useState<"select" | "play" | "result">("select");
+
+    // ------------------------------
+    // Carousel for result screen
+    // ------------------------------
+    const [carouselIndex, setCarouselIndex] = useState(0);
+
+    useEffect(() => {
+        if (mode !== "result") return;
+
+        const interval = setInterval(() => {
+            setCarouselIndex(prev => (prev + 1) % 3);
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, [mode]);
+
+    const nextImage = () => {
+        setCarouselIndex(prev => (prev + 1) % 3);
+    };
+    
+    const prevImage = () => {
+        setCarouselIndex(prev => (prev - 1 + 3) % 3);
+    };
+
+
 
     // ------------------------------
     // Score Tracker (local)
@@ -83,80 +109,165 @@ function EasterEggPage() {
     };
 
     return (
-        <div className="egg-container">
-            {/* -------------------- Score Tracker -------------------- */}
-            {mode !== "select" && (
-                <div className="egg-score navbar-margin">
+        <div className="egg-container navbar-margin">
+
+            <div className="egg-card">   {/* NEW: main card wrapper */}
+
+                {/* Always visible */}
+                <div className="egg-score">
                     <p>Total Rounds: {totalRounds}</p>
                     <p>Your Wins: {humanWins}</p>
                     <p>AI Wins: {aiWins}</p>
                 </div>
-            )}
+                <hr className='blackHR' />
 
-            {/* -------------------------------------------------- */}
-            {/* SELECT MODEL SCREEN */}
-            {/* -------------------------------------------------- */}
-            {mode === "select" && (
-                <div className="navbar-margin egg-select">
-                    <h1 className='navbar-margin'>Choose an AI to Play Against</h1>
-                    <button className="egg-btn" onClick={() => startRound("anime")}>Anime Model</button>
-                    <button className="egg-btn" onClick={() => startRound("art")}>Art Model</button>
-                    <button className="egg-btn" onClick={() => startRound("general")}>General Model</button>
-                </div>
-            )}
-
-            {/* -------------------------------------------------- */}
-            {/* PLAY SCREEN */}
-            {/* -------------------------------------------------- */}
-            {mode === "play" && (
-                <div className="egg-play">
-                    <h2 className='navbar-margin'>Guess the Image!</h2>
-
-                    <img src={apiUrl+imageUrl} className="egg-main-image" />
-
-                    <div className="egg-buttons">
-                        <button className="egg-btn ai-btn" onClick={() => sendGuess(0)}>AI</button>
-                        <button className="egg-btn human-btn" onClick={() => sendGuess(1)}>Human</button>
+                {/* -------------------- SELECT MODEL SCREEN -------------------- */}
+                {mode === "select" && (
+                    <div className="egg-select-layout">
+                    
+                        {/* TITLE full row */}
+                        <div className="egg-select-title">
+                            <h1>Choose an AI to Play Against</h1>
+                        </div>
+                                
+                        {/* LEFT SIDE: BUTTONS */}
+                        <div className="egg-select-left">
+                            <button
+                                className="egg-btn"
+                                onClick={() => startRound("anime")}
+                                onMouseEnter={() => setPreviewImage("anime")}
+                                onMouseLeave={() => setPreviewImage(null)}
+                            >
+                                Anime Model
+                            </button>
+                                
+                            <button
+                                className="egg-btn"
+                                onClick={() => startRound("art")}
+                                onMouseEnter={() => setPreviewImage("art")}
+                                onMouseLeave={() => setPreviewImage(null)}
+                            >
+                                Art Model
+                            </button>
+                                
+                            <button
+                                className="egg-btn"
+                                onClick={() => startRound("general")}
+                                onMouseEnter={() => setPreviewImage("general")}
+                                onMouseLeave={() => setPreviewImage(null)}
+                            >
+                                General Model
+                            </button>
+                        </div>
+                                
+                        {/* RIGHT SIDE: PREVIEW IMAGE */}
+                        <div className="egg-select-preview">
+                            <img
+                                src={
+                                    previewImage
+                                        ? `/CSE-416-Team3/${previewImage}.png`
+                                        : `/CSE-416-Team3/default.png`   // DEFAULT PREVIEW
+                                }
+                                className="egg-select-img"
+                            />
+                        </div>
+                            
                     </div>
+                )}
 
-                    {loading && <p className="egg-loading">Checking...</p>}
-                </div>
-            )}
 
-            {/* -------------------------------------------------- */}
-            {/* RESULT SCREEN */}
-            {/* -------------------------------------------------- */}
-            {mode === "result" && result && (
-                <div className="egg-result">
-                    <h2>Round Results</h2>
 
-                    <p>Your Guess: {result.humanCorrect ? "Correct!" : "Wrong!"}</p>
-                    <p>AI Guess: {result.aiCorrect ? "Correct!" : "Wrong!"}</p>
-                    <p>AI Confidence: {(result.confidence * 100).toFixed(1)}%</p>
+                {/* -------------------- PLAY SCREEN ---------------------------- */}
+                {mode === "play" && (
+                    <div className="egg-play-layout">
 
-                    <div className="egg-img-row">
-                        <div>
-                            <p>Original</p>
-                                <img src={`data:image/png;base64,${result.original_image}`} className="egg-small-img" />
+                        {/* LEFT SIDE — controls */}
+                        <div className="egg-play-left">
+                            <h2>Guess the Image!</h2>
+
+                            <button className="egg-btn ai-btn" onClick={() => sendGuess(0)}>AI</button>
+                            <button className="egg-btn human-btn" onClick={() => sendGuess(1)}>Human</button>
+
+                            {loading && (
+                                <p className="egg-guessing">The AI is guessing...</p>
+                            )}
                         </div>
-                        <div>
-                            <p>Heatmap</p>
-                            <img src={`data:image/png;base64,${result.attention_heatmap}`} className="egg-small-img" />
-                        </div>
-                        <div>
-                            <p>Masked Overlay</p>
-                            <img src={`data:image/png;base64,${result.masked_overlay}`} className="egg-small-img" />
+
+                        {/* VERTICAL LINE */}
+                        <div className="egg-divider"></div>
+
+                        {/* RIGHT SIDE — image */}
+                        <div className="egg-play-right">
+                            <img src={apiUrl + imageUrl} className="egg-main-image" />
                         </div>
                     </div>
+                )}
 
-                    <button className="egg-btn again-btn" onClick={playAgain}>Play Again</button>
-                    <button className="egg-btn menu-btn" onClick={() => setMode("select")}>
-                        Back to Model Select
-                    </button>
-                </div>
-            )}
+                {/* -------------------- RESULT SCREEN -------------------------- */}
+                {mode === "result" && result && (
+                    <div className="egg-result-layout">
+
+                        {/* LEFT SIDE — RESULT TEXT */}
+                        <div className="egg-result-left">
+                            <h2>Round Results</h2>
+                            <p>True Answer: {result.truth === 1 ? "Human" : "AI"}</p>
+                            <p>Your Guess: {result.humanCorrect ? "Correct!" : "Wrong!"}</p>
+                            <p>AI Guess: {result.aiCorrect ? "Correct!" : "Wrong!"}</p>
+                            <p>AI Confidence: {(result.confidence * 100).toFixed(1)}%</p>
+
+                            <button className="egg-btn again-btn" onClick={playAgain}>Play Again</button>
+                            <button className="egg-btn menu-btn" onClick={() => setMode("select")}>
+                                Back to Model Select
+                            </button>
+                        </div>
+
+                        {/* RIGHT SIDE — image carousel */}
+                        <div className="egg-result-right">
+
+                            {/* Image Viewer */}
+                            <div className="egg-carousel-wrapper">
+
+                                <button className="egg-carousel-arrow left" onClick={prevImage}>
+                                    ‹
+                                </button>
+
+                                <img
+                                    className="egg-carousel-img"
+                                    src={`data:image/png;base64,${
+                                        [
+                                            result.original_image,
+                                            result.attention_heatmap,
+                                            result.masked_overlay
+                                        ][carouselIndex]
+                                    }`}
+                                />
+
+                                <button className="egg-carousel-arrow right" onClick={nextImage}>
+                                    ›
+                                </button>
+                                
+                            </div>
+                                
+                            {/* Dots */}
+                            <div className="egg-carousel-dots">
+                                {[0,1,2].map(i => (
+                                    <span
+                                        key={i}
+                                        className={carouselIndex === i ? "active" : ""}
+                                        onClick={() => setCarouselIndex(i)}
+                                    />
+                                ))}
+                            </div>
+                            
+                        </div>
+
+                    </div>
+                )}
+
+            </div>
         </div>
     );
+
 }
 
 export default EasterEggPage;
