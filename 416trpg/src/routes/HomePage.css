@@ -206,3 +206,15 @@
     opacity: 1;
   }
 }
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.dot-general { background: #4CAF50; }
+.dot-art { background: #2196F3; }
+.dot-anime { background: #9C27B0; }

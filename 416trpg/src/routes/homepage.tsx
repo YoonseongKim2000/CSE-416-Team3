@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { ChangeEvent } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
 import "./HomePage.css";
 
 const apiUrl = import.meta.env.VITE_API_URL
@@ -17,6 +18,39 @@ function HomePage() {
   const [model, setModel] = useState<string>("General");
   const [accessStatus, setAccessStatus] = useState<boolean>(true);
   const [fileName, setFileName] = useState<string>("")
+
+  // ⌄⌄⌄ YOU CAN COLOR HERE ⌄⌄⌄
+  // ⌄⌄⌄ YOU CAN COLOR HERE ⌄⌄⌄
+  // ⌄⌄⌄ YOU CAN COLOR HERE ⌄⌄⌄
+  // ⌄⌄⌄ YOU CAN COLOR HERE ⌄⌄⌄
+  // ⌄⌄⌄ YOU CAN COLOR HERE ⌄⌄⌄
+  // ⌄⌄⌄ YOU CAN COLOR HERE ⌄⌄⌄
+  const options = [
+    { value: "General", label: "General Model", color: "#4CAF50" },
+    { value: "Art", label: "Art Model", color: "#2196F3" },
+    { value: "Anime", label: "Anime Model", color: "#9C27B0" },
+  ];
+  // ^^^ YOU CAN COLOR HERE ^^^
+  // ^^^ YOU CAN COLOR HERE ^^^
+  // ^^^ YOU CAN COLOR HERE ^^^
+  // ^^^ YOU CAN COLOR HERE ^^^
+  // ^^^ YOU CAN COLOR HERE ^^^
+  // ^^^ YOU CAN COLOR HERE ^^^
+
+  
+  const dot = (color = "transparent") => ({
+    alignItems: "center",
+    display: "flex",
+    ":before": {
+      backgroundColor: color,
+      borderRadius: 10,
+      content: '" "',
+      display: "block",
+      marginRight: 8,
+      height: 10,
+      width: 10,
+    },
+  });
 
   useEffect(() => {
     getAccessInfo()
@@ -72,11 +106,6 @@ function HomePage() {
       setPreview(result);
     };
     reader.readAsDataURL(selectedFile);
-  };
-
-  // Handle model selection
-  const handleModelChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setModel(event.target.value);
   };
 
   // Handle scan click
@@ -137,20 +166,30 @@ function HomePage() {
           <h1 className="mb-4 fw-bold AnalyzeImage aw-regular">Analyze Image</h1>
 
           <div className="card shadow-lg border-0 p-4">
+            
             {/* Model selection */}
             <div className="form-floating mb-4 modelselect p-reg">
-              <select
-                className="form-select"
-                id="floatingSelect"
-                aria-label="Model selection p-reg"
-                value={model}
-                onChange={handleModelChange}
-              >
-                <option className="p-reg" value="General">General Model</option>
-                <option className="p-reg" value="Art" disabled={accessStatus}>Art Model</option>
-                <option className="p-reg" value="Anime" disabled={accessStatus}>Anime Model</option>
-              </select>
-              <label htmlFor="floatingSelect" className="p-reg">Select Model</label>
+              <div className="mb-2 text-start p-reg">
+                <label className="form-label">Select Model</label>
+                <Select
+                  value={options.find((opt) => opt.value === model)}
+                  onChange={(selected) => setModel(selected?.value || "General")}
+                  options={options}
+                  styles={{
+                    option: (base, state) => ({
+                      ...base,
+                      ...dot(state.data.color),
+                    }),
+                    singleValue: (base, state) => ({
+                      ...base,
+                      ...dot(state.data.color),
+                    }),
+                  }}
+                  isOptionDisabled={(opt) =>
+                    (opt.value === "Art" || opt.value === "Anime") && accessStatus
+                  }
+                />
+              </div>
             </div>
 
             {/* Image preview */}
