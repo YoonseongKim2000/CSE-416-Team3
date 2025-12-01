@@ -60,7 +60,7 @@ const router = createHashRouter([
         element: <AccountSettingsPage/>
       },
       {
-        path: "purchasetoken",
+        path: "purchase",
         element: <PurchasePage/>
       },
       {

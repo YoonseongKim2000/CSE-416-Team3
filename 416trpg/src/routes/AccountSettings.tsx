@@ -358,7 +358,7 @@ function AccountSettingsPage() {
               )}
   
   
-              <Link to="/purchasetoken" id='buy_token_btn'>
+              <Link to="/purchase" id='buy_token_btn'>
                 <button
                   type="button"
                   className="btn glow-btn AccountCustomBtn mt-3"

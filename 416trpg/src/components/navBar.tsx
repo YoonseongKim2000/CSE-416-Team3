@@ -32,27 +32,32 @@ function NavBar({auth, handleAuthToNull}: Props) {
         {/* Middle - Links */}
         <div className="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
           <ul className="navbar-nav mb-2 mb-md-0 p-reg">
-            <li className="nav-item">
+            <li className="nav-item mx-1">
               <NavLink to='/home' className={({isActive}) => isActive ? "nav-link active-link" : "nav-link"}>
                 Analyze
               </NavLink>
             </li>
-            <li className="nav-item">
+            <li className="nav-item mx-1">
               <NavLink to='/features' className={({isActive}) => isActive ? "nav-link active-link" : "nav-link"}>
                 Features
               </NavLink>
             </li>
-            <li className="nav-item">
+            <li className="nav-item mx-1">
               <NavLink to='/pricing' className={({isActive}) => isActive ? "nav-link active-link" : "nav-link"}>
                 Pricing
               </NavLink>
             </li>
-            <li className="nav-item">
+            <li className="nav-item mx-1">
               <NavLink to='/api-docs' className={({isActive}) => isActive ? "nav-link active-link" : "nav-link"}>
                API
               </NavLink>
             </li>
-            <li className="nav-item">
+            <li className="nav-item mx-1">
+              <NavLink to='/purchase' className={({isActive}) => isActive ? "nav-link active-link" : "nav-link"}>
+                Purchase
+              </NavLink>
+            </li>
+            <li className="nav-item mx-1">
               <NavLink to='/guessing-game' className={({isActive}) => isActive ? "nav-link active-link" : "nav-link"}>
                 Minigame
               </NavLink>

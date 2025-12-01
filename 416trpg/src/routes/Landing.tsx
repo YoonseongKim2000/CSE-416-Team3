@@ -11,7 +11,7 @@ function LandingPage() {
   const handleBuy = () => {
     console.log(contextState);
       if (contextState && contextState.auth.accessToken) {
-          navigate('/purchasetoken');
+          navigate('/purchase');
       } else {
           navigate('/login');
       }
