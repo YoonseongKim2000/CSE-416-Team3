@@ -1,9 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import "./Landing.css";
 import PaidFeatures from "../components/paidFeatures";
 import Features from "./Features";
+import type { AuthOutletContext } from "../App";
 
 function LandingPage() {
+  const navigate = useNavigate();
+  const {contextState, contextSetState} = useOutletContext<AuthOutletContext>();
+
+  const handleBuy = () => {
+    console.log(contextState);
+      if (contextState && contextState.auth.accessToken) {
+          navigate('/purchasetoken');
+      } else {
+          navigate('/login');
+      }
+  }
   return (
     <div>
 
@@ -26,7 +38,7 @@ function LandingPage() {
                   AI v.s. AI: Analyse if images are REAL or GENERATED.
                 </p>
                 <p className="text-dark mb-4">
-                    Our models are trained to accurately analyse all accepted image formats to determine if they are real or have been AI-generated
+                    Our models are trained to analyse all accepted image formats to determine if they are real or have been AI-generated
                 </p>
 
                 
@@ -56,7 +68,7 @@ function LandingPage() {
         </div>
 
         {/* PUT OTHER STUFF HERE */}
-        <PaidFeatures/>
+        <PaidFeatures handleBtn={handleBuy}/>
         <Features/>
     </div>
     

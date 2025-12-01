@@ -1,9 +1,22 @@
 import './Pricing.css'
 import PaidFeatures from '../components/paidFeatures'
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
+import type { AuthOutletContext } from '../App';
 
 function Pricing() {
+    const navigate = useNavigate();
+    const {contextState, contextSetState} = useOutletContext<AuthOutletContext>();
+
+    const handleBuy = () => {
+        console.log(contextState);
+        if (contextState && contextState.auth.accessToken) {
+            navigate('/purchasetoken');
+        } else {
+            navigate('/login');
+        }
+    }
+
   return (
     <div className="container d-flex justify-content-center text-center py-4">
         <div className="m-4">
@@ -22,9 +35,7 @@ function Pricing() {
                 <div className='card small-card shadow-lg paid-header-card p-reg pop'>
                     <div className='align-items-center'>
                         <h2 className='fw-bold subtitle-style sp-medium'>Paid Tier</h2>
-                        <Link to="/purchasetoken">
-                            <button className='btn glow-btn m-2 buy-btn'>Buy Now</button>
-                        </Link>
+                        <button onClick={handleBuy} className='btn glow-btn m-2 buy-btn'>Buy Now</button>
                         
                     </div>
                     <hr />
@@ -34,7 +45,7 @@ function Pricing() {
                 </div>
             </div>
             <h1 className='title-style fw-bold my-5 aw-regular'>Features Breakdown</h1>
-            <PaidFeatures/>
+            <PaidFeatures handleBtn = {handleBuy}/>
         </div>
     </div>
   )

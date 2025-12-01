@@ -1,7 +1,11 @@
 import './paidFeatures.css'
 import { Link } from "react-router-dom";
 
-function PaidFeatures() {
+interface Props {
+  handleBtn: () => void
+}
+
+function PaidFeatures({handleBtn}: Props) {
   return (
     <div className='d-flex justify-content-center container-fluid flex-wrap pb-5 p-reg'>
         <div className='card mx-4 shadow-lg pop' id='featbr_features_card'>
@@ -28,9 +32,7 @@ function PaidFeatures() {
         </div>
         <div className='card mx-4 shadow-lg pop'>
             <h3 className='subtitle-style fw-bold sp-medium'>Paid Tier</h3>
-            <Link to="/purchasetoken">
-              <button className='btn glow-btn mt-1'>Buy Now</button>
-            </Link>
+            <button onClick={handleBtn} className='btn glow-btn mt-1'>Buy Now</button>
             
             <hr />
             <p>$20 / Month</p>

@@ -234,6 +234,18 @@ async def update_history_db(userEmail: str, db, new_history):
 
     return outval 
 
+async def get_user_by_APIKey(key: str, db) -> UserOutModel:
+    user_collection = db.get_collection("users")
+
+    try:
+        result = await user_collection.find_one({"APIKey": key})
+        #result = None if none found
+    except PyMongoError as e:
+        result = e
+    
+    return result
+
+
 # async def test_history_db(user: UserInModel, db):
 #     history_collection = db.get_collection("user_history")
 
