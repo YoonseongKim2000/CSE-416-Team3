@@ -5,8 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
-import HomePage from "./routes/homepage.tsx";
-import ResultsPage from "./routes/results.tsx";
+import HomePage from "./routes/Homepage.tsx";
+import ResultsPage from "./routes/Results.tsx";
 import Features from "./routes/Features.tsx";
 import Pricing from "./routes/Pricing.tsx";
 import ApiDocs from "./routes/ApiDocs.tsx";

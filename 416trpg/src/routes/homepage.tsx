@@ -26,9 +26,9 @@ function HomePage() {
   // ⌄⌄⌄ YOU CAN COLOR HERE ⌄⌄⌄
   // ⌄⌄⌄ YOU CAN COLOR HERE ⌄⌄⌄
   const options = [
-    { value: "General", label: "General Model", color: "#4CAF50" },
-    { value: "Art", label: "Art Model", color: "#2196F3" },
-    { value: "Anime", label: "Anime Model", color: "#9C27B0" },
+    { value: "General", label: "General Model", color: "#23ece8" },
+    { value: "Art", label: "Art Model", color: "#f69a2e" },
+    { value: "Anime", label: "Anime Model", color: "#8F31D2" },
   ];
   // ^^^ YOU CAN COLOR HERE ^^^
   // ^^^ YOU CAN COLOR HERE ^^^
