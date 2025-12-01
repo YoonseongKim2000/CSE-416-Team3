@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './easterEgg.css';
+import './minigame.css';
 import scannieana from '../assets/scannie-anime.png';
 import scannieara from '../assets/unnamed.png';
 import scanniega from '../assets/scannie-general.png';
