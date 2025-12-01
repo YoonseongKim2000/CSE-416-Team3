@@ -52,6 +52,11 @@ function NavBar({auth, handleAuthToNull}: Props) {
                API
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink to='/guessing-game' className={({isActive}) => isActive ? "nav-link active-link" : "nav-link"}>
+                Minigame
+              </NavLink>
+            </li>
           </ul>
         </div>
 

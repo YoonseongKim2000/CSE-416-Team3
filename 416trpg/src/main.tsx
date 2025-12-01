@@ -15,7 +15,7 @@ import SignUp from "./routes/SignUp.tsx";
 import LandingPage from "./routes/Landing.tsx";
 import AccountSettingsPage from "./routes/AccountSettings.tsx";
 import PurchasePage from "./routes/Purchase.tsx";
-import EasterEggPage from "./routes/easterEgg.tsx";
+import EasterEggPage from "./routes/Minigame.tsx";
 
 const router = createHashRouter([
   {
@@ -64,7 +64,7 @@ const router = createHashRouter([
         element: <PurchasePage/>
       },
       {
-        path: "easterEgg",
+        path: "guessing-game",
         element: <EasterEggPage/>
       }
     ]
