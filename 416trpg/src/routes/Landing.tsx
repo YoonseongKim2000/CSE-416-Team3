@@ -19,7 +19,7 @@ function LandingPage() {
   return (
     <div>
 
-        <div className="landing-page container-fluid p-reg">
+        <div className="landing-page container-fluid p-reg mb-5 mt-4">
           <div className="row align-items-center h-100 containerPicturesCustom">
             {/* Left collage */}
             <div className="col-lg-3 d-none d-lg-block collage left-collage">

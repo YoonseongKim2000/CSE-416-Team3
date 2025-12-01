@@ -52,11 +52,11 @@ function NavBar({auth, handleAuthToNull}: Props) {
                API
               </NavLink>
             </li>
-            <li className="nav-item mx-1">
+            { auth? <li className="nav-item mx-1">
               <NavLink to='/purchase' className={({isActive}) => isActive ? "nav-link active-link" : "nav-link"}>
                 Purchase
               </NavLink>
-            </li>
+            </li> : <div></div>}
             <li className="nav-item mx-1">
               <NavLink to='/guessing-game' className={({isActive}) => isActive ? "nav-link active-link" : "nav-link"}>
                 Minigame
