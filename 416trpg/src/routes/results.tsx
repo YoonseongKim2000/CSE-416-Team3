@@ -2,6 +2,12 @@ import { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "./results.css";
+import scanniegh from '../assets/scannie-general-green.png';
+import scanniega from '../assets/scannie-general.png';
+import scanniearh from '../assets/scannie-art-green.png';
+import scannieara from '../assets/unnamed.png';
+import scannieanh from '../assets/scannie-anime-green.png';
+import scannieana from '../assets/scannie-anime.png';
 
 type HistoryRecord = {
   filename: string;
@@ -25,6 +31,8 @@ function ResultsPage() {
   const [historyArray, setHistoryArray] = useState<HistoryRecord[] | null>(null);
   const [historyVisibility, setHistoryVisibility] = useState<boolean>(false);
   const [modelViewAccess, setModelViewAccess] = useState<boolean>(false);
+  const [scannie, setScannie] = useState<string>("");
+  const [modelColor, setModelColor] = useState<string>("rgb(82, 138, 241)");
 
   const limitName = (str: string, max: number) =>
   str.length > max ? str.slice(0, max) + "..." : str;
@@ -90,6 +98,36 @@ function ResultsPage() {
     historyGlorp();
     }, []
   )
+
+  useEffect(() => {
+    if (model && result) {
+      //result is AI
+      if (result.predicted_class == 0) {
+        if (model === "Anime") {
+          setScannie(scannieana);
+          setModelColor("#8F31D2");
+        } else if (model === "Art") {
+          setScannie(scannieara);
+          setModelColor("#f69a2e");
+        } else {
+          setScannie(scanniega);
+          setModelColor("#00B8D9");
+        }
+      //result is human
+      } else {
+        if (model === "Anime") {
+          setScannie(scannieanh);
+          setModelColor("#8F31D2");
+        } else if (model === "Art") {
+          setScannie(scanniearh);
+          setModelColor("#f69a2e");
+        } else {
+          setScannie(scanniegh);
+          setModelColor("#00B8D9");
+        }
+      }
+    }
+  }, [model]);
 
 
   if (!result) {
@@ -182,11 +220,14 @@ function ResultsPage() {
           <div className="card p-4 shadow cardCustom" style={{ width: "80%" }}>
             {/* Model info */}
             <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap">
-      <div className="text-start">
-        <h5 className="text-secondary mb-1">Model Used</h5>
-        <h3 className="fw-bold mb-0" style={{ color: "#528af1" }}>{model}</h3>
+      <div className="d-flex align-items-end flex-wrap">
+        <img className="scannie-results" src={scannie} alt="scannie mascot in model color" />
+        <div className="text-start mb-2">
+          <h5 className="text-secondary mb-1">Model Used</h5>
+          <h3 className="fw-bold mb-0" style={{ color: modelColor }}>{model}</h3>
+        </div>
       </div>
-      <div className="text-end">
+      <div className="text-end align-items-start h-100">
         <Link to="/home">
           <div className="d-grid">
             <button
@@ -202,22 +243,22 @@ function ResultsPage() {
     </div>
 
         {/* Prediction + Confidence */}
-        <div className="row align-items-center mb-5">
-          <div className="col-md-6 text-center text-md-start mb-4 mb-md-0">
-            <div className="d-flex justify-content-center align-items-center">
-              <h4 className="text-muted">Our analysis says this image is:</h4>
-              <br />
-              <h1 className="fw-bold display-5 text-success ms-3">
-                {result.predicted_class === 1 ? "Human" : "AI"}
-              </h1>
+        <div className="row align-items-center mb-3">
+          <div className="col text-center text-md-start mb-4 mb-md-0">
+            <div className="d-flex align-items-center mb-1 ms-3">
+                <h4 className="text-muted">Our analysis says this image is:</h4>
+                <br />
+                <h1 className={result.predicted_class === 1 ? "fw-bold display-5 ms-3 human-txt" : "fw-bold display-5 ms-3 ai-txt" }>
+                  {result.predicted_class === 1 ? "Human" : "AI"}
+                </h1>
             </div>
           </div>
 
-          <div className="col-md-1 d-none d-md-flex justify-content-center">
+          <div className="col-md-auto d-none d-md-flex justify-content-center">
             <div className="divider"></div>
           </div>
 
-          <div className="col-md-5 text-center">
+          <div className="col-md-5 text-center" id="conf_holder">
             <div className="confidence-gauge">
               <div
                 className="gauge-fill"

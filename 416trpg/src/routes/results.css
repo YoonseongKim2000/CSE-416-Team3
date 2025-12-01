@@ -2,7 +2,6 @@
   width: 2px;
   height: 100px;
   background-color: #dee2e6;
-  margin: auto;
   border-radius: 1px;
 }
 
@@ -209,7 +208,8 @@ button:disabled {
 }
 
 .history-card {
-  width: 500px;
+  width: 30vw;
+  min-width: 350px;
   background: #ffffff;
   /* border-radius: 12px; */
 
@@ -228,11 +228,31 @@ button:disabled {
 .history-image {
   aspect-ratio: 1;
   overflow: hidden;
-  width: 250px;
+  width: 50%;
   height: auto;
   object-fit: cover;
 }
 
 .testTemp {
-  width: 249px
+  width: 47%;
+}
+
+.scannie-results {
+  min-width: 100px;
+  width: 10vw;
+  margin-right: 20px;
+}
+
+.human-txt {
+  color: #00b919;
+  text-shadow: 0 0 3px #00f829;
+}
+
+.ai-txt {
+  color: #b30000;
+  text-shadow: 0 0 5px #ff1818;
+}
+
+#conf_holder {
+  max-width: 250px;
 }
