@@ -1,4 +1,4 @@
-from fastapi import APIRouter, File, UploadFile, Form, HTTPException, Request
+from fastapi import APIRouter, File, UploadFile, Form, HTTPException, Request, status
 from core.models import predict_image
 from db.db_interface import decr_token, get_user_by_apikey
 from pymongo.errors import PyMongoError
@@ -27,31 +27,29 @@ async def analyze_image(
         print("ERROR:", e)
         raise HTTPException(status_code=500, detail=str(e))
     
-@router.post("/APIanalyze")
+@router.post("/APIanalyze", status_code=status.HTTP_200_OK,)
 async def analyze_image(
     request: Request,
     model: str = Form(...),
     image: UploadFile = File(...),
     apiKey: str = "NONE"
 ):
-    try:
-        if (apiKey == "NONE"):
-            raise HTTPException(status_code=400, detail="API Key Missing")
-        
-        db = request.app.database
-
-        check_result = await get_user_by_apikey(apiKey, db)
-        if (isinstance(check_result, PyMongoError)):
-            raise HTTPException(status_code=500, detail="Database error")
-        if (check_result == None):
-            raise HTTPException(status_code=400, detail="API Key Not Found")
-        #NOTE: check_result is an obj of UserOutModel class 
-        if (check_result.tokens <= 0):
-            raise HTTPException(status_code=400, detail="Not Enough Tokens")
-        result = predict_image(image.file, model)
-        await decr_token(apiKey, db)
-        return result
-    except Exception as e:
-        print("ERROR:", e)
-        return {"error": str(e)}
+    
+    if (apiKey == "NONE"):
+        raise HTTPException(status_code=400, detail="API Key Missing")
+    
+    db = request.app.database
+    check_result = await get_user_by_apikey(apiKey, db)
+    if (isinstance(check_result, PyMongoError)):
+        raise HTTPException(status_code=500, detail="Database error")
+    if (check_result == None):
+        raise HTTPException(status_code=400, detail="API Key Not Found")
+    #NOTE: check_result is an obj of UserOutModel class 
+    if (check_result.tokens <= 0):
+        raise HTTPException(status_code=400, detail="Not Enough Tokens")
+    
+    result = predict_image(image.file, model)
+    await decr_token(apiKey, db)
+    return result
+    
 
