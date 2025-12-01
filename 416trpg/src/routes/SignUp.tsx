@@ -105,9 +105,12 @@ function SignUp() {
                             placeholder='Confirm your password'
                         />
                     </div>
-                    <p className='mt-5'>By signing up you agree to our Terms and Conditions</p>
+                    <p className='mt-5'>By signing up you agree to our <Link to="https://media.tenor.com/x8v1oNUOmg4AAAAM/rickroll-roll.gif" target="_blank">Terms and Conditions</Link></p>
                     <button type='submit' className='btn btnb submit-button mt-4 w-75 mb-4'>Sign Up</button>
                 </form>
+                <Link to="/login">
+                    <small>Have an account? Click here to login</small>
+                </Link>
             </div>
             {/* Toast container */}
             <ToastContainer position="top-center" autoClose={2500} theme="colored" />

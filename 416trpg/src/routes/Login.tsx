@@ -99,6 +99,10 @@ function Login() {
                     </div>
                     <button type='submit' className='btn btnb submit-button mt-4 w-75 mb-4'>Log In</button>
                 </form>
+                <Link to="/signup">
+                    <small>Don't have an account? Click here to signup</small>
+                </Link>
+                
             </div>
             <ToastContainer position='top-center' autoClose={2500} theme='colored'/>
         </div>

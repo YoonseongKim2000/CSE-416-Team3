@@ -20,9 +20,9 @@ function Features() {
           <h3 className="sp-medium">General Model</h3>
           <p>The jack of all trades, master of none model. This model is useful for random AI images.</p>
 
-          <p>Recall: ##%</p>
-          <p>Precision: ##%</p>
-          <p>F1: ##%</p>
+          <p>Recall: 98.77%</p>
+          <p>Precision: 98.72%</p>
+          <p>F1: 0.9874072221</p>
         </div>
         <div className="feature-card p-reg">
           <h3 className="sp-medium">Art Model</h3>
@@ -32,9 +32,9 @@ function Features() {
 
           </p>
 
-          <p>Recall: ##%</p>
-          <p>Precision: ##%</p>
-          <p>F1: ##%</p>
+          <p>Recall: 100%</p>
+          <p>Precision: 99.9%</p>
+          <p>F1: 0.9994997499</p>
         </div>
         <div className="feature-card p-reg">
           <h3 className="sp-medium">Anime Model</h3>
@@ -44,9 +44,9 @@ function Features() {
             Trained on a dataset of anime style images, this model is useful for detecting anime style AI images.
           </p>
 
-          <p>Recall: ##%</p>
-          <p>Precision: ##%</p>
-          <p>F1: ##%</p>
+          <p>Recall: 99.96%</p>
+          <p>Precision: 100%</p>
+          <p>F1: 0.9998333056</p>
         </div>
       </div>
     </div>
