@@ -45,8 +45,8 @@ async def analyze_image(
             raise HTTPException(status_code=500, detail="Database error")
         if (check_result == None):
             raise HTTPException(status_code=400, detail="API Key Not Found")
-        
-        if (check_result['tokens'] <= 0):
+        #NOTE: check_result is an obj of UserOutModel class 
+        if (check_result.tokens <= 0):
             raise HTTPException(status_code=400, detail="Not Enough Tokens")
         result = predict_image(image.file, model)
         await decr_token(apiKey, db)
