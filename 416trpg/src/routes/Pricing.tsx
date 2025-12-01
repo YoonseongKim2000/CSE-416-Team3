@@ -41,7 +41,7 @@ function Pricing() {
                     <hr />
                     <p className='fw-bold'>$20 / month</p>
                     <p>Image analysis with <br /> <span style={{color: "#09a001", fontWeight: "600"}}>3 AI Models</span></p>
-                    <p>Get 100 API tokens per month</p>
+                    <p>Get 100 API tokens at subscription purchase & every following month</p>
                 </div>
             </div>
             <h1 className='title-style fw-bold my-5 aw-regular'>Features Breakdown</h1>
