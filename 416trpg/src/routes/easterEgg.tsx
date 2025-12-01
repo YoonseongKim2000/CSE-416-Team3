@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
 import './easterEgg.css';
+import scannieana from '../assets/scannie-anime.png';
+import scannieara from '../assets/unnamed.png';
+import scanniega from '../assets/scannie-general.png';
+import grey from '../assets/grayyie.png'
 
 const apiUrl = import.meta.env.VITE_API_URL
 
@@ -18,7 +22,7 @@ function EasterEggPage() {
     const [model, setModel] = useState<string>("");
     const [roundId, setRoundId] = useState<string>("");
     const [imageUrl, setImageUrl] = useState<string>("");
-    const [previewImage, setPreviewImage] = useState<string | null>(null);
+    const [previewImage, setPreviewImage] = useState<string | null>(grey);
 
     const [result, setResult] = useState<ResultResponse | null>(null);
     const [loading, setLoading] = useState(false);
@@ -135,8 +139,8 @@ function EasterEggPage() {
                             <button
                                 className="egg-btn"
                                 onClick={() => startRound("anime")}
-                                onMouseEnter={() => setPreviewImage("anime")}
-                                onMouseLeave={() => setPreviewImage(null)}
+                                onMouseEnter={() => setPreviewImage(scannieana)}
+                                onMouseLeave={() => setPreviewImage(scannieana)}
                             >
                                 Anime Model
                             </button>
@@ -144,8 +148,8 @@ function EasterEggPage() {
                             <button
                                 className="egg-btn"
                                 onClick={() => startRound("art")}
-                                onMouseEnter={() => setPreviewImage("art")}
-                                onMouseLeave={() => setPreviewImage(null)}
+                                onMouseEnter={() => setPreviewImage(scannieara)}
+                                onMouseLeave={() => setPreviewImage(scannieana)}
                             >
                                 Art Model
                             </button>
@@ -153,8 +157,8 @@ function EasterEggPage() {
                             <button
                                 className="egg-btn"
                                 onClick={() => startRound("general")}
-                                onMouseEnter={() => setPreviewImage("general")}
-                                onMouseLeave={() => setPreviewImage(null)}
+                                onMouseEnter={() => setPreviewImage(scanniega)}
+                                onMouseLeave={() => setPreviewImage(scannieana)}
                             >
                                 General Model
                             </button>
@@ -165,7 +169,7 @@ function EasterEggPage() {
                             <img
                                 src={
                                     previewImage
-                                        ? `/CSE-416-Team3/${previewImage}.png`
+                                        ? previewImage
                                         : `/CSE-416-Team3/default.png`   // DEFAULT PREVIEW
                                 }
                                 className="egg-select-img"
