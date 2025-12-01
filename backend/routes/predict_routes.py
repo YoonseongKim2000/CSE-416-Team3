@@ -1,5 +1,7 @@
 from fastapi import APIRouter, File, UploadFile, Form, HTTPException, Request
 from core.models import predict_image
+from db.db_interface import decr_token, get_user_by_apikey
+from pymongo.errors import PyMongoError
 
 router = APIRouter(prefix="/api", tags=["AI Model"])
 
@@ -27,6 +29,7 @@ async def analyze_image(
     
 @router.post("/APIanalyze")
 async def analyze_image(
+    request: Request,
     model: str = Form(...),
     image: UploadFile = File(...),
     apiKey: str = "NONE"
@@ -34,11 +37,19 @@ async def analyze_image(
     try:
         if (apiKey == "NONE"):
             raise HTTPException(status_code=400, detail="API Key Missing")
-        elif (apiKey == "NONE"): #TODO: Implement database look up here
+        
+        db = request.app.database
+
+        check_result = await get_user_by_apikey(apiKey, db)
+        if (isinstance(check_result, PyMongoError)):
+            raise HTTPException(status_code=500, detail="Database error")
+        if (check_result == None):
             raise HTTPException(status_code=400, detail="API Key Not Found")
-        # TODO: Check Token amount
+        
+        if (check_result['tokens'] <= 0):
+            raise HTTPException(status_code=400, detail="Not Enough Tokens")
         result = predict_image(image.file, model)
-        # TODO: decrement one token from account here
+        await decr_token(apiKey, db)
         return result
     except Exception as e:
         print("ERROR:", e)
