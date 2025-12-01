@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import "./HomePage.css";
+import scannieload from '../assets/scannieload.gif'
 
 const apiUrl = import.meta.env.VITE_API_URL
 
@@ -155,6 +156,7 @@ function HomePage() {
       {/* Loading overlay */}
       {loading && (
         <div className="loading-overlay">
+          <img className="scannie-load" src={scannieload} alt="scannie mascot loading GIF" />
           <div className="spinner"></div>
           <p className="loading-text mt-3">Analyzing Image...</p>
         </div>
