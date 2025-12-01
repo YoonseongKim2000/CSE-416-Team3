@@ -113,31 +113,31 @@ function EasterEggPage() {
     };
 
     return (
-        <div className="egg-container navbar-margin">
+        <div className="egg-container navbar-margin p-reg">
 
             <div className="egg-card">   {/* NEW: main card wrapper */}
 
                 {/* Always visible */}
                 <div className="egg-score">
-                    <p>Total Rounds: {totalRounds}</p>
-                    <p>Your Wins: {humanWins}</p>
-                    <p>AI Wins: {aiWins}</p>
+                    <p className='p-reg'>Total Rounds: {totalRounds}</p>
+                    <p className='p-reg'>Your Wins: {humanWins}</p>
+                    <p className='p-reg'>AI Wins: {aiWins}</p>
                 </div>
                 <hr className='blackHR' />
 
                 {/* -------------------- SELECT MODEL SCREEN -------------------- */}
                 {mode === "select" && (
-                    <div className="egg-select-layout">
+                    <div className="egg-select-layout mt-4">
                     
                         {/* TITLE full row */}
                         <div className="egg-select-title">
-                            <h1>Choose an AI to Play Against</h1>
+                            <h1 className='aw-regular'>Choose an AI to Play Against</h1>
                         </div>
                                 
                         {/* LEFT SIDE: BUTTONS */}
                         <div className="egg-select-left">
                             <button
-                                className="egg-btn"
+                                className="egg-btn p-med"
                                 onClick={() => startRound("anime")}
                                 onMouseEnter={() => setPreviewImage(scannieana)}
                                 onMouseLeave={() => setPreviewImage(scannieana)}
@@ -146,7 +146,7 @@ function EasterEggPage() {
                             </button>
                                 
                             <button
-                                className="egg-btn"
+                                className="egg-btn p-med"
                                 onClick={() => startRound("art")}
                                 onMouseEnter={() => setPreviewImage(scannieara)}
                                 onMouseLeave={() => setPreviewImage(scannieana)}
@@ -155,7 +155,7 @@ function EasterEggPage() {
                             </button>
                                 
                             <button
-                                className="egg-btn"
+                                className="egg-btn p-med"
                                 onClick={() => startRound("general")}
                                 onMouseEnter={() => setPreviewImage(scanniega)}
                                 onMouseLeave={() => setPreviewImage(scannieana)}
@@ -183,14 +183,14 @@ function EasterEggPage() {
 
                 {/* -------------------- PLAY SCREEN ---------------------------- */}
                 {mode === "play" && (
-                    <div className="egg-play-layout">
+                    <div className="egg-play-layout mt-5">
 
                         {/* LEFT SIDE — controls */}
                         <div className="egg-play-left">
-                            <h2>Guess the Image!</h2>
+                            <h2 className='p-med'>Guess the Image!</h2>
 
-                            <button className="egg-btn ai-btn" onClick={() => sendGuess(0)}>AI</button>
-                            <button className="egg-btn human-btn" onClick={() => sendGuess(1)}>Human</button>
+                            <button className="egg-btn ai-btn p-med" onClick={() => sendGuess(0)}>AI</button>
+                            <button className="egg-btn human-btn p-med" onClick={() => sendGuess(1)}>Human</button>
 
                             {loading && (
                                 <p className="egg-guessing">The AI is guessing...</p>
@@ -209,18 +209,18 @@ function EasterEggPage() {
 
                 {/* -------------------- RESULT SCREEN -------------------------- */}
                 {mode === "result" && result && (
-                    <div className="egg-result-layout">
+                    <div className="egg-result-layout mt-5">
 
                         {/* LEFT SIDE — RESULT TEXT */}
                         <div className="egg-result-left">
-                            <h2>Round Results</h2>
-                            <p>True Answer: {result.truth === 1 ? "Human" : "AI"}</p>
-                            <p>Your Guess: {result.humanCorrect ? "Correct!" : "Wrong!"}</p>
-                            <p>AI Guess: {result.aiCorrect ? "Correct!" : "Wrong!"}</p>
-                            <p>AI Confidence: {(result.confidence * 100).toFixed(1)}%</p>
+                            <h2 className='p-med'>Round Results</h2>
+                            <p className='p-reg'>True Answer: {result.truth === 1 ? "Human" : "AI"}</p>
+                            <p className='p-reg'>Your Guess: {result.humanCorrect ? "Correct!" : "Wrong!"}</p>
+                            <p className='p-reg'>AI Guess: {result.aiCorrect ? "Correct!" : "Wrong!"}</p>
+                            <p className='p-reg'>AI Confidence: {(result.confidence * 100).toFixed(1)}%</p>
 
-                            <button className="egg-btn again-btn" onClick={playAgain}>Play Again</button>
-                            <button className="egg-btn menu-btn" onClick={() => setMode("select")}>
+                            <button className="egg-btn again-btn p-med" onClick={playAgain}>Play Again</button>
+                            <button className="egg-btn menu-btn p-med" onClick={() => setMode("select")}>
                                 Back to Model Select
                             </button>
                         </div>
