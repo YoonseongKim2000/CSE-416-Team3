@@ -63,7 +63,7 @@ class UpdateUserModel(BaseModel):
     password: Optional[str] = None
     newPassword: Optional[str] = None
     isPaid: Optional[bool] = None
-    token: Optional[int] = None
+    tokens: Optional[int] = None
     APIKey: Optional[str] = None
     model_config = ConfigDict(
         arbitrary_types_allowed=True,
@@ -234,16 +234,45 @@ async def update_history_db(userEmail: str, db, new_history):
 
     return outval 
 
-async def get_user_by_APIKey(key: str, db) -> UserOutModel:
+#key string not sanitized
+async def get_user_by_apikey(key: str, db):
     user_collection = db.get_collection("users")
 
     try:
         result = await user_collection.find_one({"APIKey": key})
         #result = None if none found
+        #else, returns a UserOutModel class obj
+        if (result):
+            outval = UserOutModel.model_validate(result) 
+        else:
+            outval = result
     except PyMongoError as e:
-        result = e
+        outval = e
     
-    return result
+    return outval
+
+async def decr_token(key: str, db):
+    user_collection = db.get_collection("users")
+
+    try:
+        user = await user_collection.find_one({"APIKey": key})
+
+        if (user == None):
+            return None
+
+        tokens = user["tokens"]
+        #if token <= 0 return None i guess? feel free to change
+        if (tokens <= 0):
+            return None
+
+        tokens = tokens - 1
+        result = await user_collection.update_one({"APIKey": key}, {"$set": {"tokens": tokens}})
+        #return no. of modified
+        outval = result.modified_count
+    except PyMongoError as e:
+        outval = e
+
+    return outval
 
 
 # async def test_history_db(user: UserInModel, db):
