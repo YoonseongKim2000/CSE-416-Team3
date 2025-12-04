@@ -1,5 +1,4 @@
 import './paidFeatures.css'
-import { Link } from "react-router-dom";
 
 interface Props {
   handleBtn: () => void

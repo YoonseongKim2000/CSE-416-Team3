@@ -1,6 +1,5 @@
 import './navBar.css'
-import { Link, NavLink, useNavigate, useOutletContext } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, NavLink} from 'react-router-dom';
 import type { AuthContext } from '../App';
 import logo from "../assets/truvision_logo.png"
 
@@ -11,9 +10,9 @@ interface Props {
 
 function NavBar({auth, handleAuthToNull}: Props) {
   //const { auth } = useOutletContext<AuthContext>();
-  const navigate = useNavigate();
+
   
-  const handleLogOut = (e: any) => {
+  const handleLogOut = () => {
     console.log('logging out...')
     handleAuthToNull();
   }

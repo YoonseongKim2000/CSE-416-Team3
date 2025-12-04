@@ -1,12 +1,12 @@
 import './Pricing.css'
 import PaidFeatures from '../components/paidFeatures'
 
-import { Link, useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import type { AuthOutletContext } from '../App';
 
 function Pricing() {
     const navigate = useNavigate();
-    const {contextState, contextSetState} = useOutletContext<AuthOutletContext>();
+    const {contextState} = useOutletContext<AuthOutletContext>();
 
     const handleBuy = () => {
         console.log(contextState);

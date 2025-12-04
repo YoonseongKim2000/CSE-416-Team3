@@ -10,7 +10,7 @@ const selfUrl = import.meta.env.SELF_URL
 
 function Login() {
     const navigate = useNavigate();
-    const {contextState, contextSetState} = useOutletContext<AuthOutletContext>();
+    const {contextSetState} = useOutletContext<AuthOutletContext>();
     const ref = useRef<HTMLInputElement>(null);
 
     const handleSubmit = async (e: any) => {
