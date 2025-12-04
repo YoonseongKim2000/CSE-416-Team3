@@ -191,9 +191,8 @@ function ApiDocsPage() {
               <code>const formData = new FormData();</code><br />
               <code>formData.append("model", "general");</code><br />
               <code>formData.append("image", file);</code><br />
-              <code>formData.append("apiKey", "YOUR_API_KEY");</code><br />
               <br />
-              <code>const response = await fetch &#40;"https://220.126.157.140:10000/api/APIanalyze", &#123;</code><br />
+              <code>const response = await fetch &#40;"https://220.126.157.140:10000/api/APIanalyze?apiKey=$&#123;apiKey&#125;`", &#123;</code><br />
               <code>&#9;method: "POST",</code><br />
               <code>&#9;body: formData,</code><br />
               <code>&#125;&#41;;</code><br />
