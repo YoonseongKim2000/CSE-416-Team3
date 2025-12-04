@@ -1,4 +1,4 @@
-# CSE-416-Team3 / 
+# CSE-416-Team3  
 
 ## Team Members
 YoonseongKim2000 (**Yoonseong Kim**)   
@@ -24,5 +24,6 @@ https://220.126.157.140:10000/
 
 Click on that link above, then white list our certificate. This will enable the browser to let 
 the frontend talk with the backend.
+
 
 Link to website: https://yoonseongkim2000.github.io/CSE-416-Team3/
