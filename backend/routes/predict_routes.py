@@ -5,8 +5,8 @@ from pymongo.errors import PyMongoError
 
 router = APIRouter(prefix="/api", tags=["AI Model"])
 
-# REQUEST_FRONTEND = "https://yoonseongkim2000.github.io"
-REQUEST_FRONTEND = "http://localhost:5173"
+REQUEST_FRONTEND = "https://yoonseongkim2000.github.io"
+# REQUEST_FRONTEND = "http://localhost:5173"
 
 @router.post("/analyze")
 async def analyze_image(

@@ -1,4 +1,4 @@
-# CSE-416-Team3 / 
+# CSE-416-Team3  
 
 ## Team Members
 YoonseongKim2000 (**Yoonseong Kim**)   
@@ -23,5 +23,6 @@ this issue you must visit our backend on the browser first.
 https://220.126.157.140:10000/docs
 
 Click on that link above, then whitelist our certificate by ignoring any warnings present and continuing/advancing to the aforementioned link. Once you see a page titled FastAPI, the whitelisting process is complete and this will enable the browser to let the frontend talk with the backend. Once that is complete, click on the link below to visit our project.
+
 
 Link to website: https://yoonseongkim2000.github.io/CSE-416-Team3/

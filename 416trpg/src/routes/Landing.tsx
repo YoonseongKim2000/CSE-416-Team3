@@ -6,7 +6,7 @@ import type { AuthOutletContext } from "../App";
 
 function LandingPage() {
   const navigate = useNavigate();
-  const {contextState, contextSetState} = useOutletContext<AuthOutletContext>();
+  const {contextState} = useOutletContext<AuthOutletContext>();
 
   const handleBuy = () => {
     console.log(contextState);
